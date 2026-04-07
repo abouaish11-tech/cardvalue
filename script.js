@@ -5,6 +5,8 @@
 // ---- STATE ----
 let allCards = [];
 let pointsValuations = {};
+let transferValuations = {};
+let valuationMode = 'transfer'; // 'transfer' or 'cash'
 let currentFilter = 'all';
 let currentSort = 'net-value';
 let currentSearch = '';
@@ -58,16 +60,16 @@ const ISSUER_EMOJI = {
 };
 
 // ---- CURRENCY LABELS ----
-const CURRENCY_LABELS = {
-  'chase_ur': 'UR pts · 1.5¢/pt',
-  'amex_mr': 'MR pts · 1.5¢/pt',
-  'capital_one_miles': 'Miles · 1¢/mi',
-  'citi_ty': 'TY pts · 1.5¢/pt',
+const CURRENCY_NAMES = {
+  'chase_ur': 'UR pts',
+  'amex_mr': 'MR pts',
+  'capital_one_miles': 'Miles',
+  'citi_ty': 'TY pts',
   'cashback': 'Cash back',
-  'bilt_points': 'Bilt pts · 1.5¢/pt',
-  'wells_fargo_pts': 'WF pts · 1¢/pt',
-  'usbank_pts': 'USB pts · 1¢/pt',
-  'bofa_pts': 'BofA pts · 1¢/pt',
+  'bilt_points': 'Bilt pts',
+  'wells_fargo_pts': 'WF pts',
+  'usbank_pts': 'USB pts',
+  'bofa_pts': 'BofA pts',
   'alliant_cashback': 'Cash back',
   'robinhood_cashback': 'Cash back',
   'fidelity_cashback': 'Cash back',
@@ -77,6 +79,14 @@ const CURRENCY_LABELS = {
   'amazon_cashback': 'Cash back',
   'discover_cashback': 'Cash back',
 };
+
+function getCurrencyLabel(currency) {
+  const name = CURRENCY_NAMES[currency] || currency;
+  if (name === 'Cash back') return 'Cash back';
+  const pv = pointsValuations[currency] || 1;
+  const unit = currency === 'capital_one_miles' ? '/mi' : '/pt';
+  return `${name} · ${pv}¢${unit}`;
+}
 
 // ---- CATEGORY CONFIG ----
 const CATEGORIES = [
@@ -247,7 +257,7 @@ function renderCards() {
     const cellMap = {
       'effective-rate': `<td class="td-rate">
         <span class="rate-pct">${effectiveRate}%</span>
-        <span class="rate-type">${CURRENCY_LABELS[card.currency] || card.currency}</span>
+        <span class="rate-type">${getCurrencyLabel(card.currency)}</span>
       </td>`,
       'annual-value': `<td class="td-earned">$${annualValue.toLocaleString()}</td>`,
       'fee': `<td class="td-fee">${feeDisplay}</td>`,
@@ -655,6 +665,27 @@ function bindEvents() {
     renderCards();
   });
 
+  // Valuation toggle
+  document.querySelectorAll('.val-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.dataset.mode;
+      if (mode === valuationMode) return;
+      valuationMode = mode;
+      document.querySelectorAll('.val-toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (mode === 'cash') {
+        // Set all valuations to 1.0 (cash redemption)
+        for (const key of Object.keys(pointsValuations)) {
+          pointsValuations[key] = 1.0;
+        }
+      } else {
+        // Restore transfer partner valuations
+        Object.assign(pointsValuations, transferValuations);
+      }
+      renderCards();
+    });
+  });
+
   // Filters
   document.getElementById('filterChips').addEventListener('click', (e) => {
     const chip = e.target.closest('.chip');
@@ -708,6 +739,7 @@ async function init() {
     const data = await res.json();
     allCards = data.cards;
     pointsValuations = data.pointsValuations;
+    transferValuations = { ...data.pointsValuations };
     bindEvents();
     renderCards();
   } catch (err) {

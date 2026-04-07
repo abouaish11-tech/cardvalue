@@ -101,7 +101,8 @@
         </div>
         <div class="results-count" id="resultsCount">38 cards</div>
       </div>
-      <div class="filter-chips" id="filterChips" role="group" aria-label="Filter by card type">
+      <div class="filter-row-bottom">
+        <div class="filter-chips" id="filterChips" role="group" aria-label="Filter by card type">
         <button class="chip active" data-filter="all">All Cards</button>
         <button class="chip" data-filter="no-fee">No Annual Fee</button>
         <button class="chip" data-filter="travel">Travel</button>
@@ -111,6 +112,11 @@
         <button class="chip" data-filter="gas">Gas</button>
         <button class="chip" data-filter="flat-rate">Flat Rate</button>
         <button class="chip" data-filter="points">Points/Miles</button>
+      </div>
+        <div class="val-toggle" role="group" aria-label="Points valuation mode">
+          <button class="val-toggle-btn" data-mode="cash">Cash (1¢/pt)</button>
+          <button class="val-toggle-btn active" data-mode="transfer">Transfer (1.5¢/pt)</button>
+        </div>
       </div>
     </div>
   </div>
