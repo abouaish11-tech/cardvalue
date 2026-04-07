@@ -112,7 +112,7 @@ body {
 .hero {
   background: linear-gradient(135deg, #0a0a0f 0%, #1a1035 50%, #0f0a1a 100%);
   color: var(--white);
-  padding: 24px 24px 20px;
+  padding: 16px 24px 14px;
   position: relative;
   overflow: hidden;
 }
@@ -129,9 +129,9 @@ body {
   opacity: 0.5;
 }
 .hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
-.hero h1 { font-family: var(--font-display); font-size: clamp(22px, 3vw, 30px); font-weight: 700; line-height: 1.15; margin-bottom: 6px; letter-spacing: -0.5px; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(20px, 2.5vw, 26px); font-weight: 700; line-height: 1.15; margin-bottom: 4px; letter-spacing: -0.5px; }
 .hero h1 em { font-style: normal; color: var(--purple-light); }
-.hero p { color: var(--text-muted); font-size: 14px; max-width: 600px; margin-bottom: 14px; }
+.hero p { color: var(--text-muted); font-size: 13px; max-width: 600px; margin-bottom: 10px; }
 .personalize-toggle-bar { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .default-profile-label { display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 14px; }
 .profile-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; }
@@ -270,7 +270,7 @@ body {
 .card-table thead th {
   background: var(--surface);
   font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-  color: var(--text-dim); padding: 8px 8px;
+  color: var(--text-muted); padding: 8px 8px;
   border-bottom: 2px solid var(--border-light);
   text-align: left; white-space: nowrap;
 }
@@ -281,9 +281,13 @@ body {
 
 /* Table rows */
 .card-row {
-  cursor: pointer; transition: background 0.15s ease;
+  cursor: pointer; transition: background 0.2s ease, box-shadow 0.2s ease;
 }
-.card-row:hover { background: var(--surface-light); }
+.card-row:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+.card-row:hover {
+  background: var(--surface-light);
+  box-shadow: inset 3px 0 0 var(--purple);
+}
 .card-row.selected { background: rgba(99, 102, 241, 0.08); }
 .card-row td {
   padding: 10px 8px; border-bottom: 1px solid var(--border);
@@ -291,10 +295,30 @@ body {
 }
 
 /* Rank column */
-.td-rank { text-align: center; font-weight: 800; font-size: 15px; color: var(--text-dim); }
-.card-row:nth-child(1) .td-rank { color: var(--purple-light); }
-.card-row:nth-child(2) .td-rank { color: var(--text-muted); }
-.card-row:nth-child(3) .td-rank { color: #fb923c; }
+.td-rank {
+  text-align: center; font-weight: 800; font-size: 14px; color: var(--text-dim);
+}
+.td-rank span {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  font-size: 13px; font-weight: 800;
+}
+.card-row:nth-child(1) .td-rank span {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(139, 92, 246, 0.1));
+  color: var(--purple-light);
+  border: 2px solid var(--purple);
+  box-shadow: 0 0 12px var(--purple-glow);
+}
+.card-row:nth-child(2) .td-rank span {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+  border: 2px solid var(--border-light);
+}
+.card-row:nth-child(3) .td-rank span {
+  background: rgba(251, 146, 60, 0.1);
+  color: #fb923c;
+  border: 2px solid rgba(251, 146, 60, 0.3);
+}
 
 /* Card identity column */
 .card-identity { display: flex; align-items: center; gap: 10px; }
@@ -305,12 +329,12 @@ body {
   overflow: hidden;
 }
 .card-name { font-size: 13px; font-weight: 700; color: var(--text); display: block; }
-.card-issuer { font-size: 11px; color: var(--text-dim); }
+.card-issuer { font-size: 12px; color: var(--text-muted); }
 
 /* Value columns */
 .td-rate { text-align: right; }
 .rate-pct { display: block; font-size: 14px; font-weight: 800; color: var(--green); }
-.rate-type { display: block; font-size: 11px; font-weight: 500; color: var(--text-dim); margin-top: 2px; white-space: nowrap; }
+.rate-type { display: block; font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 2px; white-space: nowrap; }
 .td-earned { text-align: right; font-weight: 600; color: var(--text); }
 .td-fee { text-align: right; color: var(--text-muted); }
 .no-fee { color: var(--green); font-weight: 600; }
@@ -340,6 +364,7 @@ body {
   font-weight: 500;
   color: var(--purple-light);
   margin-top: 2px;
+  white-space: nowrap;
 }
 
 /* Credits list in detail drawer */

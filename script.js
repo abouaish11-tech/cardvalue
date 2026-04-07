@@ -233,7 +233,7 @@ function renderCards() {
     const effectiveRate = calcEffectiveRate(card, currentSpending);
     const isCompared = compareList.includes(card.id);
 
-    const rankLabel = rank === 1 ? '🏆' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+    const rankLabel = rank;
 
     const totalFee = card.annualFee + (card.membershipRequired ? card.membershipRequired.cost : 0);
     const feeDisplay = totalFee === 0 ? '<span class="no-fee">$0</span>' : `$${totalFee}`;
@@ -258,7 +258,7 @@ function renderCards() {
     el.className = `card-row${isCompared ? ' selected' : ''}`;
     el.dataset.id = card.id;
     el.innerHTML = `
-      <td class="td-rank">${rankLabel}</td>
+      <td class="td-rank"><span>${rankLabel}</span></td>
       <td class="td-card">
         <div class="card-identity">
           <span class="card-logo-inline">${getIssuerLogoHTML(card.issuer, 32)}</span>
@@ -355,7 +355,7 @@ function openDetail(card) {
     const cashRate = `(${(multiplier * pv).toFixed(1)}¢/$)`;
     html += `
       <tr>
-        <td>${cat.emoji} ${cat.label}</td>
+        <td>${cat.label}</td>
         <td>${rawRate} <span class="cat-multiplier">${cashRate}</span></td>
         <td>$${monthlySpend.toLocaleString()}/mo</td>
         <td class="cat-value">$${catAnnual.toLocaleString()}</td>
@@ -392,7 +392,7 @@ function openDetail(card) {
       html += `
         <div class="credit-item">
           <div class="credit-header">
-            <span class="credit-label">💳 ${credit.label}</span>
+            <span class="credit-label">${credit.label}</span>
             <span class="credit-value">$${credit.value.toLocaleString()}/yr</span>
           </div>
           <div class="credit-desc">${credit.desc}</div>
@@ -538,7 +538,7 @@ function openCompareModal() {
     { label: 'Net Annual Value', fn: (c) => `$${calcNetValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
     { label: 'Effective Rate', fn: (c) => `${calcEffectiveRate(c, currentSpending)}%`, compare: true, better: 'max' },
     ...CATEGORIES.map(cat => ({
-      label: `${cat.emoji} ${cat.label}`,
+      label: `${cat.label}`,
       fn: (c) => {
         const m = c.rewards[cat.key] || 1;
         const pv = pointsValuations[c.currency] || 1;
