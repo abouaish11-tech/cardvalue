@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CardValue — Find Your Best Credit Card</title>
+  <link rel="stylesheet" href="style.css?v=2" />
+</head>
+<body>
+  <a href="#cardList" class="skip-link">Skip to card list</a>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <svg class="logo-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="5" width="20" height="14" rx="3" stroke="#a78bfa" stroke-width="2"/>
+          <path d="M2 10h20" stroke="#a78bfa" stroke-width="2"/>
+          <rect x="5" y="14" width="6" height="2" rx="1" fill="#a78bfa"/>
+        </svg>
+        <span class="logo-text">CardValue</span>
+      </div>
+      <p class="header-tagline">Every card ranked by what it's actually worth — in dollars.</p>
+    </div>
+  </header>
+
+  <!-- HERO / SPENDING PANEL -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h1>What's your credit card <em>actually</em> worth?</h1>
+        <p>We translate every reward — points, miles, cashback — into real dollar value so you can compare apples to apples.</p>
+      </div>
+      <div class="personalize-toggle-bar">
+        <div class="default-profile-label">
+          <span class="profile-dot default"></span>
+          Ranked by average American spending
+        </div>
+        <button class="btn-personalize" id="btnPersonalize">
+          ✨ Personalize for my spending
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONALIZE DRAWER -->
+  <div class="personalize-drawer" id="personalizeDrawer">
+    <div class="personalize-drawer-inner">
+      <div class="drawer-header">
+        <h3>Your Monthly Spending</h3>
+        <button class="drawer-close" id="drawerClose" aria-label="Close spending panel">✕</button>
+      </div>
+      <p class="drawer-sub">Enter how much you typically spend per month in each category. We'll re-rank all cards for you.</p>
+      <div class="spending-inputs">
+        <div class="spending-row">
+          <label>🍽 Dining & Restaurants</label>
+          <div class="input-wrap"><span>$</span><input type="number" id="sp_dining" value="500" min="0" max="99999" /></div>
+        </div>
+        <div class="spending-row">
+          <label>🛒 Groceries & Supermarkets</label>
+          <div class="input-wrap"><span>$</span><input type="number" id="sp_groceries" value="400" min="0" max="99999" /></div>
+        </div>
+        <div class="spending-row">
+          <label>✈️ Travel (flights, hotels, etc.)</label>
+          <div class="input-wrap"><span>$</span><input type="number" id="sp_travel" value="200" min="0" max="99999" /></div>
+        </div>
+        <div class="spending-row">
+          <label>⛽ Gas & Fuel</label>
+          <div class="input-wrap"><span>$</span><input type="number" id="sp_gas" value="150" min="0" max="99999" /></div>
+        </div>
+        <div class="spending-row">
+          <label>🛍 Everything Else</label>
+          <div class="input-wrap"><span>$</span><input type="number" id="sp_other" value="750" min="0" max="99999" /></div>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <button class="btn-reset" id="btnReset">Reset to defaults</button>
+        <button class="btn-apply" id="btnApply">Show my ranking →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <div class="filter-bar-inner">
+      <div class="filter-row-top">
+        <div class="search-wrap">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="searchInput" placeholder="Search cards..." autocomplete="off" aria-label="Search credit cards" />
+        </div>
+        <div class="sort-wrap">
+          <label class="sort-label">Sort by</label>
+          <select id="sortSelect">
+            <option value="net-value">Net Value</option>
+            <option value="effective-rate">Effective Rate</option>
+            <option value="annual-value">Annual Earnings</option>
+            <option value="fee-low">Fee: Low → High</option>
+            <option value="fee-high">Fee: High → Low</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </div>
+        <div class="results-count" id="resultsCount">38 cards</div>
+      </div>
+      <div class="filter-chips" id="filterChips" role="group" aria-label="Filter by card type">
+        <button class="chip active" data-filter="all">All Cards</button>
+        <button class="chip" data-filter="no-fee">No Annual Fee</button>
+        <button class="chip" data-filter="travel">Travel</button>
+        <button class="chip" data-filter="dining">Dining</button>
+        <button class="chip" data-filter="groceries">Groceries</button>
+        <button class="chip" data-filter="cashback">Cashback</button>
+        <button class="chip" data-filter="gas">Gas</button>
+        <button class="chip" data-filter="flat-rate">Flat Rate</button>
+        <button class="chip" data-filter="points">Points/Miles</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD LIST -->
+  <main class="main">
+    <div class="main-inner">
+      <div class="table-wrap">
+        <table class="card-table" id="cardTable">
+          <thead id="cardTableHead">
+            <!-- Dynamically rendered by JS -->
+          </thead>
+          <tbody id="cardList">
+            <tr><td colspan="8" class="loading-state"><div class="spinner"></div><p>Calculating best value...</p></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- DETAIL DRAWER (right panel) -->
+  <div class="detail-overlay" id="detailOverlay"></div>
+  <aside class="detail-drawer" id="detailDrawer">
+    <div class="detail-drawer-header">
+      <div class="detail-card-identity">
+        <div class="detail-logo" id="detailLogo"></div>
+        <div>
+          <h2 id="detailName"></h2>
+          <span id="detailIssuer" class="detail-issuer"></span>
+        </div>
+      </div>
+      <button class="detail-close" id="detailClose" aria-label="Close card details">✕</button>
+    </div>
+    <div class="detail-drawer-body" id="detailBody">
+      <!-- Injected by JS -->
+    </div>
+  </aside>
+
+  <!-- COMPARE BAR (bottom) -->
+  <div class="compare-bar" id="compareBar">
+    <div class="compare-bar-inner">
+      <div class="compare-slots" id="compareSlots"></div>
+      <div class="compare-actions">
+        <button class="btn-compare-view" id="btnCompareView">Compare →</button>
+        <button class="btn-compare-clear" id="btnCompareClear">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE MODAL -->
+  <div class="modal-overlay" id="compareOverlay">
+    <div class="compare-modal" id="compareModal">
+      <div class="compare-modal-header">
+        <h2>Side-by-Side Comparison</h2>
+        <button class="modal-close" id="compareModalClose" aria-label="Close comparison">✕</button>
+      </div>
+      <div class="compare-table-wrap" id="compareTableWrap">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>CardValue uses industry-standard points valuations (Chase UR: 1.5¢, Amex MR: 1.5¢, Citi TY: 1.5¢, Capital One: 1¢). Actual value depends on how you redeem. <strong>Not financial advice.</strong></p>
+      <p class="footer-note">Rankings are based on your spending profile. Cards with membership requirements include that cost in the net value calculation.</p>
+      <p class="footer-note">* Annual credits assume full utilization. Some credits may have restrictions (specific merchants, booking portals, or minimum spend thresholds).</p>
+    </div>
+  </footer>
+
+  <script src="script.js?v=2"></script>
+</body>
+</html>
