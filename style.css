@@ -350,6 +350,17 @@ body {
 .th-rank { width: 36px; text-align: center; }
 .th-card { min-width: 160px; }
 
+/* Column header help button */
+.col-help {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1px solid var(--border-light); background: none;
+  color: var(--text-dim); font-size: 9px; font-weight: 700;
+  cursor: pointer; margin-left: 3px; vertical-align: middle;
+  transition: all 0.2s; font-family: var(--font);
+}
+.col-help:hover { border-color: var(--purple); color: var(--purple-light); }
+
 /* Table rows */
 .card-row {
   cursor: pointer; transition: background 0.2s ease, box-shadow 0.2s ease;

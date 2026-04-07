@@ -184,6 +184,13 @@ function searchCards(cards, query) {
 }
 
 // ---- COLUMN DEFINITIONS ----
+const COLUMN_TOOLTIPS = {
+  'effective-rate': 'The percentage of each dollar spent that you get back in rewards value. Higher is better. Based on your spending profile and the current points valuation mode.',
+  'annual-value': 'Total dollar value of rewards earned per year, based on your monthly spending in each category multiplied by the card\'s reward rates.',
+  'fee': 'The card\'s annual fee plus any required membership costs (e.g., Costco membership). Deducted from net value.',
+  'net-value': 'Your bottom line: rewards earned + annual credits - annual fee. This is how much the card is actually worth to you per year.',
+};
+
 const DATA_COLUMNS = [
   { key: 'effective-rate', thClass: 'th-rate',   label: 'Eff. Rate',  sortKeys: ['effective-rate'] },
   { key: 'annual-value',   thClass: 'th-earned', label: 'Earned/yr',  sortKeys: ['annual-value'] },
@@ -211,10 +218,22 @@ function renderTableHead(sortBy) {
   thead.innerHTML = `<tr>
     <th class="th-rank">#</th>
     <th class="th-card">Card</th>
-    ${cols.map(c => `<th class="${c.thClass}">${c.label}</th>`).join('')}
+    ${cols.map(c => `<th class="${c.thClass}">${c.label} <span class="col-help" data-col="${c.key}" title="${COLUMN_TOOLTIPS[c.key]}">?</span></th>`).join('')}
     <th class="th-apply">Apply</th>
     <th class="th-compare">Compare</th>
   </tr>`;
+
+  // Bind column help tooltips
+  thead.querySelectorAll('.col-help').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const key = btn.dataset.col;
+      const col = DATA_COLUMNS.find(c => c.key === key);
+      document.getElementById('colHelpTitle').textContent = col.label;
+      document.getElementById('colHelpText').textContent = COLUMN_TOOLTIPS[key];
+      document.getElementById('colHelpPopover').classList.add('open');
+    });
+  });
 }
 
 // ---- RENDER CARD LIST ----
@@ -686,6 +705,16 @@ function bindEvents() {
     });
   });
 
+  // Column help popover
+  document.getElementById('colHelpClose').addEventListener('click', () => {
+    document.getElementById('colHelpPopover').classList.remove('open');
+  });
+  document.getElementById('colHelpPopover').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('colHelpPopover')) {
+      document.getElementById('colHelpPopover').classList.remove('open');
+    }
+  });
+
   // Valuation help popover
   document.getElementById('valHelpBtn').addEventListener('click', () => {
     document.getElementById('valHelpPopover').classList.add('open');
@@ -738,6 +767,7 @@ function bindEvents() {
       closePersonalizeDrawer();
       document.getElementById('compareOverlay').classList.remove('open');
       document.getElementById('valHelpPopover').classList.remove('open');
+      document.getElementById('colHelpPopover').classList.remove('open');
     }
     if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
       e.preventDefault();
