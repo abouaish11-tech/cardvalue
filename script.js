@@ -61,15 +61,15 @@ const ISSUER_EMOJI = {
 
 // ---- CURRENCY LABELS ----
 const CURRENCY_NAMES = {
-  'chase_ur': 'UR pts',
-  'amex_mr': 'MR pts',
+  'chase_ur': 'UR',
+  'amex_mr': 'MR',
   'capital_one_miles': 'Miles',
-  'citi_ty': 'TY pts',
+  'citi_ty': 'TY',
   'cashback': 'Cash back',
-  'bilt_points': 'Bilt pts',
-  'wells_fargo_pts': 'WF pts',
-  'usbank_pts': 'USB pts',
-  'bofa_pts': 'BofA pts',
+  'bilt_points': 'Bilt',
+  'wells_fargo_pts': 'WF',
+  'usbank_pts': 'USB',
+  'bofa_pts': 'BofA',
   'alliant_cashback': 'Cash back',
   'robinhood_cashback': 'Cash back',
   'fidelity_cashback': 'Cash back',
@@ -80,12 +80,25 @@ const CURRENCY_NAMES = {
   'discover_cashback': 'Cash back',
 };
 
+const CURRENCY_FULL_NAMES = {
+  'chase_ur': 'Ultimate Rewards — Chase\'s transferable points program',
+  'amex_mr': 'Membership Rewards — Amex\'s transferable points program',
+  'citi_ty': 'ThankYou Points — Citi\'s transferable points program',
+  'bilt_points': 'Bilt Points — transferable points earned on rent and purchases',
+  'wells_fargo_pts': 'Wells Fargo Rewards points',
+  'usbank_pts': 'US Bank Rewards points',
+  'bofa_pts': 'Bank of America Rewards points',
+  'capital_one_miles': 'Capital One Miles — transferable to airline and hotel partners',
+};
+
 function getCurrencyLabel(currency) {
   const name = CURRENCY_NAMES[currency] || currency;
   if (name === 'Cash back') return 'Cash back';
   const pv = pointsValuations[currency] || 1;
   const unit = currency === 'capital_one_miles' ? '/mi' : '/pt';
-  return `${name} · ${pv}¢${unit}`;
+  const fullName = CURRENCY_FULL_NAMES[currency] || '';
+  const helpBtn = fullName ? ` <span class="acronym-help" title="${fullName}">?</span>` : '';
+  return `${name}${helpBtn} · ${pv}¢${unit}`;
 }
 
 // ---- CATEGORY CONFIG ----

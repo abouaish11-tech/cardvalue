@@ -417,6 +417,24 @@ body {
 .td-rate { text-align: right; }
 .rate-pct { display: block; font-size: 14px; font-weight: 800; color: var(--green); }
 .rate-type { display: block; font-size: 11px; font-weight: 500; color: var(--text-muted); margin-top: 2px; white-space: nowrap; }
+.acronym-help {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 12px; height: 12px; border-radius: 50%;
+  border: 1px solid var(--border-light); background: none;
+  color: var(--text-dim); font-size: 8px; font-weight: 700;
+  cursor: help; vertical-align: middle;
+  transition: all 0.2s; position: relative;
+}
+.acronym-help:hover { border-color: var(--purple); color: var(--purple-light); }
+.acronym-help:hover::after {
+  content: attr(title);
+  position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
+  background: var(--surface-lighter); border: 1px solid var(--border-light);
+  color: var(--text); font-size: 12px; font-weight: 400;
+  padding: 8px 12px; border-radius: 8px; white-space: normal;
+  width: 220px; z-index: 100; box-shadow: var(--shadow);
+  pointer-events: none; margin-bottom: 6px; line-height: 1.5;
+}
 .td-earned { text-align: right; font-weight: 600; color: var(--text); }
 .td-fee { text-align: right; color: var(--text-muted); }
 .no-fee { color: var(--green); font-weight: 600; }
