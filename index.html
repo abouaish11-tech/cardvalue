@@ -113,10 +113,40 @@
         <button class="chip" data-filter="flat-rate">Flat Rate</button>
         <button class="chip" data-filter="points">Points/Miles</button>
       </div>
-        <div class="val-toggle" role="group" aria-label="Points valuation mode">
-          <button class="val-toggle-btn" data-mode="cash">Cash (1¢/pt)</button>
-          <button class="val-toggle-btn active" data-mode="transfer">Transfer (1.5¢/pt)</button>
+        <div class="val-toggle-wrap">
+          <div class="val-toggle" role="group" aria-label="Points valuation mode">
+            <button class="val-toggle-btn" data-mode="cash">Cash Value</button>
+            <button class="val-toggle-btn active" data-mode="transfer">Transfer Value</button>
+          </div>
+          <button class="val-help-btn" id="valHelpBtn" aria-label="What does this mean?">?</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VALUATION HELP POPOVER -->
+  <div class="val-help-popover" id="valHelpPopover">
+    <div class="val-help-content">
+      <div class="val-help-header">
+        <strong>How are points valued?</strong>
+        <button class="val-help-close" id="valHelpClose" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="val-help-section">
+        <div class="val-help-title">Cash Value (1&#162;/pt)</div>
+        <p>Every point is worth exactly 1&#162;. This is what you get if you redeem points as a statement credit, direct deposit, or gift card. Simple and guaranteed.</p>
+      </div>
+      <div class="val-help-section">
+        <div class="val-help-title">Transfer Value (varies by currency)</div>
+        <p>Points can be transferred to airline and hotel partners (like Hyatt, United, Delta) where they're often worth more. Transfer valuations are based on industry-standard estimates:</p>
+        <table class="val-help-table">
+          <tr><td>Chase Ultimate Rewards</td><td>1.5&#162;/pt</td></tr>
+          <tr><td>Amex Membership Rewards</td><td>1.5&#162;/pt</td></tr>
+          <tr><td>Citi ThankYou Points</td><td>1.5&#162;/pt</td></tr>
+          <tr><td>Bilt Points</td><td>1.5&#162;/pt</td></tr>
+          <tr><td>Capital One Miles</td><td>1&#162;/mi</td></tr>
+          <tr><td>All other currencies</td><td>1&#162;/pt</td></tr>
+        </table>
+        <p class="val-help-note">Transfer values are estimates. Actual value depends on how and when you redeem.</p>
       </div>
     </div>
   </div>

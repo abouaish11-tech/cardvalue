@@ -686,6 +686,19 @@ function bindEvents() {
     });
   });
 
+  // Valuation help popover
+  document.getElementById('valHelpBtn').addEventListener('click', () => {
+    document.getElementById('valHelpPopover').classList.add('open');
+  });
+  document.getElementById('valHelpClose').addEventListener('click', () => {
+    document.getElementById('valHelpPopover').classList.remove('open');
+  });
+  document.getElementById('valHelpPopover').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('valHelpPopover')) {
+      document.getElementById('valHelpPopover').classList.remove('open');
+    }
+  });
+
   // Filters
   document.getElementById('filterChips').addEventListener('click', (e) => {
     const chip = e.target.closest('.chip');
@@ -724,6 +737,7 @@ function bindEvents() {
       closeDetail();
       closePersonalizeDrawer();
       document.getElementById('compareOverlay').classList.remove('open');
+      document.getElementById('valHelpPopover').classList.remove('open');
     }
     if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
       e.preventDefault();
