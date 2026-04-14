@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abouaish11-tech.github.io/cardvalue/sitemap.xml
