@@ -737,17 +737,13 @@ body {
   .card-table, .card-table tbody { display: block; }
   .card-row {
     display: grid;
-    grid-template-columns: 40px 1fr auto;
-    grid-template-areas:
-      "rank identity compare"
-      "stats stats    stats"
-      "apply apply    apply";
-    gap: 10px 12px;
-    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    position: relative;
     background: var(--surface-light);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 14px;
+    padding: 54px 14px 14px;
     margin-bottom: 10px;
     box-shadow: var(--shadow);
   }
@@ -757,43 +753,62 @@ body {
     background: rgba(139, 92, 246, 0.08);
     border-color: rgba(139, 92, 246, 0.4);
   }
-  .card-row td { display: block; padding: 0; border: none; font-size: 14px; }
+  .card-row td {
+    display: block;
+    padding: 0;
+    border: none;
+    font-size: 14px;
+    min-width: 0;
+  }
 
-  /* Rank badge — top left */
+  /* Rank badge — absolute, top-left */
   .card-row .td-rank {
-    grid-area: rank;
-    text-align: center;
+    position: absolute; top: 12px; left: 12px;
+    grid-column: unset; grid-row: unset;
   }
   .card-row .td-rank span {
-    width: 36px; height: 36px; font-size: 14px;
+    width: 32px; height: 32px; font-size: 13px;
   }
 
-  /* Card identity — top middle */
-  .card-row .td-card { grid-area: identity; min-width: 0; }
-  .card-row .card-identity { gap: 10px; }
-  .card-row .card-logo-inline { width: 36px; height: 36px; }
+  /* Card identity — full-width header */
+  .card-row .td-card {
+    grid-column: 1 / -1;
+    padding-left: 40px; /* room for rank badge */
+    padding-right: 36px; /* room for compare checkbox */
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+  }
+  .card-row .card-identity { gap: 10px; width: 100%; }
+  .card-row .card-logo-inline { width: 32px; height: 32px; }
   .card-row .card-name {
     font-size: 14px; font-weight: 700;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    display: block;
   }
   .card-row .card-issuer { font-size: 12px; }
 
-  /* Compare checkbox — top right */
-  .card-row .td-compare { grid-area: compare; }
+  /* Compare checkbox — absolute, top-right */
+  .card-row .td-compare {
+    position: absolute; top: 14px; right: 14px;
+    grid-column: unset; grid-row: unset;
+  }
   .card-row .compare-check { width: 22px; height: 22px; }
 
-  /* Stats section: middle row, 2x2 or 2x1 grid */
+  /* Stats cells — flow into the 2-col grid naturally */
   .card-row .td-rate,
   .card-row .td-earned,
   .card-row .td-fee,
   .card-row .td-net {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     text-align: left;
     padding: 10px 12px;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     min-width: 0;
+    overflow: hidden;
   }
   .card-row .td-rate::before,
   .card-row .td-earned::before,
@@ -812,50 +827,12 @@ body {
   .card-row .td-fee::before { content: "Fee"; }
   .card-row .td-net::before { content: "Net Value"; }
 
-  /* Stats grid wrapper: put the 4 stat cells into a 2x2 grid */
-  .card-row > td.td-rate,
-  .card-row > td.td-earned,
-  .card-row > td.td-fee,
-  .card-row > td.td-net { grid-area: unset; }
-
-  /* Use a subgrid-like approach: wrap stats into a row */
-  .card-row {
-    grid-template-columns: 40px 1fr auto;
-    grid-template-areas:
-      "rank  identity compare"
-      "stats stats    stats"
-      "apply apply    apply";
+  /* Apply button — full width at bottom */
+  .card-row .td-apply {
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 2px;
   }
-  .card-row::after {
-    content: "";
-    grid-area: stats;
-    display: none; /* placeholder */
-  }
-
-  /* Place the 4 stat cells in a 2x2 grid that spans the stats area */
-  .card-row .td-rate    { grid-column: 1 / 3; grid-row: 2; }
-  .card-row .td-earned  { grid-column: 3 / 4; grid-row: 2; }
-  .card-row .td-fee     { grid-column: 1 / 2; grid-row: 3; }
-  .card-row .td-net     { grid-column: 2 / 4; grid-row: 3; }
-
-  /* Adjust rows and grid for stats */
-  .card-row {
-    grid-template-columns: 40px 1fr 40px;
-    grid-template-rows: auto auto auto auto;
-    grid-template-areas:
-      "rank  identity compare"
-      "stat1 stat1    stat2"
-      "stat3 stat4    stat4"
-      "apply apply    apply";
-  }
-  .card-row .td-rank { grid-area: rank; }
-  .card-row .td-card { grid-area: identity; }
-  .card-row .td-compare { grid-area: compare; }
-  .card-row .td-rate { grid-area: stat1; }
-  .card-row .td-earned { grid-area: stat2; }
-  .card-row .td-fee { grid-area: stat3; }
-  .card-row .td-net { grid-area: stat4; }
-  .card-row .td-apply { grid-area: apply; }
 
   .card-row .rate-pct { font-size: 18px; font-weight: 800; }
   .card-row .rate-type { font-size: 11px; margin-top: 2px; }
@@ -920,12 +897,18 @@ body {
 
 /* Extra small: <= 380px */
 @media (max-width: 380px) {
-  .card-row {
-    grid-template-columns: 36px 1fr 36px;
-  }
-  .card-row .td-rank span { width: 32px; height: 32px; font-size: 13px; }
+  .card-row { padding: 48px 10px 10px; gap: 6px; }
+  .card-row .td-rank { top: 10px; left: 10px; }
+  .card-row .td-rank span { width: 28px; height: 28px; font-size: 12px; }
+  .card-row .td-compare { top: 12px; right: 12px; }
+  .card-row .td-card { padding-left: 34px; padding-right: 32px; min-height: 32px; }
   .card-row .card-name { font-size: 13px; }
-  .card-row .rate-pct,
+  .card-row .card-logo-inline { width: 28px; height: 28px; }
+  .card-row .td-rate,
+  .card-row .td-earned,
+  .card-row .td-fee,
+  .card-row .td-net { padding: 8px 10px; }
+  .card-row .rate-pct { font-size: 16px; }
   .card-row .td-earned,
   .card-row .td-fee,
   .card-row .td-net { font-size: 15px; }
