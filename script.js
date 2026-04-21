@@ -311,7 +311,7 @@ function renderCards() {
         </div>
       </td>
       ${orderedCols.map(c => cellMap[c.key]).join('')}
-      <td class="td-apply"><a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" onclick="event.stopPropagation()">Apply →</a></td>
+      <td class="td-apply"><a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="table" onclick="event.stopPropagation()">Apply →</a></td>
       <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" ${isCompared ? 'checked' : ''} /></td>
     `;
 
@@ -520,7 +520,7 @@ function openDetail(card) {
   // Apply button
   html += `
     <div class="detail-section">
-      <a href="${card.applyUrl}" target="_blank" rel="noopener" class="btn-apply-card">
+      <a href="${card.applyUrl}" target="_blank" rel="noopener" class="btn-apply-card" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="detail-drawer">
         Apply for the ${card.name} →
       </a>
     </div>
@@ -798,6 +798,7 @@ async function init() {
     pointsValuations = data.pointsValuations;
     transferValuations = { ...data.pointsValuations };
     bindEvents();
+    bindApplyTracking();
     renderCards();
   } catch (err) {
     document.getElementById('cardList').innerHTML = `
@@ -807,6 +808,30 @@ async function init() {
     `;
     console.error('Failed to load cards.json:', err);
   }
+}
+
+/* ---------- Apply-click tracking (GA4) ---------- */
+function bindApplyTracking() {
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.apply-link, .btn-apply-card');
+    if (!link) return;
+
+    const cardId = link.dataset.cardId || 'unknown';
+    const cardName = link.dataset.cardName || 'unknown';
+    const cardIssuer = link.dataset.cardIssuer || 'unknown';
+    const location = link.dataset.applyLocation || 'unknown';
+
+    // Fire GA4 custom event + standard outbound event
+    if (typeof gtag === 'function') {
+      gtag('event', 'apply_click', {
+        card_id: cardId,
+        card_name: cardName,
+        card_issuer: cardIssuer,
+        apply_location: location,
+        link_url: link.href,
+      });
+    }
+  }, true); // useCapture: true so we run before onclick stopPropagation
 }
 
 document.addEventListener('DOMContentLoaded', init);
