@@ -626,14 +626,79 @@ function getSpendingFromInputs() {
 }
 
 function applyPersonalization() {
+  const btn = document.getElementById('btnApply');
+  if (btn && btn.dataset.busy === '1') return; // prevent double-click
+  if (btn) {
+    btn.dataset.busy = '1';
+    btn.classList.add('is-loading');
+    btn.dataset.originalText = btn.textContent;
+    btn.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span> Calculating…';
+    btn.disabled = true;
+  }
+
+  // Apply spending and re-render right away so the recompute is honest…
   currentSpending = getSpendingFromInputs();
   isPersonalized = true;
-  closePersonalizeDrawer();
   document.querySelector('.default-profile-label').innerHTML = `
-    <span class="profile-dot" style="background:var(--purple)"></span>
+    <span class="profile-dot personalized"></span>
     Ranked by your spending
   `;
   renderCards();
+  flashTopCards();
+
+  // …but keep the drawer open briefly so the user sees the confirmation.
+  setTimeout(() => {
+    closePersonalizeDrawer();
+    if (btn) {
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+      btn.dataset.busy = '0';
+      btn.textContent = btn.dataset.originalText || 'Show my ranking →';
+    }
+    // Smooth-scroll to the card list
+    const list = document.getElementById('cardList');
+    if (list) {
+      const top = list.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+    showToast('✓ Ranking updated for your spending', 'success');
+  }, 500);
+}
+
+/** Flash the top 3 card rows briefly when ranking updates. */
+function flashTopCards() {
+  const rows = document.querySelectorAll('#cardList .card-row');
+  for (let i = 0; i < Math.min(3, rows.length); i++) {
+    const row = rows[i];
+    row.classList.remove('flash-update');
+    // Force reflow so re-adding the class restarts the animation
+    void row.offsetWidth;
+    row.classList.add('flash-update');
+    // Stagger slightly so they ripple
+    row.style.animationDelay = `${i * 80}ms`;
+    setTimeout(() => {
+      row.classList.remove('flash-update');
+      row.style.animationDelay = '';
+    }, 700 + i * 80);
+  }
+}
+
+/** Show a transient toast notification at bottom-right. */
+function showToast(message, variant = 'success', duration = 2500) {
+  const host = document.getElementById('toastHost');
+  if (!host) return;
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${variant}`;
+  toast.setAttribute('role', 'status');
+  toast.textContent = message;
+  host.appendChild(toast);
+  // Trigger enter animation on next frame
+  requestAnimationFrame(() => toast.classList.add('toast-enter'));
+  setTimeout(() => {
+    toast.classList.remove('toast-enter');
+    toast.classList.add('toast-leave');
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
 }
 
 function resetPersonalization() {
