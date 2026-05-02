@@ -63,7 +63,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="stylesheet" href="style.css?v=9" />
 </head>
 <body>
   <a href="#cardList" class="skip-link">Skip to card list</a>
@@ -132,6 +132,60 @@
           <div class="input-wrap"><span>$</span><input type="number" id="sp_other" value="750" min="0" max="99999" /></div>
         </div>
       </div>
+
+      <!-- Banking Relationships (Phase 3) -->
+      <details class="banking-relationships" id="bankingRelationships">
+        <summary class="banking-summary">
+          <span class="banking-icon">🏦</span>
+          <span class="banking-title">Banking Relationships <em>(optional)</em></span>
+          <span class="banking-hint">Apply tier boosts and see true cost</span>
+        </summary>
+        <div class="banking-body">
+          <p class="banking-explainer">
+            Some cards (BofA Preferred Rewards, US Bank Smartly) boost your rewards based on how much you keep at the bank. We'll factor in both the boost AND the opportunity cost of holding that money there.
+          </p>
+
+          <div class="bank-relationship" data-program="BofA Preferred Rewards">
+            <div class="bank-rel-header">
+              <strong>Bank of America Preferred Rewards</strong>
+              <span class="bank-rel-bank">Deposits at BofA / Merrill</span>
+            </div>
+            <div class="bank-rel-tiers">
+              <label><input type="radio" name="bofa_tier" value="0" checked /><span>None</span></label>
+              <label><input type="radio" name="bofa_tier" value="1" /><span>Gold ($20K+) +25%</span></label>
+              <label><input type="radio" name="bofa_tier" value="2" /><span>Platinum ($50K+) +50%</span></label>
+              <label><input type="radio" name="bofa_tier" value="3" /><span>Plat Honors ($100K+) +75%</span></label>
+            </div>
+            <div class="bank-rel-balance">
+              <label for="bofa_deposits">Your balance at BofA / Merrill</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="bofa_deposits" value="0" min="0" max="99999999" data-program="BofA Preferred Rewards" /></div>
+            </div>
+          </div>
+
+          <div class="bank-relationship" data-program="US Bank Smartly">
+            <div class="bank-rel-header">
+              <strong>US Bank Smartly</strong>
+              <span class="bank-rel-bank">Deposits at US Bank Smartly Savings</span>
+            </div>
+            <div class="bank-rel-tiers">
+              <label><input type="radio" name="usb_tier" value="0" checked /><span>Base (2%)</span></label>
+              <label><input type="radio" name="usb_tier" value="1" /><span>Bronze ($5K+) 2.5%</span></label>
+              <label><input type="radio" name="usb_tier" value="2" /><span>Silver ($50K+) 3%</span></label>
+              <label><input type="radio" name="usb_tier" value="3" /><span>Gold ($100K+) 4%</span></label>
+            </div>
+            <div class="bank-rel-balance">
+              <label for="usb_deposits">Your balance at US Bank</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="usb_deposits" value="0" min="0" max="99999999" data-program="US Bank Smartly" /></div>
+            </div>
+          </div>
+
+          <div class="bank-rel-apy">
+            <label for="comparisonApy">Comparison APY <span class="apy-hint">(what you could earn elsewhere — e.g., a high-yield savings account)</span></label>
+            <div class="input-wrap apy-input"><input type="number" id="comparisonApy" value="4.5" min="0" max="20" step="0.1" /><span>%</span></div>
+          </div>
+        </div>
+      </details>
+
       <div class="drawer-footer">
         <button class="btn-reset" id="btnReset">Reset to defaults</button>
         <button class="btn-apply" id="btnApply">Show my ranking →</button>
@@ -309,6 +363,6 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>

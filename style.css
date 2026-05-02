@@ -679,6 +679,173 @@ body {
 .footer-inner strong { color: var(--text); }
 .footer-note { margin-top: 8px; opacity: 0.6; }
 
+/* ---- BANKING RELATIONSHIPS / TIER REWARDS (Phase 3) ---- */
+.banking-relationships {
+  margin-top: 18px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+.banking-summary {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer;
+  padding: 8px 0;
+  list-style: none;
+  user-select: none;
+  flex-wrap: wrap;
+}
+.banking-summary::-webkit-details-marker { display: none; }
+.banking-summary::after {
+  content: '▾';
+  margin-left: auto;
+  color: var(--text-dim);
+  transition: transform 0.2s;
+}
+.banking-relationships[open] .banking-summary::after { transform: rotate(180deg); }
+.banking-icon { font-size: 20px; }
+.banking-title { font-size: 14px; font-weight: 700; color: var(--text); }
+.banking-title em { font-style: normal; color: var(--text-dim); font-weight: 500; }
+.banking-hint { font-size: 11px; color: var(--text-dim); flex-basis: 100%; padding-left: 30px; }
+
+.banking-body {
+  margin-top: 14px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.banking-explainer {
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+  padding: 10px 12px;
+  background: rgba(139, 92, 246, 0.06);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: var(--radius-sm);
+}
+.bank-relationship {
+  background: var(--surface-light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.bank-rel-header { display: flex; flex-direction: column; gap: 2px; }
+.bank-rel-header strong { font-size: 14px; color: var(--text); }
+.bank-rel-bank { font-size: 11px; color: var(--text-muted); }
+.bank-rel-tiers {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.bank-rel-tiers label {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--surface);
+  border: 1.5px solid var(--border-light);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.bank-rel-tiers label:hover { border-color: var(--purple); }
+.bank-rel-tiers input[type="radio"] { accent-color: var(--purple); }
+.bank-rel-tiers label:has(input[type="radio"]:checked) {
+  background: var(--purple-subtle);
+  border-color: var(--purple);
+  color: var(--text);
+}
+.bank-rel-balance { display: flex; flex-direction: column; gap: 4px; }
+.bank-rel-balance label { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.bank-rel-apy { display: flex; flex-direction: column; gap: 4px; }
+.bank-rel-apy > label {
+  font-size: 13px; color: var(--text); font-weight: 600;
+}
+.apy-hint { font-weight: 500; color: var(--text-muted); font-size: 11px; }
+.input-wrap.apy-input { max-width: 140px; }
+.input-wrap.apy-input span {
+  border-right: none; border-left: 1.5px solid var(--border-light);
+}
+
+/* Tier section in detail drawer */
+.tier-section { background: rgba(139, 92, 246, 0.04); border-radius: var(--radius); padding: 16px; }
+.tier-section.is-boosted { background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.25); }
+.tier-active-pill, .tier-eligible-pill {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 8px; border-radius: 999px;
+  margin-left: 6px;
+  vertical-align: 1px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tier-active-pill { background: var(--purple); color: var(--white); }
+.tier-eligible-pill { background: var(--surface-light); color: var(--text-dim); border: 1px solid var(--border-light); }
+.tier-cta { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+.tier-table {
+  width: 100%; border-collapse: collapse; margin-bottom: 14px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.tier-table th, .tier-table td {
+  padding: 8px 10px;
+  font-size: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.tier-table th {
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-dim); font-size: 10px;
+}
+.tier-table tr:last-child td { border-bottom: none; }
+.tier-table tr.tier-current td {
+  background: rgba(139, 92, 246, 0.12);
+  color: var(--purple-light);
+  font-weight: 700;
+}
+
+.tier-true-net {
+  display: flex; flex-direction: column; gap: 6px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+.tier-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 13px; color: var(--text-muted);
+}
+.tier-row strong { color: var(--text); }
+.tier-row strong.green { color: var(--green); }
+.tier-row strong.red { color: var(--red); }
+.tier-row-divider { padding-top: 6px; border-top: 1px dashed var(--border); margin-top: 4px; }
+.tier-row-final {
+  font-size: 16px; font-weight: 700;
+  border-top: 2px solid var(--border-light); padding-top: 10px;
+  margin-top: 6px;
+}
+.tier-row-final.is-negative { color: var(--red); }
+.tier-row-final span { color: var(--text); }
+.tier-warning {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  font-size: 12px; line-height: 1.5;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  margin-top: 10px;
+}
+
+/* Wallet builder boost styling */
+.wallet-use-chip em.boosted {
+  color: #fbbf24; font-weight: 800;
+}
+.wallet-true-net-row {
+  display: flex; align-items: baseline; gap: 10px;
+  font-size: 13px; color: var(--text-muted);
+}
+.wallet-true-net-row.is-negative .wallet-true-net-value { color: var(--red); }
+.wallet-true-net-value { font-weight: 700; color: var(--text); }
+.wallet-warning {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+  font-size: 12px; line-height: 1.5;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  flex-basis: 100%;
+}
+
 /* ---- WALLET BUILDER (Phase 2) ---- */
 .wallet-builder {
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.06), rgba(139, 92, 246, 0.02));

@@ -16,6 +16,15 @@ let isPersonalized = false;
 const DEFAULT_SPENDING = { dining: 500, groceries: 400, travel: 200, gas: 150, other: 750 };
 let currentSpending = { ...DEFAULT_SPENDING };
 
+// ---- BANK TIER REWARDS STATE (Phase 3) ----
+// Keyed by program name. tierIndex 0 = "None"/base. deposits = user-entered $ they hold at the bank.
+let bankRelationships = {
+  "BofA Preferred Rewards": { tierIndex: 0, deposits: 0 },
+  "US Bank Smartly":         { tierIndex: 0, deposits: 0 }
+};
+// Comparison APY — what the user could earn elsewhere (e.g., HYSA). Used to compute opportunity cost.
+let comparisonApy = 4.5;
+
 // ---- ISSUER LOGOS ----
 const ISSUER_LOGOS = {
   'Chase': 'https://www.google.com/s2/favicons?domain=chase.com&sz=128',
@@ -119,12 +128,81 @@ function getIssuerLogoHTML(issuer, size = 28) {
   return `<span style="font-size:${Math.round(size*0.6)}px">${ISSUER_EMOJI[issuer] || '💳'}</span>`;
 }
 
+// ---- TIER REWARDS HELPERS (Phase 3) ----
+/** Returns { tier, info } for the active tier on this card, or null if no tier program. */
+function getActiveTier(card) {
+  if (!card.tierRewards) return null;
+  const program = card.tierRewards.program;
+  const rel = bankRelationships[program];
+  if (!rel) return null;
+  const tiers = card.tierRewards.tiers;
+  // Pick the highest tier the user qualifies for based on their deposit amount.
+  // We prefer deposits > 0 → auto-promote to highest qualifying tier; otherwise tierIndex.
+  let chosen = tiers[0];
+  if (rel.deposits > 0) {
+    for (const t of tiers) {
+      if (rel.deposits >= t.minDeposit) chosen = t;
+    }
+  } else {
+    chosen = tiers[Math.min(rel.tierIndex, tiers.length - 1)];
+  }
+  return { tier: chosen, info: card.tierRewards };
+}
+
+/** Returns the effective per-category multiplier for this card+category, applying tier boost. */
+function getEffectiveMultiplier(card, categoryKey) {
+  const baseRate = card.rewards[categoryKey] || 1;
+  const active = getActiveTier(card);
+  if (!active) return baseRate;
+  const { tier, info } = active;
+  if (info.boostType === 'absolute' && typeof tier.absoluteRate === 'number') {
+    // For cashback cards, the cards.json rewards are in % terms (1x = 1%).
+    // Absolute tiers replace ALL category rates with the new flat rate.
+    return tier.absoluteRate;
+  }
+  if (typeof tier.boostMultiplier === 'number') {
+    return baseRate * tier.boostMultiplier;
+  }
+  return baseRate;
+}
+
+/** Whether this card is currently using an active (non-base) tier boost. */
+function hasActiveBoost(card) {
+  const active = getActiveTier(card);
+  if (!active) return false;
+  if (active.info.boostType === 'absolute') {
+    const baseRate = active.info.tiers[0].absoluteRate;
+    return active.tier.absoluteRate > baseRate;
+  }
+  return active.tier.boostMultiplier > 1.0;
+}
+
+/** Returns annual opportunity cost across ALL active bank relationships. */
+function calcOpportunityCost() {
+  let total = 0;
+  for (const [program, rel] of Object.entries(bankRelationships)) {
+    if (!rel.deposits || rel.deposits <= 0) continue;
+    // Find the tier program APY (depositApy) — search any card that uses it
+    let depositApy = 0.01;
+    for (const c of allCards) {
+      if (c.tierRewards && c.tierRewards.program === program) {
+        depositApy = c.tierRewards.depositApy || 0.01;
+        break;
+      }
+    }
+    const apyDelta = (comparisonApy - depositApy) / 100;
+    if (apyDelta <= 0) continue;
+    total += rel.deposits * apyDelta;
+  }
+  return Math.round(total);
+}
+
 // ---- CALCULATE ANNUAL VALUE ----
 function calcAnnualValue(card, spending) {
   const pv = pointsValuations[card.currency] || 1;
   let total = 0;
   for (const cat of CATEGORIES) {
-    const multiplier = card.rewards[cat.key] || 1;
+    const multiplier = getEffectiveMultiplier(card, cat.key);
     const monthlySpend = spending[cat.key] || 0;
     total += monthlySpend * multiplier * (pv / 100) * 12;
   }
@@ -141,6 +219,13 @@ function calcNetValue(card, spending) {
   const totalCredits = calcTotalCredits(card);
   const membershipCost = card.membershipRequired ? card.membershipRequired.cost : 0;
   return annualValue + totalCredits - card.annualFee - membershipCost;
+}
+
+/** Net value with opportunity cost subtracted. Only differs from calcNetValue if the card uses an active tier. */
+function calcTrueNetValue(card, spending) {
+  const net = calcNetValue(card, spending);
+  if (!hasActiveBoost(card)) return net;
+  return net - calcOpportunityCost();
 }
 
 function calcEffectiveRate(card, spending) {
@@ -254,22 +339,25 @@ function renderTableHead(sortBy) {
 
 let walletMode = 2; // 1, 2, 3, or 'max'
 
-/** Compute per-category dollar value for a card given a spending profile. */
+/** Compute per-category dollar value for a card given a spending profile. Tier-aware. */
 function calcCardValuePerCategory(card, spending) {
   const pv = pointsValuations[card.currency] || 1;
   const map = {};
   for (const cat of CATEGORIES) {
-    const multiplier = card.rewards[cat.key] || 1;
+    const multiplier = getEffectiveMultiplier(card, cat.key);
     const monthlySpend = spending[cat.key] || 0;
     map[cat.key] = monthlySpend * multiplier * (pv / 100) * 12;
   }
   return map;
 }
 
-/** Compute total wallet value for a list of cards (uses best card per category). */
+/** Compute total wallet value for a list of cards (uses best card per category).
+ *  Subtracts opportunity cost ONCE per wallet, not per card.
+ */
 function calcWalletValue(cards, spending) {
   if (!cards.length) {
-    return { netValue: -Infinity, annualValue: 0, fees: 0, credits: 0, assignments: {} };
+    return { netValue: -Infinity, annualValue: 0, fees: 0, credits: 0,
+             oppCost: 0, trueNetValue: -Infinity, assignments: {}, anyBoost: false };
   }
   const perCard = cards.map(c => ({ card: c, values: calcCardValuePerCategory(c, spending) }));
   const assignments = {};
@@ -289,21 +377,34 @@ function calcWalletValue(cards, spending) {
   const credits = cards.reduce((s, c) => s + calcTotalCredits(c), 0);
   const fees = cards.reduce((s, c) =>
     s + c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0), 0);
+  const netValue = Math.round(annualValue + credits - fees);
+
+  // Opportunity cost: subtract ONCE if any card in the wallet uses an active tier.
+  const anyBoost = cards.some(hasActiveBoost);
+  const oppCost = anyBoost ? calcOpportunityCost() : 0;
+  const trueNetValue = netValue - oppCost;
+
   return {
-    netValue: Math.round(annualValue + credits - fees),
+    netValue,
     annualValue: Math.round(annualValue),
     fees,
     credits,
+    oppCost,
+    trueNetValue,
+    anyBoost,
     assignments,
   };
 }
 
-/** Greedy multi-card optimizer. Returns { cards, ...result }. */
+/** Greedy multi-card optimizer. Returns { cards, ...result }. Optimizes on trueNetValue
+ *  (which equals netValue when no tier program is active). */
 function optimizeWallet(pool, spending, maxCards) {
   const isMax = maxCards === 'max';
   const limit = isMax ? pool.length : Math.max(1, +maxCards);
   const wallet = [];
-  let result = { netValue: -Infinity, annualValue: 0, fees: 0, credits: 0, assignments: {} };
+  let result = { netValue: -Infinity, trueNetValue: -Infinity,
+                 annualValue: 0, fees: 0, credits: 0, oppCost: 0,
+                 anyBoost: false, assignments: {} };
 
   while (wallet.length < limit) {
     let bestCandidate = null;
@@ -312,14 +413,14 @@ function optimizeWallet(pool, spending, maxCards) {
       if (wallet.includes(candidate)) continue;
       const trial = [...wallet, candidate];
       const r = calcWalletValue(trial, spending);
-      if (bestResult === null || r.netValue > bestResult.netValue) {
+      if (bestResult === null || r.trueNetValue > bestResult.trueNetValue) {
         bestResult = r;
         bestCandidate = candidate;
       }
     }
     if (!bestCandidate) break;
     // Stop if no improvement (only after the first card; first card is the seed)
-    if (wallet.length > 0 && bestResult.netValue <= result.netValue) break;
+    if (wallet.length > 0 && bestResult.trueNetValue <= result.trueNetValue) break;
     wallet.push(bestCandidate);
     result = bestResult;
   }
@@ -366,8 +467,13 @@ function renderWalletBuilder() {
           ${cats.length === 0
             ? '<span class="wallet-uses-empty">— (kept for credits/perks)</span>'
             : cats.map(cat => {
-                const rate = c.rewards[cat.key] || 1;
-                return `<span class="wallet-use-chip">${cat.emoji} ${cat.label} <em>${rate}x</em></span>`;
+                const rate = getEffectiveMultiplier(c, cat.key);
+                const baseRate = c.rewards[cat.key] || 1;
+                const isBoosted = hasActiveBoost(c) && rate !== baseRate;
+                const rateLabel = isBoosted
+                  ? `<em class="boosted">${(+rate.toFixed(2))}x ↑</em>`
+                  : `<em>${rate}x</em>`;
+                return `<span class="wallet-use-chip">${cat.emoji} ${cat.label} ${rateLabel}</span>`;
               }).join('')
           }
         </div>
@@ -375,12 +481,23 @@ function renderWalletBuilder() {
     `;
   }).join('');
 
+  const trueNetVsNetDiffer = wallet.anyBoost && wallet.oppCost !== 0;
   const summaryHtml = `
     <div class="wallet-summary">
       <div class="wallet-net-row">
         <span class="wallet-net-label">Wallet net value</span>
         <span class="wallet-net-value">${wallet.netValue >= 0 ? '+' : ''}$${wallet.netValue.toLocaleString()}/yr</span>
       </div>
+      ${trueNetVsNetDiffer ? `
+        <div class="wallet-true-net-row ${wallet.trueNetValue < 0 ? 'is-negative' : ''}">
+          <span class="wallet-net-label">After opportunity cost (−$${wallet.oppCost.toLocaleString()})</span>
+          <span class="wallet-true-net-value">${wallet.trueNetValue >= 0 ? '+' : ''}$${wallet.trueNetValue.toLocaleString()}/yr</span>
+        </div>
+        ${wallet.trueNetValue < 0 ? `
+          <div class="wallet-warning">
+            ⚠️ Your tier deposits cost more in opportunity cost than this wallet earns. Lower your deposits or raise your comparison APY.
+          </div>` : ''}
+      ` : ''}
       ${wallet.cards.length > 1 ? `
         <div class="wallet-comparison">
           ${marginalGain > 0
@@ -555,19 +672,24 @@ function openDetail(card) {
         <tbody>
   `;
   let runningTotal = 0;
+  const cardHasActiveBoost = hasActiveBoost(card);
   for (const cat of CATEGORIES) {
-    const multiplier = card.rewards[cat.key] || 1;
+    const baseMultiplier = card.rewards[cat.key] || 1;
+    const effectiveMultiplier = getEffectiveMultiplier(card, cat.key);
     const monthlySpend = currentSpending[cat.key] || 0;
-    const catAnnual = Math.round(monthlySpend * multiplier * (pv / 100) * 12);
+    const catAnnual = Math.round(monthlySpend * effectiveMultiplier * (pv / 100) * 12);
     runningTotal += catAnnual;
-    const rawRate = multiplier > 1
-      ? `${multiplier}x ${card.currency === 'cashback' ? 'cash' : 'pts'}`
-      : `1x`;
-    const cashRate = `(${(multiplier * pv).toFixed(1)}¢/$)`;
+    const isBoosted = cardHasActiveBoost && effectiveMultiplier !== baseMultiplier;
+    const rateStr = isBoosted
+      ? `<s style="color:var(--text-dim)">${baseMultiplier}x</s> <strong style="color:var(--purple-light)">${(+effectiveMultiplier.toFixed(2))}x ↑</strong>`
+      : (effectiveMultiplier > 1
+          ? `${effectiveMultiplier}x ${card.currency === 'cashback' ? 'cash' : 'pts'}`
+          : `1x`);
+    const cashRate = `(${(effectiveMultiplier * pv).toFixed(1)}¢/$)`;
     html += `
       <tr>
         <td>${cat.label}</td>
-        <td>${rawRate} <span class="cat-multiplier">${cashRate}</span></td>
+        <td>${rateStr} <span class="cat-multiplier">${cashRate}</span></td>
         <td>$${monthlySpend.toLocaleString()}/mo</td>
         <td class="cat-value">$${catAnnual.toLocaleString()}</td>
       </tr>
@@ -652,6 +774,61 @@ function openDetail(card) {
       </div>
     </div>
   `;
+
+  // Tier Boost & True Net Value (Phase 3)
+  if (card.tierRewards) {
+    const active = getActiveTier(card);
+    const isBoosted = cardHasActiveBoost;
+    const rel = bankRelationships[card.tierRewards.program] || { deposits: 0, tierIndex: 0 };
+    const oppCost = isBoosted ? calcOpportunityCost() : 0;
+    const trueNet = netValue - oppCost;
+    const depositApy = card.tierRewards.depositApy || 0.01;
+    const bankInterest = rel.deposits ? rel.deposits * (depositApy / 100) : 0;
+    const altInterest = rel.deposits ? rel.deposits * (comparisonApy / 100) : 0;
+
+    let tierTableRows = '';
+    for (const t of card.tierRewards.tiers) {
+      const isCurrent = active && active.tier.name === t.name;
+      const rateStr = card.tierRewards.boostType === 'absolute'
+        ? `${t.absoluteRate}%`
+        : `${Math.round((t.boostMultiplier - 1) * 100)}% boost`;
+      tierTableRows += `<tr ${isCurrent ? 'class="tier-current"' : ''}>
+        <td>${isCurrent ? '✓ ' : ''}${t.name}</td>
+        <td>$${(t.minDeposit || 0).toLocaleString()}+</td>
+        <td>${rateStr}</td>
+      </tr>`;
+    }
+
+    html += `
+      <div class="detail-section tier-section ${isBoosted ? 'is-boosted' : ''}">
+        <div class="detail-section-title">🏦 ${card.tierRewards.program} ${isBoosted ? '<span class="tier-active-pill">Active</span>' : '<span class="tier-eligible-pill">Eligible</span>'}</div>
+        ${!isBoosted ? `
+          <p class="tier-cta">Open the Personalize panel and enter your deposits at ${card.tierRewards.depositBank} to see your boosted rewards.</p>
+        ` : ''}
+        <table class="tier-table">
+          <thead><tr><th>Tier</th><th>Min deposit</th><th>Reward</th></tr></thead>
+          <tbody>${tierTableRows}</tbody>
+        </table>
+        ${isBoosted ? `
+          <div class="tier-true-net">
+            <div class="tier-row"><span>Rewards (boosted)</span><strong class="green">+$${annualValue.toLocaleString()}</strong></div>
+            ${totalCredits > 0 ? `<div class="tier-row"><span>Credits</span><strong class="green">+$${totalCredits.toLocaleString()}</strong></div>` : ''}
+            <div class="tier-row"><span>Annual fee</span><strong class="red">−$${totalFee.toLocaleString()}</strong></div>
+            <div class="tier-row tier-row-divider"><span>Net before opportunity cost</span><strong class="${netValue >= 0 ? 'green' : 'red'}">${netValue >= 0 ? '+' : ''}$${netValue.toLocaleString()}</strong></div>
+            <div class="tier-row"><span>Deposits at ${card.tierRewards.depositBank}</span><strong>$${rel.deposits.toLocaleString()}</strong></div>
+            <div class="tier-row"><span>Bank pays you (${depositApy}% APY)</span><strong class="green">+$${Math.round(bankInterest).toLocaleString()}/yr</strong></div>
+            <div class="tier-row"><span>Comparison APY (${comparisonApy}%)</span><strong class="green">+$${Math.round(altInterest).toLocaleString()}/yr</strong></div>
+            <div class="tier-row"><span>Opportunity cost</span><strong class="red">−$${oppCost.toLocaleString()}/yr</strong></div>
+            <div class="tier-row tier-row-final ${trueNet < 0 ? 'is-negative' : ''}">
+              <span>True net value</span>
+              <strong class="${trueNet >= 0 ? 'green' : 'red'}">${trueNet >= 0 ? '+' : ''}$${trueNet.toLocaleString()}/yr</strong>
+            </div>
+            ${trueNet < 0 ? `<div class="tier-warning">⚠️ Tier deposits cost more than this card earns. Lower your tier or compare against a lower-yield benchmark.</div>` : ''}
+          </div>
+        ` : ''}
+      </div>
+    `;
+  }
 
   // Signup bonus
   if (card.signupBonus) {
@@ -794,6 +971,29 @@ function getSpendingFromInputs() {
   };
 }
 
+/** Reads tier selections + deposit amounts + comparison APY from the drawer. */
+function getBankRelationshipsFromInputs() {
+  const bofaTierEl = document.querySelector('input[name="bofa_tier"]:checked');
+  const usbTierEl = document.querySelector('input[name="usb_tier"]:checked');
+  const bofaDeposits = parseFloat(document.getElementById('bofa_deposits')?.value) || 0;
+  const usbDeposits = parseFloat(document.getElementById('usb_deposits')?.value) || 0;
+  const apy = parseFloat(document.getElementById('comparisonApy')?.value);
+
+  return {
+    relationships: {
+      "BofA Preferred Rewards": {
+        tierIndex: bofaTierEl ? parseInt(bofaTierEl.value, 10) : 0,
+        deposits: bofaDeposits,
+      },
+      "US Bank Smartly": {
+        tierIndex: usbTierEl ? parseInt(usbTierEl.value, 10) : 0,
+        deposits: usbDeposits,
+      },
+    },
+    comparisonApy: isNaN(apy) ? 4.5 : apy,
+  };
+}
+
 function applyPersonalization() {
   const btn = document.getElementById('btnApply');
   if (btn && btn.dataset.busy === '1') return; // prevent double-click
@@ -807,6 +1007,9 @@ function applyPersonalization() {
 
   // Apply spending and re-render right away so the recompute is honest…
   currentSpending = getSpendingFromInputs();
+  const bankInputs = getBankRelationshipsFromInputs();
+  bankRelationships = bankInputs.relationships;
+  comparisonApy = bankInputs.comparisonApy;
   isPersonalized = true;
   document.querySelector('.default-profile-label').innerHTML = `
     <span class="profile-dot personalized"></span>
@@ -878,6 +1081,24 @@ function resetPersonalization() {
   document.getElementById('sp_travel').value = DEFAULT_SPENDING.travel;
   document.getElementById('sp_gas').value = DEFAULT_SPENDING.gas;
   document.getElementById('sp_other').value = DEFAULT_SPENDING.other;
+
+  // Reset banking relationships
+  bankRelationships = {
+    "BofA Preferred Rewards": { tierIndex: 0, deposits: 0 },
+    "US Bank Smartly":         { tierIndex: 0, deposits: 0 }
+  };
+  comparisonApy = 4.5;
+  const radio0 = document.querySelector('input[name="bofa_tier"][value="0"]');
+  if (radio0) radio0.checked = true;
+  const radio0u = document.querySelector('input[name="usb_tier"][value="0"]');
+  if (radio0u) radio0u.checked = true;
+  const bofaDeposits = document.getElementById('bofa_deposits');
+  if (bofaDeposits) bofaDeposits.value = 0;
+  const usbDeposits = document.getElementById('usb_deposits');
+  if (usbDeposits) usbDeposits.value = 0;
+  const apyInput = document.getElementById('comparisonApy');
+  if (apyInput) apyInput.value = 4.5;
+
   document.querySelector('.default-profile-label').innerHTML = `
     <span class="profile-dot default"></span>
     Ranked by average American spending
