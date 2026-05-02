@@ -198,14 +198,117 @@ function calcOpportunityCost() {
 }
 
 // ---- CALCULATE ANNUAL VALUE ----
-function calcAnnualValue(card, spending) {
+/** Returns dollar value for `spend` at multiplier `mult` with currency valuation `pv` (¢/pt). */
+function _earn(spend, mult, pv) { return spend * mult * (pv / 100); }
+
+/**
+ * Compute per-category annual reward value, accounting for:
+ *  - tier-based reward boosts (BofA, US Bank Smartly)
+ *  - per-category spending caps with excess at 1x
+ *  - combined caps (e.g. Amex Blue Business Plus 2x up to $50k/yr)
+ *  - choose-your-category cards (auto-pick highest-spending eligible)
+ *  - rotating quarterly 5% cards (distributed proportionally across categories)
+ * Returns: { dining: $X, groceries: $Y, ... }
+ */
+function calcCardValuePerCategoryFull(card, spending) {
   const pv = pointsValuations[card.currency] || 1;
-  let total = 0;
+  const annualSpend = {};
+  let totalAnnualSpend = 0;
   for (const cat of CATEGORIES) {
-    const multiplier = getEffectiveMultiplier(card, cat.key);
-    const monthlySpend = spending[cat.key] || 0;
-    total += monthlySpend * multiplier * (pv / 100) * 12;
+    annualSpend[cat.key] = (spending[cat.key] || 0) * 12;
+    totalAnnualSpend += annualSpend[cat.key];
   }
+
+  const map = {};
+  for (const cat of CATEGORIES) map[cat.key] = 0;
+  const overriddenCats = new Set();
+
+  // Choose-your-category (overrides chosen cats' base rate)
+  if (card.chooseYourCategory) {
+    const cyc = card.chooseYourCategory;
+    const annualCap = cyc.capPerCycle * cyc.cyclesPerYear;
+    const eligibleKeys = (cyc.eligibleCategories || CATEGORIES.map(c => c.key))
+      .filter(k => (annualSpend[k] || 0) > 0);
+    const sorted = [...eligibleKeys].sort((a, b) => annualSpend[b] - annualSpend[a]);
+    const topN = sorted.slice(0, cyc.maxCategories || 1);
+
+    let usedCap = 0;
+    for (const cat of topN) {
+      const remaining = Math.max(0, annualCap - usedCap);
+      const cappedSpend = Math.min(annualSpend[cat] || 0, remaining);
+      const excess = (annualSpend[cat] || 0) - cappedSpend;
+      map[cat] = _earn(cappedSpend, cyc.rate, pv) + _earn(excess, 1, pv);
+      usedCap += cappedSpend;
+      overriddenCats.add(cat);
+    }
+    if (cyc.alsoCovers) {
+      for (const fixed of cyc.alsoCovers) {
+        const cat = fixed.category;
+        if (overriddenCats.has(cat)) continue;
+        const remaining = cyc.alsoCoversShareCap
+          ? Math.max(0, annualCap - usedCap)
+          : annualCap;
+        const cappedSpend = Math.min(annualSpend[cat] || 0, remaining);
+        const excess = (annualSpend[cat] || 0) - cappedSpend;
+        map[cat] = _earn(cappedSpend, fixed.rate, pv) + _earn(excess, 1, pv);
+        if (cyc.alsoCoversShareCap) usedCap += cappedSpend;
+        overriddenCats.add(cat);
+      }
+    }
+  }
+
+  // Combined cap (Amex Blue Business Plus)
+  if (card.rewardCapsCombined && !card.chooseYourCategory) {
+    const cap = card.rewardCapsCombined;
+    const cappedTotal = Math.min(totalAnnualSpend, cap);
+    const excessTotal = totalAnnualSpend - cappedTotal;
+    if (totalAnnualSpend > 0) {
+      for (const cat of CATEGORIES) {
+        const share = (annualSpend[cat.key] || 0) / totalAnnualSpend;
+        const cappedShare = cappedTotal * share;
+        const excessShare = excessTotal * share;
+        const mult = getEffectiveMultiplier(card, cat.key);
+        map[cat.key] = _earn(cappedShare, mult, pv) + _earn(excessShare, 1, pv);
+        overriddenCats.add(cat.key);
+      }
+    }
+  }
+
+  // Base rates (with optional per-category caps)
+  for (const cat of CATEGORIES) {
+    if (overriddenCats.has(cat.key)) continue;
+    const baseMultiplier = getEffectiveMultiplier(card, cat.key);
+    const annualCap = card.rewardCaps && card.rewardCaps[cat.key];
+    const spend = annualSpend[cat.key] || 0;
+    if (annualCap !== undefined && annualCap !== null) {
+      const capped = Math.min(spend, annualCap);
+      const excess = spend - capped;
+      map[cat.key] = _earn(capped, baseMultiplier, pv) + _earn(excess, 1, pv);
+    } else {
+      map[cat.key] = _earn(spend, baseMultiplier, pv);
+    }
+  }
+
+  // Rotating quarterly bonus distributed proportionally across categories
+  if (card.rotatingBonus && totalAnnualSpend > 0) {
+    const rb = card.rotatingBonus;
+    const fulfillment = rb.assumedFulfillment != null ? rb.assumedFulfillment : 1.0;
+    const annualCappedSpend = (rb.capPerQuarter || 1500) * (rb.quarters || 4) * fulfillment;
+    const extraRate = (rb.rate || 5) - 1;
+    const totalExtra = _earn(annualCappedSpend, extraRate, pv);
+    for (const cat of CATEGORIES) {
+      const share = (annualSpend[cat.key] || 0) / totalAnnualSpend;
+      map[cat.key] = (map[cat.key] || 0) + totalExtra * share;
+    }
+  }
+
+  return map;
+}
+
+function calcAnnualValue(card, spending) {
+  const map = calcCardValuePerCategoryFull(card, spending);
+  let total = 0;
+  for (const cat of CATEGORIES) total += map[cat.key] || 0;
   return Math.round(total);
 }
 
@@ -339,16 +442,11 @@ function renderTableHead(sortBy) {
 
 let walletMode = 2; // 1, 2, 3, or 'max'
 
-/** Compute per-category dollar value for a card given a spending profile. Tier-aware. */
+/** Compute per-category dollar value for a card given a spending profile.
+ *  Delegates to calcCardValuePerCategoryFull which handles tier boosts, caps,
+ *  choose-your-category, and rotating bonuses. */
 function calcCardValuePerCategory(card, spending) {
-  const pv = pointsValuations[card.currency] || 1;
-  const map = {};
-  for (const cat of CATEGORIES) {
-    const multiplier = getEffectiveMultiplier(card, cat.key);
-    const monthlySpend = spending[cat.key] || 0;
-    map[cat.key] = monthlySpend * multiplier * (pv / 100) * 12;
-  }
-  return map;
+  return calcCardValuePerCategoryFull(card, spending);
 }
 
 /** Compute total wallet value for a list of cards (uses best card per category).
@@ -673,25 +771,80 @@ function openDetail(card) {
   `;
   let runningTotal = 0;
   const cardHasActiveBoost = hasActiveBoost(card);
+  // Use the real per-category value (handles caps, choose, rotating)
+  const fullValueMap = calcCardValuePerCategoryFull(card, currentSpending);
+  // Identify which categories the chooseYourCategory picked
+  const chosenCats = new Set();
+  if (card.chooseYourCategory) {
+    const cyc = card.chooseYourCategory;
+    const annualSpendByCat = {};
+    for (const c of CATEGORIES) annualSpendByCat[c.key] = (currentSpending[c.key] || 0) * 12;
+    const eligible = (cyc.eligibleCategories || CATEGORIES.map(c => c.key))
+      .filter(k => annualSpendByCat[k] > 0);
+    const sorted = [...eligible].sort((a, b) => annualSpendByCat[b] - annualSpendByCat[a]);
+    sorted.slice(0, cyc.maxCategories || 1).forEach(c => chosenCats.add(c));
+  }
   for (const cat of CATEGORIES) {
     const baseMultiplier = card.rewards[cat.key] || 1;
     const effectiveMultiplier = getEffectiveMultiplier(card, cat.key);
     const monthlySpend = currentSpending[cat.key] || 0;
-    const catAnnual = Math.round(monthlySpend * effectiveMultiplier * (pv / 100) * 12);
+    const catAnnual = Math.round(fullValueMap[cat.key] || 0);
     runningTotal += catAnnual;
+
     const isBoosted = cardHasActiveBoost && effectiveMultiplier !== baseMultiplier;
-    const rateStr = isBoosted
-      ? `<s style="color:var(--text-dim)">${baseMultiplier}x</s> <strong style="color:var(--purple-light)">${(+effectiveMultiplier.toFixed(2))}x ↑</strong>`
-      : (effectiveMultiplier > 1
-          ? `${effectiveMultiplier}x ${card.currency === 'cashback' ? 'cash' : 'pts'}`
-          : `1x`);
+    const isChosen = chosenCats.has(cat.key);
+    const annualSpendCat = monthlySpend * 12;
+    const cap = card.rewardCaps && card.rewardCaps[cat.key];
+    const isCapped = cap !== undefined && annualSpendCat > cap;
+
+    let rateStr;
+    if (isChosen && card.chooseYourCategory) {
+      const cyc = card.chooseYourCategory;
+      rateStr = `<strong style="color:var(--purple-light)">${cyc.rate}x ★</strong> <span class="cat-multiplier" style="color:var(--text-dim)">(chosen)</span>`;
+    } else if (isBoosted) {
+      rateStr = `<s style="color:var(--text-dim)">${baseMultiplier}x</s> <strong style="color:var(--purple-light)">${(+effectiveMultiplier.toFixed(2))}x ↑</strong>`;
+    } else if (effectiveMultiplier > 1) {
+      rateStr = `${effectiveMultiplier}x ${card.currency === 'cashback' ? 'cash' : 'pts'}`;
+    } else {
+      rateStr = `1x`;
+    }
     const cashRate = `(${(effectiveMultiplier * pv).toFixed(1)}¢/$)`;
+    const capWarning = isCapped
+      ? `<span class="cap-warning" title="Excess earns 1x">⚠️ over $${cap.toLocaleString()} cap</span>`
+      : '';
     html += `
       <tr>
-        <td>${cat.label}</td>
+        <td>${cat.label}${capWarning}</td>
         <td>${rateStr} <span class="cat-multiplier">${cashRate}</span></td>
         <td>$${monthlySpend.toLocaleString()}/mo</td>
         <td class="cat-value">$${catAnnual.toLocaleString()}</td>
+      </tr>
+    `;
+  }
+  // Rotating bonus row
+  if (card.rotatingBonus) {
+    const rb = card.rotatingBonus;
+    const fulfillment = rb.assumedFulfillment != null ? rb.assumedFulfillment : 1.0;
+    const cap = (rb.capPerQuarter || 1500) * (rb.quarters || 4) * fulfillment;
+    const extraValue = Math.round(cap * ((rb.rate || 5) - 1) / 100 * pv);
+    html += `
+      <tr style="border-top:1px dashed var(--border-light);">
+        <td colspan="3" style="font-size:12px;color:var(--text-muted);font-style:italic;">
+          🔄 Rotating ${rb.rate}% (assumes max'd ${rb.quarters || 4} × $${(rb.capPerQuarter || 1500).toLocaleString()}/quarter)
+        </td>
+        <td class="cat-value" style="color:var(--purple-light);">+$${extraValue.toLocaleString()}</td>
+      </tr>
+    `;
+  }
+  // Choose-your-category info row
+  if (card.chooseYourCategory) {
+    const cyc = card.chooseYourCategory;
+    const annualCap = cyc.capPerCycle * cyc.cyclesPerYear;
+    html += `
+      <tr style="border-top:1px dashed var(--border-light);">
+        <td colspan="4" style="font-size:12px;color:var(--text-muted);font-style:italic;">
+          ⭐ Auto-picked top ${cyc.maxCategories || 1} category from your spending. ${cyc.rate}% capped at $${annualCap.toLocaleString()}/yr (excess earns 1x).
+        </td>
       </tr>
     `;
   }

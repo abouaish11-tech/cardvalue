@@ -679,6 +679,21 @@ body {
 .footer-inner strong { color: var(--text); }
 .footer-note { margin-top: 8px; opacity: 0.6; }
 
+/* ---- CAP WARNING CHIP (Phase 4) ---- */
+.cap-warning {
+  display: inline-block;
+  font-size: 10px;
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  padding: 1px 6px;
+  border-radius: 999px;
+  margin-left: 6px;
+  font-weight: 600;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
 /* ---- BANKING RELATIONSHIPS / TIER REWARDS (Phase 3) ---- */
 .banking-relationships {
   margin-top: 18px;

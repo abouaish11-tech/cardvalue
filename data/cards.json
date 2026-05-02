@@ -210,7 +210,14 @@
         "Earns Ultimate Rewards (poolable with Sapphire)"
       ],
       "applyUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/flex",
-      "bestFor": "Rotating 5x Rewards"
+      "bestFor": "Rotating 5x Rewards",
+      "rotatingBonus": {
+        "rate": 5,
+        "capPerQuarter": 1500,
+        "quarters": 4,
+        "assumedFulfillment": 1.0,
+        "note": "5% on rotating categories, $1,500/quarter cap (activation required). Assumes user maxes out the cap."
+      }
     },
     {
       "id": "amex_platinum",
@@ -344,7 +351,11 @@
         "$100/yr Resy credit"
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/gold-card",
-      "bestFor": "Dining & Groceries"
+      "bestFor": "Dining & Groceries",
+      "rewardCaps": {
+        "dining": 50000,
+        "groceries": 25000
+      }
     },
     {
       "id": "amex_blue_cash_preferred",
@@ -383,7 +394,10 @@
         "$0 annual fee first year"
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred",
-      "bestFor": "Groceries"
+      "bestFor": "Groceries",
+      "rewardCaps": {
+        "groceries": 6000
+      }
     },
     {
       "id": "amex_blue_cash_everyday",
@@ -422,7 +436,12 @@
         "No annual fee"
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/blue-cash-everyday",
-      "bestFor": "No-Fee Groceries"
+      "bestFor": "No-Fee Groceries",
+      "rewardCaps": {
+        "groceries": 6000,
+        "gas": 6000,
+        "other": 6000
+      }
     },
     {
       "id": "citi_double_cash",
@@ -545,7 +564,20 @@
         "No annual fee"
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-custom-cash-credit-card",
-      "bestFor": "Auto-Optimizing Cashback"
+      "bestFor": "Auto-Optimizing Cashback",
+      "chooseYourCategory": {
+        "rate": 5,
+        "maxCategories": 1,
+        "eligibleCategories": [
+          "dining",
+          "gas",
+          "groceries",
+          "travel"
+        ],
+        "capPerCycle": 500,
+        "cyclesPerYear": 12,
+        "note": "5% on highest-spending eligible category each billing cycle, $500 cap per cycle."
+      }
     },
     {
       "id": "capital_one_venture_x",
@@ -779,7 +811,14 @@
         "Free FICO score"
       ],
       "applyUrl": "https://www.discover.com/credit-cards/cash-back/it-card.html",
-      "bestFor": "First-Year Value (Cashback Match)"
+      "bestFor": "First-Year Value (Cashback Match)",
+      "rotatingBonus": {
+        "rate": 5,
+        "capPerQuarter": 1500,
+        "quarters": 4,
+        "assumedFulfillment": 1.0,
+        "note": "5% on rotating categories, $1,500/quarter cap (activation required). Assumes user maxes out the cap."
+      }
     },
     {
       "id": "discover_it_miles",
@@ -955,6 +994,26 @@
             "boostMultiplier": 1.75
           }
         ]
+      },
+      "chooseYourCategory": {
+        "rate": 3,
+        "maxCategories": 1,
+        "eligibleCategories": [
+          "dining",
+          "gas",
+          "travel",
+          "other"
+        ],
+        "capPerCycle": 2500,
+        "cyclesPerYear": 4,
+        "alsoCovers": [
+          {
+            "category": "groceries",
+            "rate": 2
+          }
+        ],
+        "alsoCoversShareCap": true,
+        "note": "3% on chosen category + 2% on groceries (combined $2,500/quarter cap)."
       }
     },
     {
@@ -1172,7 +1231,21 @@
         "No annual fee"
       ],
       "applyUrl": "https://www.usbank.com/credit-cards/cash-plus-visa-signature-credit-card.html",
-      "bestFor": "Choose-Your-Own 5% Cashback"
+      "bestFor": "Choose-Your-Own 5% Cashback",
+      "chooseYourCategory": {
+        "rate": 5,
+        "maxCategories": 2,
+        "eligibleCategories": [
+          "dining",
+          "gas",
+          "groceries",
+          "travel",
+          "other"
+        ],
+        "capPerCycle": 2000,
+        "cyclesPerYear": 4,
+        "note": "5% on two chosen categories, $2,000/quarter combined cap."
+      }
     },
     {
       "id": "us_bank_smartly",
@@ -1384,7 +1457,11 @@
         "Earns Ultimate Rewards (poolable with Sapphire)"
       ],
       "applyUrl": "https://creditcards.chase.com/business-credit-cards/ink/cash",
-      "bestFor": "Business Office/Internet Spend"
+      "bestFor": "Business Office/Internet Spend",
+      "rewardCaps": {
+        "gas": 25000,
+        "dining": 25000
+      }
     },
     {
       "id": "amex_blue_business_plus",
@@ -1422,7 +1499,15 @@
         "0% intro APR for 12 months"
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-blue-business-plus-credit-card-amex",
-      "bestFor": "Best No-Fee Business Card"
+      "bestFor": "Best No-Fee Business Card",
+      "rewardCaps": {
+        "dining": 50000,
+        "groceries": 50000,
+        "travel": 50000,
+        "gas": 50000,
+        "other": 50000
+      },
+      "rewardCapsCombined": 50000
     },
     {
       "id": "robinhood_gold",
@@ -1529,7 +1614,10 @@
         "No foreign transaction fees"
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-costco-anywhere-visa-credit-card",
-      "bestFor": "Gas + Costco Shoppers"
+      "bestFor": "Gas + Costco Shoppers",
+      "rewardCaps": {
+        "gas": 7000
+      }
     },
     {
       "id": "fidelity_rewards_visa",
@@ -1745,7 +1833,10 @@
         "No foreign transaction fees"
       ],
       "applyUrl": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
-      "bestFor": "Best Signup Bonus"
+      "bestFor": "Best Signup Bonus",
+      "rewardCaps": {
+        "travel": 150000
+      }
     },
     {
       "id": "usbank_altitude_go",
