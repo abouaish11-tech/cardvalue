@@ -250,6 +250,172 @@ function renderTableHead(sortBy) {
 }
 
 // ---- RENDER CARD LIST ----
+/* ========== WALLET BUILDER (Phase 2) ========== */
+
+let walletMode = 2; // 1, 2, 3, or 'max'
+
+/** Compute per-category dollar value for a card given a spending profile. */
+function calcCardValuePerCategory(card, spending) {
+  const pv = pointsValuations[card.currency] || 1;
+  const map = {};
+  for (const cat of CATEGORIES) {
+    const multiplier = card.rewards[cat.key] || 1;
+    const monthlySpend = spending[cat.key] || 0;
+    map[cat.key] = monthlySpend * multiplier * (pv / 100) * 12;
+  }
+  return map;
+}
+
+/** Compute total wallet value for a list of cards (uses best card per category). */
+function calcWalletValue(cards, spending) {
+  if (!cards.length) {
+    return { netValue: -Infinity, annualValue: 0, fees: 0, credits: 0, assignments: {} };
+  }
+  const perCard = cards.map(c => ({ card: c, values: calcCardValuePerCategory(c, spending) }));
+  const assignments = {};
+  let annualValue = 0;
+  for (const cat of CATEGORIES) {
+    let bestEntry = perCard[0];
+    let bestVal = bestEntry.values[cat.key];
+    for (let i = 1; i < perCard.length; i++) {
+      if (perCard[i].values[cat.key] > bestVal) {
+        bestVal = perCard[i].values[cat.key];
+        bestEntry = perCard[i];
+      }
+    }
+    assignments[cat.key] = bestEntry.card.id;
+    annualValue += bestVal;
+  }
+  const credits = cards.reduce((s, c) => s + calcTotalCredits(c), 0);
+  const fees = cards.reduce((s, c) =>
+    s + c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0), 0);
+  return {
+    netValue: Math.round(annualValue + credits - fees),
+    annualValue: Math.round(annualValue),
+    fees,
+    credits,
+    assignments,
+  };
+}
+
+/** Greedy multi-card optimizer. Returns { cards, ...result }. */
+function optimizeWallet(pool, spending, maxCards) {
+  const isMax = maxCards === 'max';
+  const limit = isMax ? pool.length : Math.max(1, +maxCards);
+  const wallet = [];
+  let result = { netValue: -Infinity, annualValue: 0, fees: 0, credits: 0, assignments: {} };
+
+  while (wallet.length < limit) {
+    let bestCandidate = null;
+    let bestResult = null;
+    for (const candidate of pool) {
+      if (wallet.includes(candidate)) continue;
+      const trial = [...wallet, candidate];
+      const r = calcWalletValue(trial, spending);
+      if (bestResult === null || r.netValue > bestResult.netValue) {
+        bestResult = r;
+        bestCandidate = candidate;
+      }
+    }
+    if (!bestCandidate) break;
+    // Stop if no improvement (only after the first card; first card is the seed)
+    if (wallet.length > 0 && bestResult.netValue <= result.netValue) break;
+    wallet.push(bestCandidate);
+    result = bestResult;
+  }
+  return { cards: wallet, ...result };
+}
+
+/** Render the wallet builder section. */
+function renderWalletBuilder() {
+  const root = document.getElementById('walletResult');
+  if (!root) return;
+  if (!allCards.length) { root.innerHTML = ''; return; }
+
+  const wallet = optimizeWallet(allCards, currentSpending, walletMode);
+  const single = optimizeWallet(allCards, currentSpending, 1);
+  const marginalGain = wallet.netValue - single.netValue;
+
+  // Build per-card "use for" list
+  const cardCategoryMap = {};
+  wallet.cards.forEach(c => { cardCategoryMap[c.id] = []; });
+  for (const cat of CATEGORIES) {
+    const cardId = wallet.assignments[cat.key];
+    if (cardCategoryMap[cardId]) cardCategoryMap[cardId].push(cat);
+  }
+
+  const cardsHtml = wallet.cards.map((c, idx) => {
+    const cats = cardCategoryMap[c.id];
+    const totalFee = c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0);
+    const feeBadge = totalFee === 0 ? '<span class="wallet-card-fee no-fee">$0/yr</span>'
+                                    : `<span class="wallet-card-fee">$${totalFee}/yr</span>`;
+    return `
+      <div class="wallet-card" data-card-id="${c.id}" tabindex="0" role="button"
+           aria-label="View details for ${c.name}">
+        <div class="wallet-card-header">
+          <span class="wallet-card-num">${idx + 1}</span>
+          <span class="wallet-card-logo">${getIssuerLogoHTML(c.issuer, 28)}</span>
+          <div class="wallet-card-id">
+            <span class="wallet-card-name">${c.name}</span>
+            <span class="wallet-card-issuer">${c.issuer}</span>
+          </div>
+          ${feeBadge}
+        </div>
+        <div class="wallet-card-uses">
+          <span class="wallet-uses-label">Use for:</span>
+          ${cats.length === 0
+            ? '<span class="wallet-uses-empty">— (kept for credits/perks)</span>'
+            : cats.map(cat => {
+                const rate = c.rewards[cat.key] || 1;
+                return `<span class="wallet-use-chip">${cat.emoji} ${cat.label} <em>${rate}x</em></span>`;
+              }).join('')
+          }
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const summaryHtml = `
+    <div class="wallet-summary">
+      <div class="wallet-net-row">
+        <span class="wallet-net-label">Wallet net value</span>
+        <span class="wallet-net-value">${wallet.netValue >= 0 ? '+' : ''}$${wallet.netValue.toLocaleString()}/yr</span>
+      </div>
+      ${wallet.cards.length > 1 ? `
+        <div class="wallet-comparison">
+          ${marginalGain > 0
+            ? `<span class="wallet-gain">+$${marginalGain.toLocaleString()}</span> better than the best single card`
+            : `Same value as the best single card — try fewer cards.`}
+        </div>` : `
+        <div class="wallet-comparison">Single-card mode — try 2 or 3 cards to see if you can do better.</div>
+      `}
+    </div>
+  `;
+
+  root.innerHTML = `<div class="wallet-cards-grid">${cardsHtml}</div>${summaryHtml}`;
+
+  // Wire clicks/keys to open detail drawer
+  root.querySelectorAll('.wallet-card').forEach(el => {
+    const cardId = el.dataset.cardId;
+    const card = allCards.find(c => c.id === cardId);
+    if (!card) return;
+    el.addEventListener('click', () => openDetail(card));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(card); }
+    });
+  });
+}
+
+function setWalletMode(mode) {
+  walletMode = mode;
+  document.querySelectorAll('.wallet-mode-btn').forEach(b => {
+    b.classList.toggle('active', String(b.dataset.n) === String(mode));
+  });
+  renderWalletBuilder();
+}
+
+/* ========== END WALLET BUILDER ========== */
+
 function renderCards() {
   let results = filterCards(allCards, currentFilter);
   results = searchCards(results, currentSearch);
@@ -329,6 +495,9 @@ function renderCards() {
 
     list.appendChild(el);
   });
+
+  // Keep wallet builder in sync with the latest spending/valuations
+  renderWalletBuilder();
 }
 
 // ---- DETAIL DRAWER ----
@@ -738,6 +907,14 @@ function bindEvents() {
   document.getElementById('drawerClose').addEventListener('click', closePersonalizeDrawer);
   document.getElementById('btnApply').addEventListener('click', applyPersonalization);
   document.getElementById('btnReset').addEventListener('click', resetPersonalization);
+
+  // Wallet Builder: mode toggle
+  document.querySelectorAll('.wallet-mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const n = btn.dataset.n;
+      setWalletMode(n === 'max' ? 'max' : parseInt(n, 10));
+    });
+  });
 
   // Inputs: live re-rank on Enter
   document.querySelectorAll('.spending-inputs input').forEach(input => {

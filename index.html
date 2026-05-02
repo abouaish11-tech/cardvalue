@@ -63,7 +63,7 @@
   }
   </script>
 
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="stylesheet" href="style.css?v=8" />
 </head>
 <body>
   <a href="#cardList" class="skip-link">Skip to card list</a>
@@ -138,6 +138,25 @@
       </div>
     </div>
   </div>
+
+  <!-- WALLET BUILDER -->
+  <section class="wallet-builder" id="walletBuilder" aria-label="Wallet Builder — multi-card optimizer">
+    <div class="wallet-builder-inner">
+      <div class="wallet-header">
+        <div class="wallet-title">
+          <h2>💼 Wallet Builder</h2>
+          <p class="wallet-sub">Best card combo for your spending — each transaction goes to whichever card earns the most.</p>
+        </div>
+        <div class="wallet-mode-toggle" role="group" aria-label="Wallet size">
+          <button data-n="1" class="wallet-mode-btn">1 card</button>
+          <button data-n="2" class="wallet-mode-btn active">2 cards</button>
+          <button data-n="3" class="wallet-mode-btn">3 cards</button>
+          <button data-n="max" class="wallet-mode-btn">Max</button>
+        </div>
+      </div>
+      <div class="wallet-result" id="walletResult"></div>
+    </div>
+  </section>
 
   <!-- FILTER BAR -->
   <div class="filter-bar">
@@ -290,6 +309,6 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>
