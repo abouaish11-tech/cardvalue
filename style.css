@@ -529,6 +529,50 @@ body {
   line-height: 1.5;
 }
 
+/* Credit realization: struck-through face value + type badges */
+.credit-face {
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 12px;
+  margin-right: 4px;
+}
+.credit-type-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 999px;
+  margin-left: 6px;
+  vertical-align: middle;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.credit-type-automatic {
+  color: var(--green);
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.25);
+}
+.credit-type-flexible {
+  color: var(--green);
+  background: rgba(74, 222, 128, 0.08);
+  border-color: rgba(74, 222, 128, 0.2);
+}
+.credit-type-drip {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.2);
+}
+.credit-type-portal {
+  color: #fb923c;
+  background: rgba(251, 146, 60, 0.08);
+  border-color: rgba(251, 146, 60, 0.2);
+}
+.credit-type-coupon {
+  color: #f87171;
+  background: rgba(248, 113, 113, 0.08);
+  border-color: rgba(248, 113, 113, 0.2);
+}
+
 /* Compare checkbox */
 .td-compare { text-align: center; }
 .compare-check {

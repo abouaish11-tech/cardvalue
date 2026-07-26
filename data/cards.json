@@ -55,7 +55,8 @@
         {
           "label": "Hotel Credit",
           "value": 50,
-          "desc": "Annual credit for hotel stays booked through Chase Travel portal"
+          "desc": "Annual credit for hotel stays booked through Chase Travel portal",
+          "type": "portal"
         }
       ],
       "signupBonus": {
@@ -102,25 +103,29 @@
         {
           "label": "Travel Credit",
           "value": 300,
-          "desc": "Statement credit for ANY travel purchase \u2014 flights, hotels, Uber, tolls, parking. Very easy to use"
+          "desc": "Statement credit for ANY travel purchase — flights, hotels, Uber, tolls, parking. Very easy to use",
+          "type": "flexible"
         },
         {
           "label": "Hotel (The Edit)",
           "value": 500,
-          "desc": "$250 semi-annually through The Edit by Chase Travel hotel bookings. Requires 2-night minimum"
+          "desc": "$250 semi-annually through The Edit by Chase Travel hotel bookings. Requires 2-night minimum",
+          "type": "portal"
         },
         {
           "label": "DoorDash",
           "value": 300,
-          "desc": "DoorDash credits + complimentary DashPass membership"
+          "desc": "DoorDash credits + complimentary DashPass membership",
+          "type": "drip"
         },
         {
           "label": "Entertainment",
           "value": 300,
-          "desc": "$150 semi-annually on StubHub.com and viagogo.com only"
+          "desc": "$150 semi-annually on StubHub.com and viagogo.com only",
+          "type": "coupon"
         }
       ],
-      "creditsCaveat": "The $300 travel credit is easy \u2014 almost anyone uses it. The hotel credit requires booking through Chase Travel. The entertainment credit is StubHub-only.",
+      "creditsCaveat": "The $300 travel credit is easy — almost anyone uses it. The hotel credit requires booking through Chase Travel. The entertainment credit is StubHub-only.",
       "signupBonus": {
         "points": 125000,
         "spendRequired": 6000,
@@ -247,32 +252,38 @@
         {
           "label": "Airline Incidentals",
           "value": 200,
-          "desc": "Covers checked bags, seat upgrades, in-flight food on ONE selected airline per year"
+          "desc": "Covers checked bags, seat upgrades, in-flight food on ONE selected airline per year",
+          "type": "coupon"
         },
         {
           "label": "Uber Credits",
           "value": 320,
-          "desc": "$15/month Uber Cash + extra $20 in December + ~$120 Uber One membership. Use it or lose it monthly"
+          "desc": "$15/month Uber Cash + extra $20 in December + ~$120 Uber One membership. Use it or lose it monthly",
+          "type": "drip"
         },
         {
           "label": "Resy Dining",
           "value": 400,
-          "desc": "$100/quarter at restaurants booked through the Resy app"
+          "desc": "$100/quarter at restaurants booked through the Resy app",
+          "type": "drip"
         },
         {
           "label": "Lululemon",
           "value": 300,
-          "desc": "$75/quarter at Lululemon stores or lululemon.com"
+          "desc": "$75/quarter at Lululemon stores or lululemon.com",
+          "type": "coupon"
         },
         {
           "label": "Hotel (FHR)",
           "value": 600,
-          "desc": "$300 semi-annually for Fine Hotels + Resorts or Hotel Collection prepaid bookings. Requires 2-night minimum"
+          "desc": "$300 semi-annually for Fine Hotels + Resorts or Hotel Collection prepaid bookings. Requires 2-night minimum",
+          "type": "portal"
         },
         {
           "label": "Streaming/Digital",
           "value": 300,
-          "desc": "$25/month for Disney+, Hulu, ESPN+, Paramount+, YouTube Premium, etc."
+          "desc": "$25/month for Disney+, Hulu, ESPN+, Paramount+, YouTube Premium, etc.",
+          "type": "drip"
         }
       ],
       "creditsCaveat": "You need to actually shop at Lululemon ($300), book luxury hotels through FHR ($600), and use Resy ($400). If you wouldn't naturally spend on those things, these credits are worth $0 to you.",
@@ -319,22 +330,26 @@
         {
           "label": "Dining Credit",
           "value": 120,
-          "desc": "$10/month at Grubhub, Cheesecake Factory, Goldbelly, Wine.com, Five Guys. Use it or lose it monthly"
+          "desc": "$10/month at Grubhub, Cheesecake Factory, Goldbelly, Wine.com, Five Guys. Use it or lose it monthly",
+          "type": "drip"
         },
         {
           "label": "Uber Cash",
           "value": 120,
-          "desc": "$10/month for Uber rides or Uber Eats. Resets monthly"
+          "desc": "$10/month for Uber rides or Uber Eats. Resets monthly",
+          "type": "drip"
         },
         {
           "label": "Resy Dining",
           "value": 100,
-          "desc": "$50 semi-annually at restaurants booked through Resy"
+          "desc": "$50 semi-annually at restaurants booked through Resy",
+          "type": "drip"
         },
         {
           "label": "Dunkin'",
           "value": 84,
-          "desc": "$7/month at U.S. Dunkin' locations"
+          "desc": "$7/month at U.S. Dunkin' locations",
+          "type": "coupon"
         }
       ],
       "creditsCaveat": "These are all small monthly credits at specific merchants. If you eat out and use Uber regularly, these are realistic. The Dunkin' credit is very specific.",
@@ -472,7 +487,7 @@
         "months": 6
       },
       "perks": [
-        "2% on everything \u2014 no categories to track",
+        "2% on everything — no categories to track",
         "Earns ThankYou Points (transferable with Premier)",
         "0% intro APR on balance transfers for 18 months",
         "No rewards cap",
@@ -511,7 +526,8 @@
         {
           "label": "Hotel Credit",
           "value": 100,
-          "desc": "$100 off a single hotel stay of $500+ booked through Citi Travel, once per calendar year"
+          "desc": "$100 off a single hotel stay of $500+ booked through Citi Travel, once per calendar year",
+          "type": "portal"
         }
       ],
       "creditsCaveat": "Requires a $500+ hotel stay booked through Citi Travel specifically.",
@@ -607,12 +623,15 @@
         {
           "label": "Travel Credit",
           "value": 300,
-          "desc": "Statement credit for bookings through Capital One Travel portal only \u2014 not direct airline or hotel bookings"
+          "desc": "Statement credit for bookings through Capital One Travel portal only — not direct airline or hotel bookings",
+          "type": "portal",
+          "utilization": 0.8
         },
         {
           "label": "Anniversary Miles",
           "value": 100,
-          "desc": "10,000 bonus miles deposited on card anniversary, worth $100 at 1\u00a2/mile. Automatic \u2014 you always get this"
+          "desc": "10,000 bonus miles deposited on card anniversary, worth $100 at 1¢/mile. Automatic — you always get this",
+          "type": "automatic"
         }
       ],
       "creditsCaveat": "The $300 travel credit only works through Capital One's travel portal, not direct bookings. The anniversary miles are automatic.",
@@ -801,7 +820,7 @@
       },
       "note": "5% on rotating quarterly categories (up to $1,500/quarter, activation required). First-year Cashback Match effectively doubles all rewards.",
       "signupBonus": {
-        "description": "Cashback Match \u2014 Discover matches ALL cash back earned in year 1"
+        "description": "Cashback Match — Discover matches ALL cash back earned in year 1"
       },
       "perks": [
         "5% rotating quarterly categories",
@@ -846,7 +865,7 @@
       },
       "note": "First-year Miles Match effectively gives 3x on everything in year 1",
       "signupBonus": {
-        "description": "Miles Match \u2014 Discover matches ALL miles earned in year 1"
+        "description": "Miles Match — Discover matches ALL miles earned in year 1"
       },
       "perks": [
         "1.5x miles on everything",
@@ -885,7 +904,8 @@
         {
           "label": "Airline Incidentals",
           "value": 100,
-          "desc": "Covers checked bags, seat upgrades, in-flight purchases on a selected airline"
+          "desc": "Covers checked bags, seat upgrades, in-flight purchases on a selected airline",
+          "type": "coupon"
         }
       ],
       "signupBonus": {
@@ -1143,7 +1163,7 @@
         "gas": 2,
         "other": 2
       },
-      "note": "3% foreign transaction fee \u2014 best for domestic use",
+      "note": "3% foreign transaction fee — best for domestic use",
       "signupBonus": {
         "points": 200,
         "spendRequired": 500,

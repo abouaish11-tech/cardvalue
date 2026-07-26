@@ -312,14 +312,50 @@ function calcAnnualValue(card, spending) {
   return Math.round(total);
 }
 
+// ---- CREDIT REALIZATION ----
+// Statement credits are not cash: most come with restrictions (monthly drips,
+// portal-only bookings, single merchants) that keep typical cardholders from
+// extracting full face value. Each credit has a `type` in cards.json and is
+// discounted by how hard it is to use in practice. A per-credit `utilization`
+// field overrides the type default.
+const CREDIT_REALIZATION = {
+  automatic: 1.0,  // posts by itself (anniversary miles)
+  flexible:  0.9,  // broad category, book anywhere (CSR travel credit)
+  drip:      0.6,  // monthly/quarterly use-it-or-lose-it at common merchants
+  portal:    0.5,  // must book through the issuer's travel portal
+  coupon:    0.3,  // niche merchant you may not shop at anyway
+};
+
+const CREDIT_TYPE_LABELS = {
+  automatic: 'Automatic',
+  flexible:  'Flexible',
+  drip:      'Monthly drip',
+  portal:    'Portal only',
+  coupon:    'Merchant coupon',
+};
+
+function creditRealisticValue(credit) {
+  const rate = credit.utilization != null
+    ? credit.utilization
+    : (CREDIT_REALIZATION[credit.type] != null ? CREDIT_REALIZATION[credit.type] : 1);
+  return Math.round(credit.value * rate);
+}
+
+/** Face value of all credits — what the issuer advertises. */
 function calcTotalCredits(card) {
   if (!card.credits || !Array.isArray(card.credits)) return 0;
   return card.credits.reduce((sum, c) => sum + c.value, 0);
 }
 
+/** Realistic value of all credits after discounting for restrictions. */
+function calcRealisticCredits(card) {
+  if (!card.credits || !Array.isArray(card.credits)) return 0;
+  return card.credits.reduce((sum, c) => sum + creditRealisticValue(c), 0);
+}
+
 function calcNetValue(card, spending) {
   const annualValue = calcAnnualValue(card, spending);
-  const totalCredits = calcTotalCredits(card);
+  const totalCredits = calcRealisticCredits(card);
   const membershipCost = card.membershipRequired ? card.membershipRequired.cost : 0;
   return annualValue + totalCredits - card.annualFee - membershipCost;
 }
@@ -389,7 +425,7 @@ const COLUMN_TOOLTIPS = {
   'effective-rate': 'The percentage of each dollar spent that you get back in rewards value. Higher is better. Based on your spending profile and the current points valuation mode.',
   'annual-value': 'Total dollar value of rewards earned per year, based on your monthly spending in each category multiplied by the card\'s reward rates.',
   'fee': 'The card\'s annual fee plus any required membership costs (e.g., Costco membership). Deducted from net value.',
-  'net-value': 'Your bottom line: rewards earned + annual credits - annual fee. This is how much the card is actually worth to you per year.',
+  'net-value': 'Your bottom line: rewards earned + realistic credits - annual fee. Credits are discounted for restrictions (monthly caps, portal-only bookings, specific merchants) rather than counted at advertised face value.',
 };
 
 const DATA_COLUMNS = [
@@ -472,7 +508,7 @@ function calcWalletValue(cards, spending) {
     assignments[cat.key] = bestEntry.card.id;
     annualValue += bestVal;
   }
-  const credits = cards.reduce((s, c) => s + calcTotalCredits(c), 0);
+  const credits = cards.reduce((s, c) => s + calcRealisticCredits(c), 0);
   const fees = cards.reduce((s, c) =>
     s + c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0), 0);
   const netValue = Math.round(annualValue + credits - fees);
@@ -661,10 +697,13 @@ function renderCards() {
     const totalFee = card.annualFee + (card.membershipRequired ? card.membershipRequired.cost : 0);
     const feeDisplay = totalFee === 0 ? '<span class="no-fee">$0</span>' : `$${totalFee}`;
 
-    const totalCredits = calcTotalCredits(card);
+    const faceCredits = calcTotalCredits(card);
+    const realisticCredits = calcRealisticCredits(card);
     const netClass = netValue >= 0 ? 'positive' : 'negative';
     const netDisplay = netValue >= 0 ? `+$${netValue.toLocaleString()}` : `-$${Math.abs(netValue).toLocaleString()}`;
-    const creditsTag = totalCredits > 0 ? `<span class="credits-tag">incl. $${totalCredits.toLocaleString()} credits*</span>` : '';
+    const creditsTag = faceCredits > 0
+      ? `<span class="credits-tag" title="Issuer advertises $${faceCredits.toLocaleString()} in credits; we count ~$${realisticCredits.toLocaleString()} after discounting for restrictions (monthly caps, portals, specific merchants)">incl. ~$${realisticCredits.toLocaleString()} credits*</span>`
+      : '';
 
     // Build cell HTML map
     const cellMap = {
@@ -718,7 +757,8 @@ function renderCards() {
 // ---- DETAIL DRAWER ----
 function openDetail(card) {
   const annualValue = calcAnnualValue(card, currentSpending);
-  const totalCredits = calcTotalCredits(card);
+  const faceCredits = calcTotalCredits(card);
+  const totalCredits = calcRealisticCredits(card);
   const netValue = calcNetValue(card, currentSpending);
   const effectiveRate = calcEffectiveRate(card, currentSpending);
   const totalFee = card.annualFee + (card.membershipRequired ? card.membershipRequired.cost : 0);
@@ -737,8 +777,8 @@ function openDetail(card) {
     <div class="detail-section">
       <div class="value-highlight-box">
         <div class="big-number">$${combinedValue.toLocaleString()}</div>
-        <div class="big-label">Estimated annual value${totalCredits > 0 ? ' (rewards + credits)' : ''}</div>
-        <div class="big-sub">${totalCredits > 0 ? `$${annualValue.toLocaleString()} rewards + $${totalCredits.toLocaleString()} credits* · ` : `Based on ${isPersonalized ? 'your spending' : 'average American spending'} · `}${effectiveRate}% effective rate</div>
+        <div class="big-label">Estimated annual value${totalCredits > 0 ? ' (rewards + realistic credits)' : ''}</div>
+        <div class="big-sub">${totalCredits > 0 ? `$${annualValue.toLocaleString()} rewards + ~$${totalCredits.toLocaleString()} credits* (of $${faceCredits.toLocaleString()} advertised) · ` : `Based on ${isPersonalized ? 'your spending' : 'average American spending'} · `}${effectiveRate}% effective rate</div>
       </div>
     </div>
   `;
@@ -875,11 +915,14 @@ function openDetail(card) {
         <div class="credits-list">
     `;
     for (const credit of card.credits) {
+      const realistic = creditRealisticValue(credit);
+      const typeLabel = CREDIT_TYPE_LABELS[credit.type] || '';
+      const discounted = realistic < credit.value;
       html += `
         <div class="credit-item">
           <div class="credit-header">
-            <span class="credit-label">${credit.label}</span>
-            <span class="credit-value">$${credit.value.toLocaleString()}/yr</span>
+            <span class="credit-label">${credit.label}${typeLabel ? ` <span class="credit-type-badge credit-type-${credit.type}">${typeLabel}</span>` : ''}</span>
+            <span class="credit-value">${discounted ? `<s class="credit-face">$${credit.value.toLocaleString()}</s> ~$${realistic.toLocaleString()}/yr` : `$${credit.value.toLocaleString()}/yr`}</span>
           </div>
           <div class="credit-desc">${credit.desc}</div>
         </div>
@@ -888,13 +931,13 @@ function openDetail(card) {
     html += `
           <div class="credit-item credit-total">
             <div class="credit-header">
-              <span class="credit-label">Total Annual Credits</span>
-              <span class="credit-value">$${totalCredits.toLocaleString()}/yr</span>
+              <span class="credit-label">Realistic Annual Credits</span>
+              <span class="credit-value"><s class="credit-face">$${faceCredits.toLocaleString()}</s> ~$${totalCredits.toLocaleString()}/yr</span>
             </div>
           </div>
         </div>
         ${card.creditsCaveat ? `<div class="credits-caveat">⚠️ ${card.creditsCaveat}</div>` : ''}
-        <p class="credits-disclaimer">* Assumes full utilization of all credits.</p>
+        <p class="credits-disclaimer">* Credits are discounted by how hard they are to actually use: automatic 100%, flexible 90%, monthly drips 60%, portal-only 50%, merchant coupons 30%. Advertised face value shown struck through.</p>
       </div>
     `;
   }
@@ -910,8 +953,8 @@ function openDetail(card) {
         </div>
         ${totalCredits > 0 ? `
         <div class="fee-box">
-          <div class="fee-num green">$${totalCredits.toLocaleString()}</div>
-          <div class="fee-lbl">Annual Credits*</div>
+          <div class="fee-num green">~$${totalCredits.toLocaleString()}</div>
+          <div class="fee-lbl">Realistic Credits*</div>
         </div>
         ` : ''}
         <div class="fee-box">
@@ -965,7 +1008,7 @@ function openDetail(card) {
         ${isBoosted ? `
           <div class="tier-true-net">
             <div class="tier-row"><span>Rewards (boosted)</span><strong class="green">+$${annualValue.toLocaleString()}</strong></div>
-            ${totalCredits > 0 ? `<div class="tier-row"><span>Credits</span><strong class="green">+$${totalCredits.toLocaleString()}</strong></div>` : ''}
+            ${totalCredits > 0 ? `<div class="tier-row"><span>Credits (realistic)</span><strong class="green">+$${totalCredits.toLocaleString()}</strong></div>` : ''}
             <div class="tier-row"><span>Annual fee</span><strong class="red">−$${totalFee.toLocaleString()}</strong></div>
             <div class="tier-row tier-row-divider"><span>Net before opportunity cost</span><strong class="${netValue >= 0 ? 'green' : 'red'}">${netValue >= 0 ? '+' : ''}$${netValue.toLocaleString()}</strong></div>
             <div class="tier-row"><span>Deposits at ${card.tierRewards.depositBank}</span><strong>$${rel.deposits.toLocaleString()}</strong></div>
@@ -1075,7 +1118,7 @@ function openCompareModal() {
   const rows = [
     { label: 'Annual Fee', fn: (c) => `$${(c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0)).toLocaleString()}` },
     { label: 'Rewards Earned', fn: (c) => `$${calcAnnualValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
-    { label: 'Annual Credits*', fn: (c) => { const tc = calcTotalCredits(c); return tc > 0 ? `$${tc.toLocaleString()}` : '—'; }, compare: true, better: 'max' },
+    { label: 'Realistic Credits*', fn: (c) => { const tc = calcRealisticCredits(c); const face = calcTotalCredits(c); return tc > 0 ? `~$${tc.toLocaleString()} (of $${face.toLocaleString()})` : '—'; }, compare: true, better: 'max', valueKey: (c) => calcRealisticCredits(c) },
     { label: 'Net Annual Value', fn: (c) => `$${calcNetValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
     { label: 'Effective Rate', fn: (c) => `${calcEffectiveRate(c, currentSpending)}%`, compare: true, better: 'max' },
     ...CATEGORIES.map(cat => ({
