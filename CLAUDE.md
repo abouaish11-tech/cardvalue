@@ -44,3 +44,4 @@ The user can pre-authorize a batch (e.g., "yes, post all 6 Reddit drafts I appro
 - Bump CSS/JS cache versions in `index.html` (`?v=N`) when making changes that need fresh delivery
 - Commit with the standard `Co-Authored-By: Claude...` trailer
 - Don't commit `.claude/`, `og-image.html`, or other dev-only artifacts
+- **Push updates to production**: after committing a change, merge it into `main` and push to GitHub (GitHub Pages deploys `main` to cardvalue.org). No need to ask first — verify the change locally, then ship it.
