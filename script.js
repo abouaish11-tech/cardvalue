@@ -367,11 +367,25 @@ function calcTrueNetValue(card, spending) {
   return net - calcOpportunityCost();
 }
 
+/** Everything the card gives back before the fee: rewards + realistic credits. */
+function calcTotalValue(card, spending) {
+  return calcAnnualValue(card, spending) + calcRealisticCredits(card);
+}
+
+/** Effective rate: net value (rewards + credits - fee) as a % of what you spend.
+ *  Includes the annual fee, so this always orders the same way as net value. */
 function calcEffectiveRate(card, spending) {
-  const annualValue = calcAnnualValue(card, spending);
   const totalSpend = Object.values(spending).reduce((a, b) => a + b, 0) * 12;
   if (totalSpend === 0) return 0;
-  return ((annualValue / totalSpend) * 100).toFixed(2);
+  return ((calcNetValue(card, spending) / totalSpend) * 100).toFixed(2);
+}
+
+/** Rewards-only earn rate, ignoring fee and credits. Shown as secondary detail
+ *  for comparing raw earning power between cards. */
+function calcRewardsRate(card, spending) {
+  const totalSpend = Object.values(spending).reduce((a, b) => a + b, 0) * 12;
+  if (totalSpend === 0) return 0;
+  return ((calcAnnualValue(card, spending) / totalSpend) * 100).toFixed(2);
 }
 
 // ---- SORT CARDS ----
@@ -381,9 +395,12 @@ function sortCards(cards, sortBy, spending) {
       case 'net-value':
         return calcNetValue(b, spending) - calcNetValue(a, spending);
       case 'effective-rate':
-        return parseFloat(calcEffectiveRate(b, spending)) - parseFloat(calcEffectiveRate(a, spending));
+        // Compare unrounded: the displayed rate is rounded to 2dp, so sorting on it
+        // would tie cards whose net values actually differ. Spend is the same divisor
+        // for every card, so ordering by net value is exactly ordering by rate.
+        return calcNetValue(b, spending) - calcNetValue(a, spending);
       case 'annual-value':
-        return calcAnnualValue(b, spending) - calcAnnualValue(a, spending);
+        return calcTotalValue(b, spending) - calcTotalValue(a, spending);
       case 'fee-low': {
         const feeA = a.annualFee + (a.membershipRequired ? a.membershipRequired.cost : 0);
         const feeB = b.annualFee + (b.membershipRequired ? b.membershipRequired.cost : 0);
@@ -422,15 +439,15 @@ function searchCards(cards, query) {
 
 // ---- COLUMN DEFINITIONS ----
 const COLUMN_TOOLTIPS = {
-  'effective-rate': 'The percentage of each dollar spent that you get back in rewards value. Higher is better. Based on your spending profile and the current points valuation mode.',
-  'annual-value': 'Total dollar value of rewards earned per year, based on your monthly spending in each category multiplied by the card\'s reward rates.',
+  'effective-rate': 'Net value as a percentage of what you spend — rewards + realistic credits, minus the annual fee. Because the fee is included, this always ranks cards in the same order as Net Value. Hover a card\'s rate to see its rewards-only rate before fees.',
+  'annual-value': 'Everything the card gives back per year before the fee: rewards earned on your spending, plus the realistic value of its annual credits.',
   'fee': 'The card\'s annual fee plus any required membership costs (e.g., Costco membership). Deducted from net value.',
-  'net-value': 'Your bottom line: rewards earned + realistic credits - annual fee. Credits are discounted for restrictions (monthly caps, portal-only bookings, specific merchants) rather than counted at advertised face value.',
+  'net-value': 'Your bottom line: Value/yr minus the annual fee. Credits are discounted for restrictions (monthly caps, portal-only bookings, specific merchants) rather than counted at advertised face value.',
 };
 
 const DATA_COLUMNS = [
   { key: 'effective-rate', thClass: 'th-rate',   label: 'Eff. Rate',  sortKeys: ['effective-rate'] },
-  { key: 'annual-value',   thClass: 'th-earned', label: 'Earned/yr',  sortKeys: ['annual-value'] },
+  { key: 'annual-value',   thClass: 'th-earned', label: 'Value/yr',   sortKeys: ['annual-value'] },
   { key: 'fee',            thClass: 'th-fee',    label: 'Fee',        sortKeys: ['fee-low', 'fee-high'] },
   { key: 'net-value',      thClass: 'th-net',    label: 'Net Value',  sortKeys: ['net-value'] },
 ];
@@ -688,8 +705,10 @@ function renderCards() {
   ranked.forEach((card, idx) => {
     const rank = idx + 1;
     const annualValue = calcAnnualValue(card, currentSpending);
+    const totalValue = calcTotalValue(card, currentSpending);
     const netValue = calcNetValue(card, currentSpending);
     const effectiveRate = calcEffectiveRate(card, currentSpending);
+    const rewardsRate = calcRewardsRate(card, currentSpending);
     const isCompared = compareList.includes(card.id);
 
     const rankLabel = rank;
@@ -701,19 +720,20 @@ function renderCards() {
     const realisticCredits = calcRealisticCredits(card);
     const netClass = netValue >= 0 ? 'positive' : 'negative';
     const netDisplay = netValue >= 0 ? `+$${netValue.toLocaleString()}` : `-$${Math.abs(netValue).toLocaleString()}`;
+    // Credits live in the Value/yr column, since that's the number they're part of.
     const creditsTag = faceCredits > 0
-      ? `<span class="credits-tag" title="Issuer advertises $${faceCredits.toLocaleString()} in credits; we count ~$${realisticCredits.toLocaleString()} after discounting for restrictions (monthly caps, portals, specific merchants)">incl. ~$${realisticCredits.toLocaleString()} credits*</span>`
+      ? `<span class="credits-tag" title="$${annualValue.toLocaleString()} rewards + ~$${realisticCredits.toLocaleString()} credits. Issuer advertises $${faceCredits.toLocaleString()} in credits; we discount for restrictions (monthly caps, portals, specific merchants).">$${annualValue.toLocaleString()} + ~$${realisticCredits.toLocaleString()} credits*</span>`
       : '';
 
     // Build cell HTML map
     const cellMap = {
-      'effective-rate': `<td class="td-rate">
+      'effective-rate': `<td class="td-rate" title="${rewardsRate}% on rewards alone, before the annual fee${faceCredits > 0 ? ' and credits' : ''}">
         <span class="rate-pct">${effectiveRate}%</span>
         <span class="rate-type">${getCurrencyLabel(card.currency)}</span>
       </td>`,
-      'annual-value': `<td class="td-earned">$${annualValue.toLocaleString()}</td>`,
+      'annual-value': `<td class="td-earned">$${totalValue.toLocaleString()}${creditsTag}</td>`,
       'fee': `<td class="td-fee">${feeDisplay}</td>`,
-      'net-value': `<td class="td-net ${netClass}">${netDisplay}${creditsTag}</td>`,
+      'net-value': `<td class="td-net ${netClass}">${netDisplay}</td>`,
     };
 
     const el = document.createElement('tr');
@@ -761,9 +781,9 @@ function openDetail(card) {
   const totalCredits = calcRealisticCredits(card);
   const netValue = calcNetValue(card, currentSpending);
   const effectiveRate = calcEffectiveRate(card, currentSpending);
+  const rewardsRate = calcRewardsRate(card, currentSpending);
   const totalFee = card.annualFee + (card.membershipRequired ? card.membershipRequired.cost : 0);
   const pv = pointsValuations[card.currency] || 1;
-  const combinedValue = annualValue + totalCredits;
 
   document.getElementById('detailName').textContent = card.name;
   document.getElementById('detailIssuer').textContent = card.issuer;
@@ -776,9 +796,12 @@ function openDetail(card) {
   html += `
     <div class="detail-section">
       <div class="value-highlight-box">
-        <div class="big-number">$${combinedValue.toLocaleString()}</div>
-        <div class="big-label">Estimated annual value${totalCredits > 0 ? ' (rewards + realistic credits)' : ''}</div>
-        <div class="big-sub">${totalCredits > 0 ? `$${annualValue.toLocaleString()} rewards + ~$${totalCredits.toLocaleString()} credits* (of $${faceCredits.toLocaleString()} advertised) · ` : `Based on ${isPersonalized ? 'your spending' : 'average American spending'} · `}${effectiveRate}% effective rate</div>
+        <div class="big-number">${netValue >= 0 ? '+' : '−'}$${Math.abs(netValue).toLocaleString()}</div>
+        <div class="big-label">Net annual value — what you keep after the fee</div>
+        <div class="big-sub">${totalCredits > 0
+            ? `$${annualValue.toLocaleString()} rewards + ~$${totalCredits.toLocaleString()} credits* (of $${faceCredits.toLocaleString()} advertised) − $${totalFee.toLocaleString()} fee`
+            : `$${annualValue.toLocaleString()} rewards${totalFee > 0 ? ` − $${totalFee.toLocaleString()} fee` : ''}`
+          } · ${effectiveRate}% effective rate<span class="rate-secondary"> (${rewardsRate}% on rewards alone)</span></div>
       </div>
     </div>
   `;

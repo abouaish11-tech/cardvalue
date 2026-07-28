@@ -624,6 +624,7 @@ body {
 .value-highlight-box .big-number { font-size: 42px; font-weight: 800; color: var(--green); line-height: 1; }
 .value-highlight-box .big-label { font-size: 13px; color: var(--green); margin-top: 4px; opacity: 0.8; }
 .value-highlight-box .big-sub { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+.value-highlight-box .rate-secondary { color: var(--text-dim); }
 
 /* Category breakdown table */
 .cat-table { width: 100%; border-collapse: collapse; }
