@@ -441,11 +441,11 @@ function searchCards(cards, query) {
 
 // ---- COLUMN DEFINITIONS ----
 const COLUMN_TOOLTIPS = {
-  'effective-rate': 'Net value as a percentage of what you spend — rewards + realistic credits, minus the annual fee. Because the fee is included, this always ranks cards in the same order as Net Value. Hover a card\'s rate to see its rewards-only rate before fees.',
-  'annual-value': 'Dollar value of rewards earned per year, from your monthly spending in each category times the card\'s reward rates. Credits are counted separately in the next column.',
-  'credits': 'Realistic value of the card\'s annual statement credits — discounted by how hard each one is to actually use, rather than counted at the advertised face value. Hover a card\'s number to see what the issuer claims.',
-  'fee': 'The card\'s annual fee plus any required membership costs (e.g., Costco membership). Deducted from net value.',
-  'net-value': 'Your bottom line: Earned + Credits − Fee. Every number in this row adds up to it.',
+  'effective-rate': 'What you keep back on every dollar you spend, after the annual fee is paid for. A 3% rate means $100 of spending returns $3 net. Because the fee is included, this ranks cards in the same order as Net Value. Hover any rate to see the rewards-only figure before fees.',
+  'annual-value': 'The rewards this card earns in a year, based on your spending in each category at the card\'s published rates. Points and miles are converted to dollars at the valuation selected above. Statement credits are counted separately.',
+  'credits': 'What the card\'s annual statement credits are realistically worth to you. Issuers advertise these at face value; we discount each one by how difficult it is to use in practice. Hover any figure to see the advertised amount.',
+  'fee': 'The annual fee, plus any membership you must hold to carry the card (a Costco membership, for example). Subtracted in full from Net Value.',
+  'net-value': 'What this card is worth to you over a year: rewards earned, plus realistic credit value, minus the annual fee. Every figure in the row reconciles to this number.',
 };
 
 const DATA_COLUMNS = [
@@ -726,7 +726,7 @@ function renderCards() {
     // Credits get their own column so the row reads as an equation:
     // Earned + Credits − Fee = Net Value.
     const creditsDisplay = faceCredits > 0
-      ? `<span class="credits-real" title="Issuer advertises $${faceCredits.toLocaleString()}/yr. We count ~$${realisticCredits.toLocaleString()} after discounting for restrictions (monthly caps, portals, specific merchants).">+~$${realisticCredits.toLocaleString()}<span class="credits-face-inline">of $${faceCredits.toLocaleString()}</span></span>`
+      ? `<span class="credits-real" title="Advertised at $${faceCredits.toLocaleString()}/yr. We count ~$${realisticCredits.toLocaleString()}, discounted for monthly expiry, booking-portal requirements, and single-merchant restrictions.">+~$${realisticCredits.toLocaleString()}<span class="credits-face-inline">of $${faceCredits.toLocaleString()}</span></span>`
       : '<span class="credits-none">—</span>';
 
     // Build cell HTML map
@@ -965,7 +965,7 @@ function openDetail(card) {
           </div>
         </div>
         ${card.creditsCaveat ? `<div class="credits-caveat">⚠️ ${card.creditsCaveat}</div>` : ''}
-        <p class="credits-disclaimer">* Credits are discounted by how hard they are to actually use: automatic 100%, flexible 90%, monthly drips 60%, portal-only 50%, merchant coupons 30%. Advertised face value shown struck through.</p>
+        <p class="credits-disclaimer">* Each credit is valued by how usable it is in practice — automatic 100%, flexible 90%, monthly expiring 60%, portal-only 50%, single-merchant 30%. The advertised amount is shown struck through.</p>
       </div>
     `;
   }

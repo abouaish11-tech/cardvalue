@@ -2,9 +2,10 @@
    CARDVALUE — DARK FUTURISTIC PURPLE THEME
    ============================================= */
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* Fonts are loaded via <link> in index.html — an @import here would sit after
+   this rule and be ignored by the CSS parser. */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   /* Primary purple palette — Fintech/Crypto inspired */
@@ -42,8 +43,11 @@
   --shadow-hover: 0 4px 16px rgba(139, 92, 246, 0.15), 0 12px 40px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
   /* Typography */
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  /* IBM Plex Sans — the type family banks and financial products use.
+     Reads as precise and trustworthy, and its tabular figures keep
+     dollar columns aligned. One family, two roles. */
+  --font: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   /* Glass */
   --glass: rgba(255, 255, 255, 0.04);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -435,6 +439,16 @@ body {
   width: 220px; z-index: 100; box-shadow: var(--shadow);
   pointer-events: none; margin-bottom: 6px; line-height: 1.5;
 }
+/* Tabular figures: every digit occupies the same width, so dollar amounts
+   line up column-to-column and don't jitter when values re-render. */
+.td-rate, .td-earned, .td-credits, .td-fee, .td-net,
+.rate-pct, .credits-real, .credits-face-inline,
+.big-number, .wallet-net-value, .wallet-card-fee,
+.credit-value, .cat-table td {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
 .td-earned { text-align: right; font-weight: 600; color: var(--text); }
 .td-credits { text-align: right; }
 .credits-real {
@@ -1262,7 +1276,8 @@ body {
     text-align: left;
     padding: 10px 12px;
     background: rgba(255, 255, 255, 0.03);
-    border-radius: 8px;
+    border: 1px solid transparent;
+    border-radius: 10px;
     min-width: 0;
     overflow: hidden;
   }
@@ -1271,12 +1286,12 @@ body {
   .card-row .td-credits::before,
   .card-row .td-fee::before,
   .card-row .td-net::before {
-    font-size: 10px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-dim);
-    margin-bottom: 4px;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+    margin-bottom: 3px;
     order: -1;
   }
   .card-row .td-rate::before { content: "Eff. Rate"; }
@@ -1285,6 +1300,16 @@ body {
   .card-row .td-fee::before { content: "Fee"; }
   .card-row .td-net::before { content: "Net Value"; }
 
+  /* Net Value is the answer — give it the full width and visual weight,
+     with the three inputs that produce it grouped underneath. */
+  .card-row .td-net {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.13), rgba(139, 92, 246, 0.05));
+    border-color: rgba(139, 92, 246, 0.28);
+    padding: 12px 14px;
+  }
+  .card-row .td-net::before { color: var(--purple-light); }
+
   /* Apply button — full width at bottom */
   .card-row .td-apply {
     grid-column: 1 / -1;
@@ -1292,13 +1317,13 @@ body {
     margin-top: 2px;
   }
 
-  .card-row .rate-pct { font-size: 18px; font-weight: 800; }
+  .card-row .rate-pct { font-size: 18px; font-weight: 700; }
   .card-row .rate-type { font-size: 11px; margin-top: 2px; }
-  .card-row .td-earned { font-size: 17px; font-weight: 800; color: var(--text); }
-  .card-row .td-credits { font-size: 17px; font-weight: 800; }
-  .card-row .td-fee { font-size: 17px; font-weight: 700; }
-  .card-row .td-net { font-size: 19px; font-weight: 800; }
-  .card-row .credits-face-inline { font-size: 10px; }
+  .card-row .td-earned { font-size: 17px; font-weight: 700; color: var(--text); }
+  .card-row .td-credits { font-size: 17px; font-weight: 700; }
+  .card-row .td-fee { font-size: 17px; font-weight: 600; }
+  .card-row .td-net { font-size: 24px; font-weight: 700; letter-spacing: -0.3px; }
+  .card-row .credits-face-inline { font-size: 11px; }
   .card-row .credits-tag {
     font-size: 10px; white-space: normal; line-height: 1.3; margin-top: 3px;
   }
