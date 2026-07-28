@@ -400,7 +400,9 @@ function sortCards(cards, sortBy, spending) {
         // for every card, so ordering by net value is exactly ordering by rate.
         return calcNetValue(b, spending) - calcNetValue(a, spending);
       case 'annual-value':
-        return calcTotalValue(b, spending) - calcTotalValue(a, spending);
+        return calcAnnualValue(b, spending) - calcAnnualValue(a, spending);
+      case 'credits':
+        return calcRealisticCredits(b) - calcRealisticCredits(a);
       case 'fee-low': {
         const feeA = a.annualFee + (a.membershipRequired ? a.membershipRequired.cost : 0);
         const feeB = b.annualFee + (b.membershipRequired ? b.membershipRequired.cost : 0);
@@ -440,16 +442,18 @@ function searchCards(cards, query) {
 // ---- COLUMN DEFINITIONS ----
 const COLUMN_TOOLTIPS = {
   'effective-rate': 'Net value as a percentage of what you spend — rewards + realistic credits, minus the annual fee. Because the fee is included, this always ranks cards in the same order as Net Value. Hover a card\'s rate to see its rewards-only rate before fees.',
-  'annual-value': 'Everything the card gives back per year before the fee: rewards earned on your spending, plus the realistic value of its annual credits.',
+  'annual-value': 'Dollar value of rewards earned per year, from your monthly spending in each category times the card\'s reward rates. Credits are counted separately in the next column.',
+  'credits': 'Realistic value of the card\'s annual statement credits — discounted by how hard each one is to actually use, rather than counted at the advertised face value. Hover a card\'s number to see what the issuer claims.',
   'fee': 'The card\'s annual fee plus any required membership costs (e.g., Costco membership). Deducted from net value.',
-  'net-value': 'Your bottom line: Value/yr minus the annual fee. Credits are discounted for restrictions (monthly caps, portal-only bookings, specific merchants) rather than counted at advertised face value.',
+  'net-value': 'Your bottom line: Earned + Credits − Fee. Every number in this row adds up to it.',
 };
 
 const DATA_COLUMNS = [
-  { key: 'effective-rate', thClass: 'th-rate',   label: 'Eff. Rate',  sortKeys: ['effective-rate'] },
-  { key: 'annual-value',   thClass: 'th-earned', label: 'Value/yr',   sortKeys: ['annual-value'] },
-  { key: 'fee',            thClass: 'th-fee',    label: 'Fee',        sortKeys: ['fee-low', 'fee-high'] },
-  { key: 'net-value',      thClass: 'th-net',    label: 'Net Value',  sortKeys: ['net-value'] },
+  { key: 'effective-rate', thClass: 'th-rate',    label: 'Eff. Rate',  sortKeys: ['effective-rate'] },
+  { key: 'annual-value',   thClass: 'th-earned',  label: 'Earned/yr',  sortKeys: ['annual-value'] },
+  { key: 'credits',        thClass: 'th-credits', label: 'Credits',    sortKeys: ['credits'] },
+  { key: 'fee',            thClass: 'th-fee',     label: 'Fee',        sortKeys: ['fee-low', 'fee-high'] },
+  { key: 'net-value',      thClass: 'th-net',     label: 'Net Value',  sortKeys: ['net-value'] },
 ];
 
 function getOrderedColumns(sortBy) {
@@ -698,14 +702,13 @@ function renderCards() {
   list.innerHTML = '';
 
   if (ranked.length === 0) {
-    list.innerHTML = `<tr><td colspan="8" class="loading-state"><p>No cards match your search.</p></td></tr>`;
+    list.innerHTML = `<tr><td colspan="9" class="loading-state"><p>No cards match your search.</p></td></tr>`;
     return;
   }
 
   ranked.forEach((card, idx) => {
     const rank = idx + 1;
     const annualValue = calcAnnualValue(card, currentSpending);
-    const totalValue = calcTotalValue(card, currentSpending);
     const netValue = calcNetValue(card, currentSpending);
     const effectiveRate = calcEffectiveRate(card, currentSpending);
     const rewardsRate = calcRewardsRate(card, currentSpending);
@@ -714,16 +717,17 @@ function renderCards() {
     const rankLabel = rank;
 
     const totalFee = card.annualFee + (card.membershipRequired ? card.membershipRequired.cost : 0);
-    const feeDisplay = totalFee === 0 ? '<span class="no-fee">$0</span>' : `$${totalFee}`;
+    const feeDisplay = totalFee === 0 ? '<span class="no-fee">$0</span>' : `−$${totalFee.toLocaleString()}`;
 
     const faceCredits = calcTotalCredits(card);
     const realisticCredits = calcRealisticCredits(card);
     const netClass = netValue >= 0 ? 'positive' : 'negative';
     const netDisplay = netValue >= 0 ? `+$${netValue.toLocaleString()}` : `-$${Math.abs(netValue).toLocaleString()}`;
-    // Credits live in the Value/yr column, since that's the number they're part of.
-    const creditsTag = faceCredits > 0
-      ? `<span class="credits-tag" title="$${annualValue.toLocaleString()} rewards + ~$${realisticCredits.toLocaleString()} credits. Issuer advertises $${faceCredits.toLocaleString()} in credits; we discount for restrictions (monthly caps, portals, specific merchants).">$${annualValue.toLocaleString()} + ~$${realisticCredits.toLocaleString()} credits*</span>`
-      : '';
+    // Credits get their own column so the row reads as an equation:
+    // Earned + Credits − Fee = Net Value.
+    const creditsDisplay = faceCredits > 0
+      ? `<span class="credits-real" title="Issuer advertises $${faceCredits.toLocaleString()}/yr. We count ~$${realisticCredits.toLocaleString()} after discounting for restrictions (monthly caps, portals, specific merchants).">+~$${realisticCredits.toLocaleString()}<span class="credits-face-inline">of $${faceCredits.toLocaleString()}</span></span>`
+      : '<span class="credits-none">—</span>';
 
     // Build cell HTML map
     const cellMap = {
@@ -731,7 +735,8 @@ function renderCards() {
         <span class="rate-pct">${effectiveRate}%</span>
         <span class="rate-type">${getCurrencyLabel(card.currency)}</span>
       </td>`,
-      'annual-value': `<td class="td-earned">$${totalValue.toLocaleString()}${creditsTag}</td>`,
+      'annual-value': `<td class="td-earned">$${annualValue.toLocaleString()}</td>`,
+      'credits': `<td class="td-credits">${creditsDisplay}</td>`,
       'fee': `<td class="td-fee">${feeDisplay}</td>`,
       'net-value': `<td class="td-net ${netClass}">${netDisplay}</td>`,
     };

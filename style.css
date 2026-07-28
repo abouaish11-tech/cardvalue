@@ -345,7 +345,7 @@ body {
   border-bottom: 2px solid var(--border-light);
   text-align: left; white-space: nowrap;
 }
-.th-rate, .th-earned, .th-fee, .th-net { text-align: right; }
+.th-rate, .th-earned, .th-credits, .th-fee, .th-net { text-align: right; }
 .th-compare { text-align: center; width: 40px; }
 .th-rank { width: 36px; text-align: center; }
 .th-card { min-width: 160px; }
@@ -436,6 +436,22 @@ body {
   pointer-events: none; margin-bottom: 6px; line-height: 1.5;
 }
 .td-earned { text-align: right; font-weight: 600; color: var(--text); }
+.td-credits { text-align: right; }
+.credits-real {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--purple-light);
+  cursor: help;
+}
+.credits-face-inline {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-decoration: line-through;
+  margin-top: 1px;
+}
+.credits-none { color: var(--text-dim); }
 .td-fee { text-align: right; color: var(--text-muted); }
 .no-fee { color: var(--green); font-weight: 600; }
 .td-net { text-align: right; font-weight: 700; }
@@ -1237,6 +1253,7 @@ body {
   /* Stats cells — flow into the 2-col grid naturally */
   .card-row .td-rate,
   .card-row .td-earned,
+  .card-row .td-credits,
   .card-row .td-fee,
   .card-row .td-net {
     display: flex;
@@ -1251,6 +1268,7 @@ body {
   }
   .card-row .td-rate::before,
   .card-row .td-earned::before,
+  .card-row .td-credits::before,
   .card-row .td-fee::before,
   .card-row .td-net::before {
     font-size: 10px;
@@ -1263,6 +1281,7 @@ body {
   }
   .card-row .td-rate::before { content: "Eff. Rate"; }
   .card-row .td-earned::before { content: "Earned/yr"; }
+  .card-row .td-credits::before { content: "Credits"; }
   .card-row .td-fee::before { content: "Fee"; }
   .card-row .td-net::before { content: "Net Value"; }
 
@@ -1276,8 +1295,10 @@ body {
   .card-row .rate-pct { font-size: 18px; font-weight: 800; }
   .card-row .rate-type { font-size: 11px; margin-top: 2px; }
   .card-row .td-earned { font-size: 17px; font-weight: 800; color: var(--text); }
+  .card-row .td-credits { font-size: 17px; font-weight: 800; }
   .card-row .td-fee { font-size: 17px; font-weight: 700; }
   .card-row .td-net { font-size: 19px; font-weight: 800; }
+  .card-row .credits-face-inline { font-size: 10px; }
   .card-row .credits-tag {
     font-size: 10px; white-space: normal; line-height: 1.3; margin-top: 3px;
   }
@@ -1345,10 +1366,12 @@ body {
   .card-row .card-logo-inline { width: 28px; height: 28px; }
   .card-row .td-rate,
   .card-row .td-earned,
+  .card-row .td-credits,
   .card-row .td-fee,
   .card-row .td-net { padding: 8px 10px; }
   .card-row .rate-pct { font-size: 16px; }
   .card-row .td-earned,
+  .card-row .td-credits,
   .card-row .td-fee,
   .card-row .td-net { font-size: 15px; }
   .hero h1 { font-size: 18px; }
