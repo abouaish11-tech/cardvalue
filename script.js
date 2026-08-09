@@ -1235,6 +1235,8 @@ function applyPersonalization() {
   bankRelationships = bankInputs.relationships;
   comparisonApy = bankInputs.comparisonApy;
   isPersonalized = true;
+  try { localStorage.setItem(GATE_KEYS.spending, JSON.stringify(currentSpending)); } catch (e) {}
+  completeGateChoice('mine');
   document.querySelector('.default-profile-label').innerHTML = `
     <span class="profile-dot personalized"></span>
     Ranked by your spending
@@ -1336,6 +1338,11 @@ function openPersonalizeDrawer() {
 
 function closePersonalizeDrawer() {
   document.getElementById('personalizeDrawer').classList.remove('open');
+  // Backed out of "enter my spending" without applying — bring the gate back.
+  if (gatePending) {
+    gatePending = false;
+    showGate('choice');
+  }
 }
 
 // ---- EVENT LISTENERS ----
@@ -1476,6 +1483,122 @@ function bindEvents() {
   });
 }
 
+/* ---------- Onboarding gate + paywall ---------- */
+// Flip `enabled` to true once the checkout product exists and checkoutUrl is set.
+// With enabled=false the gate only asks for a spending basis, then opens the site.
+const PAYWALL = {
+  enabled: false,
+  checkoutUrl: '',        // e.g. https://cardvalue.lemonsqueezy.com/buy/xxxx
+  price: '$19',
+};
+const GATE_KEYS = { mode: 'cv_gate_mode', spending: 'cv_spending', license: 'cv_license' };
+let gatePending = false;   // true while "enter my spending" chose but not applied
+
+function gateEl() { return document.getElementById('gateOverlay'); }
+
+function setGateBlur(on) {
+  [...document.body.children].forEach(el => {
+    if (el.id === 'gateOverlay' || el.classList.contains('personalize-drawer')) return;
+    el.classList.toggle('gate-blur', on);
+  });
+  document.body.classList.toggle('gate-open', on);
+}
+
+function showGate(step) {
+  document.getElementById('gateStepChoice').hidden = step !== 'choice';
+  document.getElementById('gateStepPay').hidden = step !== 'pay';
+  gateEl().hidden = false;
+  setGateBlur(true);
+}
+
+function hideGate() {
+  gateEl().hidden = true;
+  gatePending = false;
+  setGateBlur(false);
+}
+
+function isLicensed() {
+  return !!localStorage.getItem(GATE_KEYS.license);
+}
+
+function completeGateChoice(mode) {
+  try { localStorage.setItem(GATE_KEYS.mode, mode); } catch (e) {}
+  gatePending = false;
+  if (PAYWALL.enabled && !isLicensed()) {
+    showGate('pay');
+  } else {
+    hideGate();
+  }
+}
+
+async function activateLicense() {
+  const input = document.getElementById('gateLicense');
+  const msg = document.getElementById('gateLicenseMsg');
+  const key = (input.value || '').trim();
+  if (!key) { msg.textContent = 'Paste the license key from your receipt email.'; return; }
+  msg.textContent = 'Checking…';
+  try {
+    const res = await fetch('https://api.lemonsqueezy.com/v1/licenses/validate', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'license_key=' + encodeURIComponent(key),
+    });
+    const data = await res.json();
+    if (data && data.valid) {
+      try { localStorage.setItem(GATE_KEYS.license, key); } catch (e) {}
+      msg.textContent = '';
+      showToast('✓ Unlocked — welcome to CardValue', 'success');
+      hideGate();
+    } else {
+      msg.textContent = 'That key didn\'t validate. Check for typos, or reply to your receipt email for help.';
+    }
+  } catch (err) {
+    msg.textContent = 'Couldn\'t reach the license server. Try again in a minute.';
+  }
+}
+
+function restoreSavedSpending() {
+  try {
+    const raw = localStorage.getItem(GATE_KEYS.spending);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!saved || typeof saved !== 'object') return;
+    for (const k of ['dining', 'groceries', 'travel', 'gas', 'other']) {
+      if (typeof saved[k] === 'number' && saved[k] >= 0) {
+        currentSpending[k] = saved[k];
+        const inp = document.getElementById('sp_' + k);
+        if (inp) inp.value = saved[k];
+      }
+    }
+    isPersonalized = true;
+    const label = document.querySelector('.default-profile-label');
+    if (label) label.innerHTML = '<span class="profile-dot personalized"></span> Ranked by your spending';
+  } catch (e) {}
+}
+
+function initGate() {
+  const modeChosen = localStorage.getItem(GATE_KEYS.mode);
+  const needsPay = PAYWALL.enabled && !isLicensed();
+  if (modeChosen && !needsPay) return;   // returning, settled visitor — no gate
+
+  document.getElementById('gatePriceAmt').textContent = PAYWALL.price;
+  const buy = document.getElementById('gateBuy');
+  buy.href = PAYWALL.checkoutUrl || '#';
+
+  document.getElementById('gateAvg').addEventListener('click', () => completeGateChoice('avg'));
+  document.getElementById('gateMine').addEventListener('click', () => {
+    gatePending = true;
+    gateEl().hidden = true;             // step aside; blur stays on behind the drawer
+    openPersonalizeDrawer();
+  });
+  document.getElementById('gateLicenseGo').addEventListener('click', activateLicense);
+  document.getElementById('gateLicense').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') activateLicense();
+  });
+
+  showGate(modeChosen && needsPay ? 'pay' : 'choice');
+}
+
 // ---- INIT ----
 async function init() {
   try {
@@ -1486,7 +1609,9 @@ async function init() {
     transferValuations = { ...data.pointsValuations };
     bindEvents();
     bindApplyTracking();
+    restoreSavedSpending();
     renderCards();
+    initGate();
   } catch (err) {
     document.getElementById('cardList').innerHTML = `
       <div class="loading-state">

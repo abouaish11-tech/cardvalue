@@ -66,7 +66,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="style.css?v=14" />
+  <link rel="stylesheet" href="style.css?v=15" />
 </head>
 <body>
   <a href="#cardList" class="skip-link">Skip to card list</a>
@@ -364,9 +364,48 @@
     </div>
   </footer>
 
+  <!-- Onboarding gate: choose a spending basis before rankings are shown -->
+  <div class="gate-overlay" id="gateOverlay" hidden>
+    <div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+      <div class="gate-brand">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="26" height="26">
+          <rect x="2" y="5" width="20" height="14" rx="3" stroke="#a78bfa" stroke-width="2"/>
+          <path d="M2 9.5H22" stroke="#a78bfa" stroke-width="2"/>
+        </svg>
+        <span>Card<em>Value</em></span>
+      </div>
+
+      <div class="gate-step" id="gateStepChoice">
+        <h2 id="gateTitle">How should we rank the cards for you?</h2>
+        <p class="gate-sub">The best card depends entirely on where your money goes. Pick a starting point:</p>
+        <button class="gate-option" id="gateMine" type="button">
+          <span class="gate-opt-title">Enter my spending</span>
+          <span class="gate-opt-desc">Takes about 60 seconds. Rankings computed for your dining, groceries, travel, and gas.</span>
+        </button>
+        <button class="gate-option gate-option-secondary" id="gateAvg" type="button">
+          <span class="gate-opt-title">Use average American spending</span>
+          <span class="gate-opt-desc">$500 dining · $400 groceries · $200 travel · $150 gas · $750 other per month</span>
+        </button>
+        <p class="gate-note">No signup · no affiliate links</p>
+      </div>
+
+      <div class="gate-step" id="gateStepPay" hidden>
+        <h2>Unlock your rankings</h2>
+        <p class="gate-sub">One payment, yours forever. The banks never pay us — that's why the math stays honest.</p>
+        <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> one-time</span></div>
+        <a class="gate-buy" id="gateBuy" href="#" target="_blank" rel="noopener">Unlock with card →</a>
+        <div class="gate-license">
+          <input id="gateLicense" type="text" placeholder="Already paid? Paste your license key" autocomplete="off" />
+          <button id="gateLicenseGo" type="button">Activate</button>
+        </div>
+        <p class="gate-note" id="gateLicenseMsg" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="script.js?v=12"></script>
+  <script src="script.js?v=13"></script>
 </body>
 </html>
