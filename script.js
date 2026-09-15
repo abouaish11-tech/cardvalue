@@ -1605,12 +1605,8 @@ function completeGateChoice(mode) {
   hideGate();
 }
 
-async function activateLicense() {
-  const input = document.getElementById('gateLicense');
-  const msg = document.getElementById('gateLicenseMsg');
-  const key = (input.value || '').trim();
-  if (!key) { msg.textContent = 'Paste the license key from your receipt email.'; return; }
-  msg.textContent = 'Checking…';
+/** Validate a key against our store+product. Returns 'ok' | 'wrong-product' | 'invalid' | 'network'. */
+async function validateLicenseKey(key) {
   try {
     const res = await fetch('https://api.lemonsqueezy.com/v1/licenses/validate', {
       method: 'POST',
@@ -1620,19 +1616,50 @@ async function activateLicense() {
     const data = await res.json();
     const meta = (data && data.meta) || {};
     const ours = Number(meta.store_id) === PAYWALL.storeId && Number(meta.product_id) === PAYWALL.productId;
-    if (data && data.valid && ours) {
-      try { localStorage.setItem(GATE_KEYS.license, key); } catch (e) {}
-      msg.textContent = '';
-      showToast('✓ Unlocked — welcome to CardValue', 'success');
-      hideGate();
-      renderCards();
-    } else if (data && data.valid && !ours) {
-      msg.textContent = 'That key belongs to a different product.';
-    } else {
-      msg.textContent = 'That key didn\'t validate. Check for typos, or reply to your receipt email for help.';
-    }
+    if (data && data.valid && ours) return 'ok';
+    if (data && data.valid && !ours) return 'wrong-product';
+    return 'invalid';
   } catch (err) {
-    msg.textContent = 'Couldn\'t reach the license server. Try again in a minute.';
+    return 'network';
+  }
+}
+
+function unlockWith(key) {
+  try { localStorage.setItem(GATE_KEYS.license, key); } catch (e) {}
+  showToast('✓ Unlocked — welcome to CardValue', 'success');
+  hideGate();
+  renderCards();
+}
+
+async function activateLicense() {
+  const input = document.getElementById('gateLicense');
+  const msg = document.getElementById('gateLicenseMsg');
+  const key = (input.value || '').trim();
+  if (!key) { msg.textContent = 'Paste the license key from your receipt email.'; return; }
+  msg.textContent = 'Checking…';
+  const result = await validateLicenseKey(key);
+  if (result === 'ok') { msg.textContent = ''; unlockWith(key); }
+  else if (result === 'wrong-product') msg.textContent = 'That key belongs to a different product.';
+  else if (result === 'network') msg.textContent = 'Couldn\'t reach the license server. Try again in a minute.';
+  else msg.textContent = 'That key didn\'t validate. Check for typos, or reply to your receipt email for help.';
+}
+
+/** Auto-unlock when Lemon Squeezy's post-checkout redirect lands with
+ *  ?license_key=... — the buyer never has to paste anything. */
+async function autoUnlockFromUrl() {
+  const params = new URLSearchParams(location.search);
+  const key = (params.get('license_key') || params.get('key') || '').trim();
+  if (!key) return;
+  // Clean the key out of the address bar either way (don't leave it in history).
+  params.delete('license_key'); params.delete('key');
+  const qs = params.toString();
+  history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+  if (isLicensed()) return;
+  const result = await validateLicenseKey(key);
+  if (result === 'ok') {
+    unlockWith(key);
+  } else if (result === 'network') {
+    showToast('Payment received — couldn\'t reach the license server. Your key is in your receipt email.', 'error');
   }
 }
 
@@ -1689,6 +1716,7 @@ async function init() {
     bindApplyTracking();
     restoreSavedSpending();
     renderCards();
+    await autoUnlockFromUrl();   // post-checkout redirect unlocks before the gate shows
     initGate();
   } catch (err) {
     document.getElementById('cardList').innerHTML = `
