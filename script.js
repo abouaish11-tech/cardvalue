@@ -1719,7 +1719,20 @@ function initGate() {
   const buy = document.getElementById('gateBuy');
   buy.href = PAYWALL.checkoutUrl || '#';
 
-  document.getElementById('gateAvg').addEventListener('click', () => completeGateChoice('avg'));
+  document.getElementById('gateAvg').addEventListener('click', () => {
+    // Picking "average" must actually mean average — a returning visitor may
+    // have personalized spending saved from a previous session.
+    currentSpending = { ...DEFAULT_SPENDING };
+    isPersonalized = false;
+    for (const k of ['dining', 'groceries', 'travel', 'gas', 'other']) {
+      const inp = document.getElementById('sp_' + k);
+      if (inp) inp.value = DEFAULT_SPENDING[k];
+    }
+    const label = document.querySelector('.default-profile-label');
+    if (label) label.innerHTML = '<span class="profile-dot default"></span> Ranked by average American spending';
+    renderCards();
+    completeGateChoice('avg');
+  });
   document.getElementById('gateMine').addEventListener('click', () => {
     gatePending = true;
     gateEl().hidden = true;             // step aside; blur stays on behind the drawer
@@ -1731,8 +1744,9 @@ function initGate() {
   });
   document.getElementById('gateLater').addEventListener('click', hideGate);
 
-  const modeChosen = localStorage.getItem(GATE_KEYS.mode);
-  if (!modeChosen) showGate('choice');   // first visit: pick a spending basis, then browse
+  // Every visit lands on the spending-basis chooser. Saved custom spending
+  // still prefills the drawer when they pick "enter my spending" again.
+  showGate('choice');
 }
 
 // ---- INIT ----
