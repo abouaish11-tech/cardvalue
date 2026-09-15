@@ -1176,7 +1176,9 @@ body {
   }
 
   /* --- Personalize drawer --- */
-  .personalize-drawer.open { max-height: 900px; }
+  /* Tall cap: with banking relationships expanded the drawer exceeds 900px on
+     phones, and overflow:hidden would clip the Apply button entirely. */
+  .personalize-drawer.open { max-height: 2400px; }
   .personalize-drawer-inner { padding: 20px 16px; }
   .spending-inputs { grid-template-columns: 1fr 1fr; gap: 12px; }
   .drawer-footer { flex-direction: column; }

@@ -1412,7 +1412,13 @@ function resetPersonalization() {
 }
 
 function openPersonalizeDrawer() {
-  document.getElementById('personalizeDrawer').classList.add('open');
+  const drawer = document.getElementById('personalizeDrawer');
+  drawer.classList.add('open');
+  // The gate's scroll lock must not outlive the gate itself: on phones the
+  // drawer is taller than the viewport, and a locked body makes the lower
+  // inputs and the Apply button unreachable. Blur on the background stays.
+  document.body.classList.remove('gate-open');
+  setTimeout(() => drawer.scrollIntoView({ behavior: 'smooth', block: 'start' }), 380);
 }
 
 function closePersonalizeDrawer() {
