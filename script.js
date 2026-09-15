@@ -1551,7 +1551,7 @@ const PAYWALL = {
   // endpoint, so a key is only accepted when it belongs to OUR store + product.
   storeId: 469620,
   productId: 1362367,
-  lockedRanks: 3,         // top N cards (by net value) hidden until unlocked
+  freeRanks: [4, 5],      // only these net-value ranks stay visible unlicensed
 };
 const GATE_KEYS = { mode: 'cv_gate_mode', spending: 'cv_spending', license: 'cv_license' };
 let gatePending = false;   // true while "enter my spending" chose but not applied
@@ -1583,12 +1583,14 @@ function isLicensed() {
   return !!localStorage.getItem(GATE_KEYS.license);
 }
 
-/** Ids of the top-N cards by net value for the current spending — the paid tier.
+/** Ids of every locked card for the current spending — the paid tier.
+ *  Everything except the freeRanks positions (by net value) is locked.
  *  Computed over ALL cards so no filter, search, or sort order can surface them. */
 function getLockedCardIds() {
   if (!PAYWALL.enabled || isLicensed() || !allCards.length) return new Set();
   const ranked = [...allCards].sort((a, b) => calcNetValue(b, currentSpending) - calcNetValue(a, currentSpending));
-  return new Set(ranked.slice(0, PAYWALL.lockedRanks).map(c => c.id));
+  const free = new Set(PAYWALL.freeRanks.map(r => ranked[r - 1] && ranked[r - 1].id).filter(Boolean));
+  return new Set(ranked.filter(c => !free.has(c.id)).map(c => c.id));
 }
 
 function isCardLocked(cardId) {
