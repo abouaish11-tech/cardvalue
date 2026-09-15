@@ -1485,6 +1485,7 @@ body.gate-open { overflow: hidden; }
   transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 .gate-buy:hover { transform: translateY(-1px); box-shadow: 0 8px 32px var(--purple-glow); }
+.gate-trust { text-align: center; font-size: 11.5px; color: var(--text-dim); margin: 8px 0 0; letter-spacing: 0.2px; }
 .gate-license { display: flex; gap: 8px; margin-top: 14px; }
 .gate-license input {
   flex: 1; background: var(--dark); border: 1px solid var(--border-light);

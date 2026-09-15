@@ -1574,7 +1574,9 @@ function bindEvents() {
 // With enabled=false the gate only asks for a spending basis, then opens the site.
 const PAYWALL = {
   enabled: true,
-  checkoutUrl: 'https://card-value-saudi-arabia.lemonsqueezy.com/checkout/buy/ee98a08c-2536-4391-a44c-2fa6ce091c24',
+  // ?embed=1 makes lemon.js open this as an in-page overlay so the address bar
+  // stays on cardvalue.org (buyer never sees the raw store subdomain).
+  checkoutUrl: 'https://card-value-saudi-arabia.lemonsqueezy.com/checkout/buy/ee98a08c-2536-4391-a44c-2fa6ce091c24?embed=1',
   price: '$19',
   // License keys from any Lemon Squeezy store validate against the same public
   // endpoint, so a key is only accepted when it belongs to OUR store + product.

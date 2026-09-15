@@ -66,7 +66,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
-  <link rel="stylesheet" href="style.css?v=17" />
+  <link rel="stylesheet" href="style.css?v=18" />
+
+  <!-- Lemon Squeezy overlay checkout: opens the checkout as a modal on cardvalue.org
+       so the address bar never leaves this domain. -->
+  <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
 </head>
 <body>
   <a href="#cardList" class="skip-link">Skip to card list</a>
@@ -392,8 +396,9 @@
       <div class="gate-step" id="gateStepPay" hidden>
         <h2>Unlock your full rankings</h2>
         <p class="gate-sub">All 42 cards ranked for your spending — including the 3 that pay you the most — stay hidden until you unlock. One payment, yours forever. The banks never pay us, that's why the math stays honest.</p>
-        <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> one-time</span></div>
-        <a class="gate-buy" id="gateBuy" href="#" target="_blank" rel="noopener">Unlock with card →</a>
+        <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> USD · one-time</span></div>
+        <a class="gate-buy lemonsqueezy-button" id="gateBuy" href="#" rel="noopener">Unlock with card →</a>
+        <p class="gate-trust">Secure checkout · Billed in USD</p>
         <div class="gate-license">
           <input id="gateLicense" type="text" placeholder="Bought on another device? Paste your key" autocomplete="off" />
           <button id="gateLicenseGo" type="button">Activate</button>
@@ -407,6 +412,6 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="script.js?v=17"></script>
+  <script src="script.js?v=18"></script>
 </body>
 </html>
