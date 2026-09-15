@@ -87,9 +87,31 @@ const CURRENCY_NAMES = {
   'pnc_cashback': 'Cash back',
   'amazon_cashback': 'Cash back',
   'discover_cashback': 'Cash back',
+  'delta_miles': 'SkyMiles',
+  'united_miles': 'United',
+  'southwest_points': 'Rapid Rewards',
+  'aa_miles': 'AAdvantage',
+  'marriott_points': 'Bonvoy',
+  'hilton_points': 'Hilton',
+  'hyatt_points': 'Hyatt',
+  'ihg_points': 'IHG',
 };
+const MILE_CURRENCIES = new Set(['capital_one_miles', 'delta_miles', 'united_miles', 'aa_miles']);
+// Co-brand airline/hotel points can't be cashed out, so the Cash Value toggle leaves them alone.
+const NON_CASHABLE_CURRENCIES = new Set([
+  'delta_miles', 'united_miles', 'southwest_points', 'aa_miles',
+  'marriott_points', 'hilton_points', 'hyatt_points', 'ihg_points',
+]);
 
 const CURRENCY_FULL_NAMES = {
+  'delta_miles': 'Delta SkyMiles — redeemable on Delta and SkyTeam partners',
+  'united_miles': 'United MileagePlus miles — redeemable on United and Star Alliance partners',
+  'southwest_points': 'Southwest Rapid Rewards — fixed-value points on Southwest flights',
+  'aa_miles': 'American Airlines AAdvantage miles — redeemable on AA and oneworld partners',
+  'marriott_points': 'Marriott Bonvoy points — redeemable at 30+ Marriott brands',
+  'hilton_points': 'Hilton Honors points — low value per point, high earn rates',
+  'hyatt_points': 'World of Hyatt points — the highest-value hotel currency',
+  'ihg_points': 'IHG One Rewards points — Holiday Inn, InterContinental, Kimpton and more',
   'chase_ur': 'Ultimate Rewards — Chase\'s transferable points program',
   'amex_mr': 'Membership Rewards — Amex\'s transferable points program',
   'citi_ty': 'ThankYou Points — Citi\'s transferable points program',
@@ -104,7 +126,7 @@ function getCurrencyLabel(currency) {
   const name = CURRENCY_NAMES[currency] || currency;
   if (name === 'Cash back') return 'Cash back';
   const pv = pointsValuations[currency] || 1;
-  const unit = currency === 'capital_one_miles' ? '/mi' : '/pt';
+  const unit = MILE_CURRENCIES.has(currency) ? '/mi' : '/pt';
   const fullName = CURRENCY_FULL_NAMES[currency] || '';
   const helpBtn = fullName ? ` <span class="acronym-help" title="${fullName}">?</span>` : '';
   return `${name}${helpBtn} · ${pv}¢${unit}`;
@@ -1457,9 +1479,10 @@ function bindEvents() {
       document.querySelectorAll('.val-toggle-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       if (mode === 'cash') {
-        // Set all valuations to 1.0 (cash redemption)
+        // Set transferable/cashable programs to 1.0 (cash redemption). Airline and
+        // hotel co-brand points have no cash-out, so their value doesn't change here.
         for (const key of Object.keys(pointsValuations)) {
-          pointsValuations[key] = 1.0;
+          if (!NON_CASHABLE_CURRENCIES.has(key)) pointsValuations[key] = 1.0;
         }
       } else {
         // Restore transfer partner valuations

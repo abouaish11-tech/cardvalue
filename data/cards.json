@@ -16,9 +16,17 @@
     "venmo_cashback": 1.0,
     "pnc_cashback": 1.0,
     "amazon_cashback": 1.0,
-    "discover_cashback": 1.0
+    "discover_cashback": 1.0,
+    "delta_miles": 1.2,
+    "united_miles": 1.2,
+    "southwest_points": 1.4,
+    "aa_miles": 1.4,
+    "marriott_points": 0.7,
+    "hilton_points": 0.5,
+    "hyatt_points": 1.7,
+    "ihg_points": 0.5
   },
-  "lastUpdated": "2026-03-28",
+  "lastUpdated": "2026-09-15",
   "defaultSpending": {
     "dining": 500,
     "groceries": 400,
@@ -1931,6 +1939,517 @@
       ],
       "applyUrl": "https://www.wellsfargo.com/credit-cards/autograph-journey/",
       "bestFor": "Hotel Travel Rewards"
+    },
+    {
+      "id": "delta_skymiles_gold",
+      "name": "Delta SkyMiles Gold",
+      "issuer": "American Express",
+      "annualFee": 150,
+      "membershipRequired": null,
+      "categories": [
+        "travel",
+        "dining"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining",
+        "groceries"
+      ],
+      "currency": "delta_miles",
+      "rewards": {
+        "dining": 2,
+        "groceries": 2,
+        "travel": 2,
+        "gas": 1,
+        "other": 1
+      },
+      "note": "2x on Delta purchases, restaurants worldwide, and U.S. supermarkets; 1x elsewhere. The travel rate applies to Delta purchases only, not other airlines or hotels. $0 intro annual fee the first year.",
+      "credits": [
+        {
+          "label": "Delta Flight Credit",
+          "value": 200,
+          "desc": "$200 Delta flight credit each calendar year — but only after $10,000 in purchases on the card that year",
+          "type": "coupon"
+        },
+        {
+          "label": "Delta Stays",
+          "value": 100,
+          "desc": "$100 back on prepaid hotel or vacation-rental bookings made through Delta Stays on delta.com",
+          "type": "portal"
+        }
+      ],
+      "creditsCaveat": "The $200 flight credit requires $10,000 of annual spend to unlock — most Gold cardholders never hit it. Delta Stays only works through Delta's booking portal.",
+      "signupBonus": {
+        "points": 50000,
+        "spendRequired": 2000,
+        "months": 6
+      },
+      "perks": [
+        "First checked bag free on Delta",
+        "Priority boarding (Zone 5)",
+        "20% back on Delta in-flight purchases",
+        "No foreign transaction fees",
+        "$0 annual fee the first year"
+      ],
+      "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
+      "bestFor": "Delta Flyers"
+    },
+    {
+      "id": "delta_skymiles_platinum",
+      "name": "Delta SkyMiles Platinum",
+      "issuer": "American Express",
+      "annualFee": 350,
+      "membershipRequired": null,
+      "categories": [
+        "travel",
+        "dining"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "premium",
+        "dining",
+        "groceries"
+      ],
+      "currency": "delta_miles",
+      "rewards": {
+        "dining": 2,
+        "groceries": 2,
+        "travel": 3,
+        "gas": 1,
+        "other": 1
+      },
+      "note": "3x on Delta purchases and hotels booked direct; 2x at restaurants and U.S. supermarkets; 1x elsewhere. Travel rate applies to Delta and direct hotel bookings only.",
+      "credits": [
+        {
+          "label": "Companion Certificate",
+          "value": 300,
+          "desc": "Annual round-trip Main Cabin companion ticket to select destinations (you pay taxes and fees). Value depends entirely on booking an eligible fare each year",
+          "type": "portal"
+        },
+        {
+          "label": "Delta Stays",
+          "value": 150,
+          "desc": "$150 back on prepaid hotel or vacation-rental bookings through Delta Stays on delta.com",
+          "type": "portal"
+        }
+      ],
+      "creditsCaveat": "The companion certificate is the whole case for this card — if you don't fly a Delta round-trip with a companion every year, the $350 fee is hard to justify.",
+      "signupBonus": {
+        "points": 60000,
+        "spendRequired": 3000,
+        "months": 6
+      },
+      "perks": [
+        "Annual companion certificate",
+        "$2,500 MQD Headstart toward Medallion status",
+        "First checked bag free",
+        "Priority boarding",
+        "No foreign transaction fees"
+      ],
+      "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
+      "bestFor": "Delta Loyalists"
+    },
+    {
+      "id": "united_explorer",
+      "name": "United Explorer",
+      "issuer": "Chase",
+      "annualFee": 150,
+      "membershipRequired": null,
+      "categories": [
+        "travel",
+        "dining"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining"
+      ],
+      "currency": "united_miles",
+      "rewards": {
+        "dining": 2,
+        "groceries": 1,
+        "travel": 2,
+        "gas": 1,
+        "other": 1
+      },
+      "note": "2x on United purchases, dining, and hotel stays; 1x elsewhere. Travel rate applies to United and hotel purchases. Fee rose from $95 to $150 in the 2025 refresh; $0 the first year.",
+      "credits": [
+        {
+          "label": "United Hotels Credit",
+          "value": 100,
+          "desc": "Up to $100/yr back on prepaid hotel stays booked through United Hotels",
+          "type": "portal"
+        },
+        {
+          "label": "Instacart",
+          "value": 120,
+          "desc": "$10/month in Instacart credits plus three months of Instacart+. Use it or lose it monthly",
+          "type": "drip"
+        },
+        {
+          "label": "United Travel Credit",
+          "value": 100,
+          "desc": "$100 United travel credit — only after $10,000 in purchases in a calendar year",
+          "type": "coupon"
+        }
+      ],
+      "creditsCaveat": "The $100 travel credit needs $10,000 of annual spend. The two United Club passes now require the cardholder to be present.",
+      "signupBonus": {
+        "points": 60000,
+        "spendRequired": 3000,
+        "months": 3
+      },
+      "perks": [
+        "First checked bag free for you and a companion",
+        "2 United Club one-time passes per year",
+        "Global Entry / TSA PreCheck credit (up to $120 every 4 years)",
+        "10,000-mile award discount after $20,000 annual spend",
+        "No foreign transaction fees"
+      ],
+      "applyUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
+      "bestFor": "United Flyers"
+    },
+    {
+      "id": "southwest_priority",
+      "name": "Southwest Rapid Rewards Priority",
+      "issuer": "Chase",
+      "annualFee": 229,
+      "membershipRequired": null,
+      "categories": [
+        "travel"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining",
+        "gas"
+      ],
+      "currency": "southwest_points",
+      "rewards": {
+        "dining": 2,
+        "groceries": 1,
+        "travel": 4,
+        "gas": 2,
+        "other": 1
+      },
+      "note": "4x on Southwest purchases; 2x at restaurants and gas stations; 1x elsewhere. Travel rate applies to Southwest only. The 2025 refresh raised the fee from $149 to $229 and removed the $75 Southwest credit and upgraded boardings.",
+      "credits": [
+        {
+          "label": "Anniversary Points",
+          "value": 105,
+          "desc": "7,500 Rapid Rewards points every cardmember anniversary, worth about $105. Automatic",
+          "type": "automatic"
+        }
+      ],
+      "creditsCaveat": "After the 2025 changes this card no longer has a travel credit — the anniversary points are the only guaranteed money back against the $229 fee.",
+      "signupBonus": {
+        "description": "Varies — recent public offers have ranged from 50,000 to 100,000 points"
+      },
+      "perks": [
+        "7,500 anniversary points",
+        "25% back on in-flight purchases",
+        "1,500 Tier Qualifying Points per $5,000 spent",
+        "No foreign transaction fees",
+        "Counts toward Companion Pass qualification"
+      ],
+      "applyUrl": "https://creditcards.chase.com/southwest/priority-credit-card",
+      "bestFor": "Southwest Flyers"
+    },
+    {
+      "id": "citi_aadvantage_platinum_select",
+      "name": "Citi AAdvantage Platinum Select",
+      "issuer": "Citi",
+      "annualFee": 99,
+      "membershipRequired": null,
+      "categories": [
+        "travel"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining",
+        "gas"
+      ],
+      "currency": "aa_miles",
+      "rewards": {
+        "dining": 2,
+        "groceries": 1,
+        "travel": 2,
+        "gas": 2,
+        "other": 1
+      },
+      "note": "2x on American Airlines purchases, restaurants, and gas stations; 1x elsewhere. Travel rate applies to American Airlines only. $0 annual fee the first year, then $99.",
+      "credits": [],
+      "signupBonus": {
+        "points": 50000,
+        "spendRequired": 2500,
+        "months": 3
+      },
+      "perks": [
+        "First checked bag free on domestic AA itineraries (you + 4 companions)",
+        "Preferred boarding",
+        "25% back on in-flight food and beverage",
+        "$125 AA flight discount after $20,000 annual spend",
+        "No foreign transaction fees"
+      ],
+      "applyUrl": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-credit-card",
+      "bestFor": "American Airlines Flyers"
+    },
+    {
+      "id": "marriott_bonvoy_boundless",
+      "name": "Marriott Bonvoy Boundless",
+      "issuer": "Chase",
+      "annualFee": 95,
+      "membershipRequired": null,
+      "categories": [
+        "travel"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining",
+        "groceries",
+        "gas"
+      ],
+      "currency": "marriott_points",
+      "rewards": {
+        "dining": 3,
+        "groceries": 3,
+        "travel": 6,
+        "gas": 3,
+        "other": 2
+      },
+      "rewardCaps": {
+        "dining": 2900,
+        "groceries": 2300,
+        "gas": 800
+      },
+      "note": "6x at Marriott Bonvoy hotels; 3x on the first $6,000 combined per year at grocery stores, gas stations, and restaurants; 2x on everything else. Travel rate applies to Marriott stays only. The $6,000 cap is shared across the three 3x categories — modeled here split in proportion to typical spending.",
+      "credits": [
+        {
+          "label": "Free Night Award",
+          "value": 245,
+          "desc": "One Free Night Award every anniversary, redeemable at hotels up to 35,000 points. Automatic, though you have to find a qualifying night to use it",
+          "type": "automatic"
+        }
+      ],
+      "creditsCaveat": "The Free Night Award is the card's main value — roughly $245 at 0.7¢/point, but only if you stay at a Marriott property that fits under the 35,000-point cap within the year.",
+      "signupBonus": {
+        "description": "Varies — commonly 3 Free Night Awards (each worth up to 50,000 points) after $3,000 spend in 3 months"
+      },
+      "perks": [
+        "Free Night Award every year (up to 35,000 points)",
+        "Automatic Silver Elite status",
+        "15 Elite Night Credits per year",
+        "No foreign transaction fees"
+      ],
+      "applyUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
+      "bestFor": "Marriott Stays"
+    },
+    {
+      "id": "hilton_honors_surpass",
+      "name": "Hilton Honors Surpass",
+      "issuer": "American Express",
+      "annualFee": 150,
+      "membershipRequired": null,
+      "categories": [
+        "travel",
+        "dining"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining",
+        "groceries",
+        "gas"
+      ],
+      "currency": "hilton_points",
+      "rewards": {
+        "dining": 6,
+        "groceries": 6,
+        "travel": 12,
+        "gas": 6,
+        "other": 3
+      },
+      "note": "12x at Hilton properties; 6x at restaurants, U.S. supermarkets, and gas stations; 4x on U.S. online retail; 3x elsewhere. Travel rate applies to Hilton stays only. Hilton points are worth about 0.5¢ each, so the big multipliers are smaller than they look.",
+      "credits": [
+        {
+          "label": "Hilton Credit",
+          "value": 200,
+          "desc": "Up to $50 in statement credits each quarter for purchases made directly with Hilton properties. Expires quarterly",
+          "type": "drip"
+        }
+      ],
+      "creditsCaveat": "The $200 Hilton credit comes as four $50 quarterly chunks that expire — you need a Hilton charge every quarter to capture it all.",
+      "signupBonus": {
+        "points": 130000,
+        "spendRequired": 3000,
+        "months": 6
+      },
+      "perks": [
+        "Hilton Honors Gold status (room upgrades, free breakfast at many brands)",
+        "Free Night Reward after $15,000 annual spend",
+        "Diamond status after $40,000 annual spend",
+        "No foreign transaction fees"
+      ],
+      "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
+      "bestFor": "Hilton Stays"
+    },
+    {
+      "id": "world_of_hyatt",
+      "name": "World of Hyatt Credit Card",
+      "issuer": "Chase",
+      "annualFee": 95,
+      "membershipRequired": null,
+      "categories": [
+        "travel",
+        "dining"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining"
+      ],
+      "currency": "hyatt_points",
+      "rewards": {
+        "dining": 2,
+        "groceries": 1,
+        "travel": 4,
+        "gas": 1,
+        "other": 1
+      },
+      "note": "4x at Hyatt hotels; 2x at restaurants, on airline tickets bought direct, local transit, and fitness clubs; 1x elsewhere. Travel rate applies to Hyatt stays only. Hyatt points are the most valuable hotel currency (~1.7¢ each).",
+      "credits": [
+        {
+          "label": "Free Night Award",
+          "value": 150,
+          "desc": "One free night at a Category 1–4 Hyatt every anniversary. Automatic — and a second one after $15,000 annual spend",
+          "type": "automatic"
+        }
+      ],
+      "creditsCaveat": "The Category 1–4 free night is worth $150–$300 depending on the property, but it must be used within the year.",
+      "signupBonus": {
+        "points": 30000,
+        "spendRequired": 3000,
+        "months": 3
+      },
+      "perks": [
+        "Free Category 1–4 night every year",
+        "Automatic Discoverist status",
+        "5 qualifying night credits per year, plus 2 more per $5,000 spent",
+        "No foreign transaction fees"
+      ],
+      "applyUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt",
+      "bestFor": "Hyatt Stays"
+    },
+    {
+      "id": "ihg_one_rewards_premier",
+      "name": "IHG One Rewards Premier",
+      "issuer": "Chase",
+      "annualFee": 99,
+      "membershipRequired": null,
+      "categories": [
+        "travel"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining",
+        "gas"
+      ],
+      "currency": "ihg_points",
+      "rewards": {
+        "dining": 5,
+        "groceries": 3,
+        "travel": 10,
+        "gas": 5,
+        "other": 3
+      },
+      "note": "10x at IHG hotels (26x total with status); 5x on travel, gas stations, and restaurants; 3x elsewhere. IHG points are worth about 0.5¢ each. The travel multiplier applies broadly, unlike most co-brands.",
+      "credits": [
+        {
+          "label": "Anniversary Free Night",
+          "value": 200,
+          "desc": "One free night every anniversary at IHG hotels up to 40,000 points. Automatic — and you can top it up with points for pricier hotels",
+          "type": "automatic"
+        },
+        {
+          "label": "United TravelBank",
+          "value": 50,
+          "desc": "$50 in United TravelBank cash each year, usable only on United flights",
+          "type": "coupon"
+        }
+      ],
+      "creditsCaveat": "The anniversary night is worth about $200 and covers most mid-range IHG properties. The $50 United credit is only useful if you fly United.",
+      "signupBonus": {
+        "points": 140000,
+        "spendRequired": 3000,
+        "months": 3
+      },
+      "perks": [
+        "Anniversary free night (up to 40,000 points)",
+        "Automatic Platinum Elite status",
+        "Fourth night free on award stays",
+        "Global Entry / TSA PreCheck credit every 4 years",
+        "No foreign transaction fees"
+      ],
+      "applyUrl": "https://creditcards.chase.com/travel-credit-cards/ihg/premier",
+      "bestFor": "IHG Stays"
+    },
+    {
+      "id": "amex_green",
+      "name": "American Express Green Card",
+      "issuer": "American Express",
+      "annualFee": 150,
+      "membershipRequired": null,
+      "categories": [
+        "travel",
+        "dining"
+      ],
+      "tags": [
+        "travel",
+        "points",
+        "dining"
+      ],
+      "currency": "amex_mr",
+      "rewards": {
+        "dining": 3,
+        "groceries": 1,
+        "travel": 3,
+        "gas": 1,
+        "other": 1
+      },
+      "note": "3x on travel (airfare, hotels, cruises, tours), transit (rideshare, trains, tolls, parking), and restaurants worldwide; 1x elsewhere. The broadest travel definition of any Amex card.",
+      "credits": [
+        {
+          "label": "CLEAR Plus",
+          "value": 199,
+          "desc": "Up to $199/yr back on a CLEAR Plus airport security membership",
+          "type": "coupon"
+        },
+        {
+          "label": "LoungeBuddy",
+          "value": 100,
+          "desc": "Up to $100/yr back on airport lounge access purchased through LoungeBuddy",
+          "type": "coupon"
+        }
+      ],
+      "creditsCaveat": "Both credits only pay off if you'd already buy CLEAR and pay-per-visit lounge access. If you wouldn't, the card is a $150 fee for 3x travel and dining.",
+      "signupBonus": {
+        "points": 40000,
+        "spendRequired": 3000,
+        "months": 6
+      },
+      "perks": [
+        "3x on the widest travel and transit definition",
+        "Transfer to Amex's 20+ airline and hotel partners",
+        "Trip delay insurance",
+        "No foreign transaction fees"
+      ],
+      "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/green/",
+      "bestFor": "Travel & Transit"
     }
   ]
 }
