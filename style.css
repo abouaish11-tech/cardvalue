@@ -1501,3 +1501,50 @@ body.gate-open { overflow: hidden; }
   .gate-card { padding: 24px 20px 20px; }
   .gate-step h2 { font-size: 19px; }
 }
+
+/* ---- PAYWALL: locked top-3 rows ---- */
+.row-locked { cursor: pointer; }
+.row-locked .locked-name {
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  user-select: none;
+}
+.row-locked .card-issuer { color: var(--purple-light); }
+.locked-logo {
+  width: 32px; height: 32px; border-radius: 6px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--purple-subtle); font-size: 15px;
+}
+.row-locked td { position: relative; }
+.row-locked:hover { background: var(--purple-subtle); }
+.locked-cta {
+  background: var(--purple); color: var(--white);
+  border: 0; cursor: pointer; font: inherit; font-weight: 600;
+  padding: 6px 14px; border-radius: 100px; font-size: 13px;
+}
+.locked-cta:hover { background: var(--purple-dark); }
+
+/* ---- PAYWALL: wallet builder lock ---- */
+.wallet-locked {
+  text-align: center; padding: 36px 20px;
+  border: 1px dashed var(--border-light); border-radius: var(--radius);
+  background: var(--purple-subtle);
+}
+.wallet-locked-icon { font-size: 26px; display: block; margin-bottom: 10px; }
+.wallet-locked-title { font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.wallet-locked-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+.wallet-locked-btn {
+  background: var(--purple); color: var(--white);
+  border: 0; cursor: pointer; font: inherit; font-weight: 700;
+  padding: 12px 26px; border-radius: 100px;
+}
+.wallet-locked-btn:hover { background: var(--purple-dark); }
+
+/* ---- PAYWALL: gate dismiss link ---- */
+.gate-later {
+  display: block; margin: 16px auto 0;
+  background: none; border: 0; cursor: pointer;
+  font: inherit; font-size: 13px; color: var(--text-dim);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.gate-later:hover { color: var(--text-muted); }

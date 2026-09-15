@@ -588,6 +588,18 @@ function renderWalletBuilder() {
   if (!root) return;
   if (!allCards.length) { root.innerHTML = ''; return; }
 
+  // The optimizer names the exact best cards — that's the paid answer.
+  if (PAYWALL.enabled && !isLicensed()) {
+    root.innerHTML = `
+      <div class="wallet-locked">
+        <span class="wallet-locked-icon">🔒</span>
+        <p class="wallet-locked-title">The optimizer builds your exact best 1–3 card wallet.</p>
+        <p class="wallet-locked-sub">It names names. That's the part behind the unlock.</p>
+        <button type="button" class="wallet-locked-btn" onclick="showGate('pay')">Unlock for ${PAYWALL.price} →</button>
+      </div>`;
+    return;
+  }
+
   const wallet = optimizeWallet(allCards, currentSpending, walletMode);
   const single = optimizeWallet(allCards, currentSpending, 1);
   const marginalGain = wallet.netValue - single.netValue;
@@ -706,8 +718,51 @@ function renderCards() {
     return;
   }
 
+  const lockedIds = getLockedCardIds();
+
   ranked.forEach((card, idx) => {
     const rank = idx + 1;
+
+    // Paid tier: the top cards keep their real dollar columns (the tease) but
+    // identity, apply link, detail, and compare stay locked until licensed.
+    if (lockedIds.has(card.id)) {
+      const netValueL = calcNetValue(card, currentSpending);
+      const annualValueL = calcAnnualValue(card, currentSpending);
+      const realisticCreditsL = calcRealisticCredits(card);
+      const totalFeeL = card.annualFee + (card.membershipRequired ? card.membershipRequired.cost : 0);
+      const effectiveRateL = calcEffectiveRate(card, currentSpending);
+      const netClassL = netValueL >= 0 ? 'positive' : 'negative';
+      const netDisplayL = netValueL >= 0 ? `+$${netValueL.toLocaleString()}` : `-$${Math.abs(netValueL).toLocaleString()}`;
+      const orderedColsL = getOrderedColumns(currentSort);
+      const cellMapL = {
+        'effective-rate': `<td class="td-rate"><span class="rate-pct">${effectiveRateL}%</span></td>`,
+        'annual-value': `<td class="td-earned">$${annualValueL.toLocaleString()}</td>`,
+        'credits': `<td class="td-credits">${realisticCreditsL > 0 ? `+~$${realisticCreditsL.toLocaleString()}` : '—'}</td>`,
+        'fee': `<td class="td-fee">${totalFeeL === 0 ? '<span class="no-fee">$0</span>' : `−$${totalFeeL.toLocaleString()}`}</td>`,
+        'net-value': `<td class="td-net ${netClassL}">${netDisplayL}</td>`,
+      };
+      const elL = document.createElement('tr');
+      elL.className = 'card-row row-locked';
+      elL.innerHTML = `
+        <td class="td-rank"><span>${rank}</span></td>
+        <td class="td-card">
+          <div class="card-identity">
+            <span class="locked-logo">🔒</span>
+            <div>
+              <span class="card-name locked-name">█████ ████████</span>
+              <span class="card-issuer">Unlock to reveal</span>
+            </div>
+          </div>
+        </td>
+        ${orderedColsL.map(c => cellMapL[c.key]).join('')}
+        <td class="td-apply"><button type="button" class="apply-link locked-cta">Unlock →</button></td>
+        <td class="td-compare"></td>
+      `;
+      elL.addEventListener('click', () => showGate('pay'));
+      list.appendChild(elL);
+      return;
+    }
+
     const annualValue = calcAnnualValue(card, currentSpending);
     const netValue = calcNetValue(card, currentSpending);
     const effectiveRate = calcEffectiveRate(card, currentSpending);
@@ -781,6 +836,7 @@ function renderCards() {
 
 // ---- DETAIL DRAWER ----
 function openDetail(card) {
+  if (isCardLocked(card.id)) { showGate('pay'); return; }
   const annualValue = calcAnnualValue(card, currentSpending);
   const faceCredits = calcTotalCredits(card);
   const totalCredits = calcRealisticCredits(card);
@@ -1108,6 +1164,7 @@ function closeDetail() {
 
 // ---- COMPARE ----
 function toggleCompare(cardId, checked) {
+  if (checked && isCardLocked(cardId)) { showGate('pay'); renderCards(); return; }
   if (checked) {
     if (compareList.length >= 3) {
       alert('You can compare up to 3 cards at a time. Remove one first.');
@@ -1487,9 +1544,14 @@ function bindEvents() {
 // Flip `enabled` to true once the checkout product exists and checkoutUrl is set.
 // With enabled=false the gate only asks for a spending basis, then opens the site.
 const PAYWALL = {
-  enabled: false,
-  checkoutUrl: '',        // e.g. https://cardvalue.lemonsqueezy.com/buy/xxxx
+  enabled: true,
+  checkoutUrl: 'https://card-value-saudi-arabia.lemonsqueezy.com/checkout/buy/ee98a08c-2536-4391-a44c-2fa6ce091c24',
   price: '$19',
+  // License keys from any Lemon Squeezy store validate against the same public
+  // endpoint, so a key is only accepted when it belongs to OUR store + product.
+  storeId: 469620,
+  productId: 1362367,
+  lockedRanks: 3,         // top N cards (by net value) hidden until unlocked
 };
 const GATE_KEYS = { mode: 'cv_gate_mode', spending: 'cv_spending', license: 'cv_license' };
 let gatePending = false;   // true while "enter my spending" chose but not applied
@@ -1521,14 +1583,24 @@ function isLicensed() {
   return !!localStorage.getItem(GATE_KEYS.license);
 }
 
+/** Ids of the top-N cards by net value for the current spending — the paid tier.
+ *  Computed over ALL cards so no filter, search, or sort order can surface them. */
+function getLockedCardIds() {
+  if (!PAYWALL.enabled || isLicensed() || !allCards.length) return new Set();
+  const ranked = [...allCards].sort((a, b) => calcNetValue(b, currentSpending) - calcNetValue(a, currentSpending));
+  return new Set(ranked.slice(0, PAYWALL.lockedRanks).map(c => c.id));
+}
+
+function isCardLocked(cardId) {
+  return getLockedCardIds().has(cardId);
+}
+
 function completeGateChoice(mode) {
   try { localStorage.setItem(GATE_KEYS.mode, mode); } catch (e) {}
   gatePending = false;
-  if (PAYWALL.enabled && !isLicensed()) {
-    showGate('pay');
-  } else {
-    hideGate();
-  }
+  // Partial-access model: never hard-wall the site after the spending choice.
+  // Ranks 4+ stay free; the locked top-3 rows and wallet builder sell the unlock.
+  hideGate();
 }
 
 async function activateLicense() {
@@ -1544,11 +1616,16 @@ async function activateLicense() {
       body: 'license_key=' + encodeURIComponent(key),
     });
     const data = await res.json();
-    if (data && data.valid) {
+    const meta = (data && data.meta) || {};
+    const ours = Number(meta.store_id) === PAYWALL.storeId && Number(meta.product_id) === PAYWALL.productId;
+    if (data && data.valid && ours) {
       try { localStorage.setItem(GATE_KEYS.license, key); } catch (e) {}
       msg.textContent = '';
       showToast('✓ Unlocked — welcome to CardValue', 'success');
       hideGate();
+      renderCards();
+    } else if (data && data.valid && !ours) {
+      msg.textContent = 'That key belongs to a different product.';
     } else {
       msg.textContent = 'That key didn\'t validate. Check for typos, or reply to your receipt email for help.';
     }
@@ -1577,10 +1654,7 @@ function restoreSavedSpending() {
 }
 
 function initGate() {
-  const modeChosen = localStorage.getItem(GATE_KEYS.mode);
-  const needsPay = PAYWALL.enabled && !isLicensed();
-  if (modeChosen && !needsPay) return;   // returning, settled visitor — no gate
-
+  // Bind the pay step unconditionally: locked rows can open it at any time.
   document.getElementById('gatePriceAmt').textContent = PAYWALL.price;
   const buy = document.getElementById('gateBuy');
   buy.href = PAYWALL.checkoutUrl || '#';
@@ -1595,8 +1669,10 @@ function initGate() {
   document.getElementById('gateLicense').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') activateLicense();
   });
+  document.getElementById('gateLater').addEventListener('click', hideGate);
 
-  showGate(modeChosen && needsPay ? 'pay' : 'choice');
+  const modeChosen = localStorage.getItem(GATE_KEYS.mode);
+  if (!modeChosen) showGate('choice');   // first visit: pick a spending basis, then browse
 }
 
 // ---- INIT ----
