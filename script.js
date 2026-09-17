@@ -1579,7 +1579,7 @@ const PAYWALL = {
   // checkout[billing_address][country]=US prefills the country so the phone
   // and address pickers default to United States instead of the store's or
   // visitor's detected locale.
-  checkoutUrl: 'https://card-value-saudi-arabia.lemonsqueezy.com/checkout/buy/ee98a08c-2536-4391-a44c-2fa6ce091c24?embed=1&checkout%5Bbilling_address%5D%5Bcountry%5D=US',
+  checkoutUrl: 'https://card-value.lemonsqueezy.com/checkout/buy/ee98a08c-2536-4391-a44c-2fa6ce091c24?embed=1&checkout%5Bbilling_address%5D%5Bcountry%5D=US',
   price: '$19',
   // License keys from any Lemon Squeezy store validate against the same public
   // endpoint, so a key is only accepted when it belongs to OUR store + product.
