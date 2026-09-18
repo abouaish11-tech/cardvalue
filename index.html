@@ -66,7 +66,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="style.css?v=19" />
+  <link rel="stylesheet" href="style.css?v=20" />
 
   <!-- Lemon Squeezy overlay checkout: opens the checkout as a modal on cardvalue.org
        so the address bar never leaves this domain. -->
@@ -104,6 +104,29 @@
         <button class="btn-personalize" id="btnPersonalize">
           Rank for my spending
         </button>
+      </div>
+      <div class="hero-art" id="heroArt" aria-hidden="true">
+        <div class="hero-stack">
+          <div class="hero-card hero-card-3">
+            <span class="hero-card-chip"></span>
+            <span class="hero-card-rank">#3</span>
+            <span class="hero-card-tag" data-hero-rank="3">+$765<small>/yr</small></span>
+          </div>
+          <div class="hero-card hero-card-2">
+            <span class="hero-card-chip"></span>
+            <span class="hero-card-rank">#2</span>
+            <span class="hero-card-tag" data-hero-rank="2">+$822<small>/yr</small></span>
+          </div>
+          <div class="hero-card hero-card-1">
+            <span class="hero-card-chip"></span>
+            <span class="hero-card-rank">#1</span>
+            <span class="hero-card-tag hero-card-tag-top" data-hero-rank="1">+$900<small>/yr</small></span>
+          </div>
+        </div>
+        <div class="hero-yours">
+          <span class="hero-yours-card"></span>
+          <span class="hero-yours-text">A plain 1% card on the same spending: <b id="heroYoursValue">$240/yr</b></span>
+        </div>
       </div>
     </div>
   </section>
@@ -410,6 +433,6 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="script.js?v=22"></script>
+  <script src="script.js?v=23"></script>
 </body>
 </html>

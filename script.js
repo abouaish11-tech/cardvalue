@@ -857,6 +857,24 @@ function renderCards() {
 
   // Keep wallet builder in sync with the latest spending/valuations
   renderWalletBuilder();
+  updateHeroArt();
+}
+
+/** The hero product shot shows the real top-3 net values and what a plain
+ *  1% card would earn on the same spending, so the image is the argument. */
+function updateHeroArt() {
+  const art = document.getElementById('heroArt');
+  if (!art || !allCards.length) return;
+  const top = sortCards(allCards, 'net-value', currentSpending).slice(0, 3);
+  top.forEach((card, i) => {
+    const el = art.querySelector(`[data-hero-rank="${i + 1}"]`);
+    if (!el) return;
+    const v = calcNetValue(card, currentSpending);
+    el.innerHTML = `${v >= 0 ? '+' : '-'}$${Math.abs(v).toLocaleString()}<small>/yr</small>`;
+  });
+  const monthly = Object.values(currentSpending).reduce((a, b) => a + (Number(b) || 0), 0);
+  const yours = document.getElementById('heroYoursValue');
+  if (yours) yours.textContent = `$${Math.round(monthly * 12 * 0.01).toLocaleString()}/yr`;
 }
 
 // ---- DETAIL DRAWER ----
