@@ -134,20 +134,23 @@ function getCurrencyLabel(currency) {
 
 // ---- CATEGORY CONFIG ----
 const CATEGORIES = [
-  { key: 'dining',     label: 'Dining',     emoji: '🍽' },
-  { key: 'groceries',  label: 'Groceries',  emoji: '🛒' },
-  { key: 'travel',     label: 'Travel',     emoji: '✈️' },
-  { key: 'gas',        label: 'Gas',        emoji: '⛽' },
-  { key: 'other',      label: 'Everything Else', emoji: '🛍' },
+  { key: 'dining',     label: 'Dining',     emoji: '' },
+  { key: 'groceries',  label: 'Groceries',  emoji: '' },
+  { key: 'travel',     label: 'Travel',     emoji: '' },
+  { key: 'gas',        label: 'Gas',        emoji: '' },
+  { key: 'other',      label: 'Everything Else', emoji: '' },
 ];
 
 // ---- ISSUER LOGO HELPER ----
+function issuerInitials(issuer) {
+  return issuer.replace(/\(.*?\)/g, '').trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+}
 function getIssuerLogoHTML(issuer, size = 28) {
   const logoUrl = ISSUER_LOGOS[issuer];
   if (logoUrl) {
-    return `<img src="${logoUrl}" alt="${issuer}" width="${size}" height="${size}" style="border-radius:4px; object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span style="display:none;width:${size}px;height:${size}px;align-items:center;justify-content:center;font-size:${Math.round(size*0.6)}px">${ISSUER_EMOJI[issuer] || '💳'}</span>`;
+    return `<img src="${logoUrl}" alt="${issuer}" width="${size}" height="${size}" style="border-radius:4px; object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="logo-fallback" style="display:none;width:${size}px;height:${size}px;align-items:center;justify-content:center;font-size:${Math.round(size*0.4)}px">${issuerInitials(issuer)}</span>`;
   }
-  return `<span style="font-size:${Math.round(size*0.6)}px">${ISSUER_EMOJI[issuer] || '💳'}</span>`;
+  return `<span class="logo-fallback" style="font-size:${Math.round(size*0.4)}px">${issuerInitials(issuer)}</span>`;
 }
 
 // ---- TIER REWARDS HELPERS (Phase 3) ----
@@ -614,10 +617,10 @@ function renderWalletBuilder() {
   if (PAYWALL.enabled && !isLicensed()) {
     root.innerHTML = `
       <div class="wallet-locked">
-        <span class="wallet-locked-icon">🔒</span>
-        <p class="wallet-locked-title">The optimizer builds your exact best 1–3 card wallet.</p>
+        <span class="wallet-locked-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+        <p class="wallet-locked-title">The optimizer builds your exact best 1 to 3 card wallet.</p>
         <p class="wallet-locked-sub">It names names. That's the part behind the unlock.</p>
-        <button type="button" class="wallet-locked-btn" onclick="showGate('pay')">Unlock for ${PAYWALL.price} →</button>
+        <button type="button" class="wallet-locked-btn" onclick="showGate('pay')">Unlock for ${PAYWALL.price}</button>
       </div>`;
     return;
   }
@@ -654,7 +657,7 @@ function renderWalletBuilder() {
         <div class="wallet-card-uses">
           <span class="wallet-uses-label">Use for:</span>
           ${cats.length === 0
-            ? '<span class="wallet-uses-empty">— (kept for credits/perks)</span>'
+            ? '<span class="wallet-uses-empty">kept for credits and perks</span>'
             : cats.map(cat => {
                 const rate = getEffectiveMultiplier(c, cat.key);
                 const baseRate = c.rewards[cat.key] || 1;
@@ -662,7 +665,7 @@ function renderWalletBuilder() {
                 const rateLabel = isBoosted
                   ? `<em class="boosted">${(+rate.toFixed(2))}x ↑</em>`
                   : `<em>${rate}x</em>`;
-                return `<span class="wallet-use-chip">${cat.emoji} ${cat.label} ${rateLabel}</span>`;
+                return `<span class="wallet-use-chip">${cat.label} ${rateLabel}</span>`;
               }).join('')
           }
         </div>
@@ -684,16 +687,16 @@ function renderWalletBuilder() {
         </div>
         ${wallet.trueNetValue < 0 ? `
           <div class="wallet-warning">
-            ⚠️ Your tier deposits cost more in opportunity cost than this wallet earns. Lower your deposits or raise your comparison APY.
+            Your tier deposits cost more in opportunity cost than this wallet earns. Lower your deposits or raise your comparison APY.
           </div>` : ''}
       ` : ''}
       ${wallet.cards.length > 1 ? `
         <div class="wallet-comparison">
           ${marginalGain > 0
             ? `<span class="wallet-gain">+$${marginalGain.toLocaleString()}</span> better than the best single card`
-            : `Same value as the best single card — try fewer cards.`}
+            : `Same value as the best single card. Try fewer cards.`}
         </div>` : `
-        <div class="wallet-comparison">Single-card mode — try 2 or 3 cards to see if you can do better.</div>
+        <div class="wallet-comparison">Single-card mode. Try 2 or 3 cards to see if you can do better.</div>
       `}
     </div>
   `;
@@ -769,7 +772,7 @@ function renderCards() {
         <td class="td-rank"><span>${rank}</span></td>
         <td class="td-card">
           <div class="card-identity">
-            <span class="locked-logo">🔒</span>
+            <span class="locked-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
             <div>
               <span class="card-name locked-name">█████ ████████</span>
               <span class="card-issuer">Unlock to reveal</span>
@@ -777,7 +780,7 @@ function renderCards() {
           </div>
         </td>
         ${orderedColsL.map(c => cellMapL[c.key]).join('')}
-        <td class="td-apply"><button type="button" class="apply-link locked-cta">Unlock →</button></td>
+        <td class="td-apply"><button type="button" class="apply-link locked-cta">Unlock</button></td>
         <td class="td-compare"></td>
       `;
       elL.addEventListener('click', () => showGate('pay'));
@@ -833,7 +836,7 @@ function renderCards() {
         </div>
       </td>
       ${orderedCols.map(c => cellMap[c.key]).join('')}
-      <td class="td-apply"><a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="table" onclick="event.stopPropagation()">Apply →</a></td>
+      <td class="td-apply"><a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="table" onclick="event.stopPropagation()">Apply</a></td>
       <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" ${isCompared ? 'checked' : ''} /></td>
     `;
 
@@ -880,7 +883,7 @@ function openDetail(card) {
     <div class="detail-section">
       <div class="value-highlight-box">
         <div class="big-number">${netValue >= 0 ? '+' : '−'}$${Math.abs(netValue).toLocaleString()}</div>
-        <div class="big-label">Net annual value — what you keep after the fee</div>
+        <div class="big-label">Net annual value, what you keep after the fee</div>
         <div class="big-sub">${totalCredits > 0
             ? `$${annualValue.toLocaleString()} rewards + ~$${totalCredits.toLocaleString()} credits* (of $${faceCredits.toLocaleString()} advertised) − $${totalFee.toLocaleString()} fee`
             : `$${annualValue.toLocaleString()} rewards${totalFee > 0 ? ` − $${totalFee.toLocaleString()} fee` : ''}`
@@ -893,9 +896,9 @@ function openDetail(card) {
   if (card.membershipRequired) {
     html += `
       <div class="membership-note">
-        <strong>⚠️ Membership Required</strong>
+        <strong>Membership required</strong>
         ${card.membershipRequired.description}
-        ${card.membershipRequired.cost > 0 ? ` — $${card.membershipRequired.cost}/yr (already deducted from net value)` : ''}
+        ${card.membershipRequired.cost > 0 ? `. $${card.membershipRequired.cost}/yr, already deducted from net value` : ''}
       </div>
     `;
   }
@@ -956,7 +959,7 @@ function openDetail(card) {
     }
     const cashRate = `(${(effectiveMultiplier * pv).toFixed(1)}¢/$)`;
     const capWarning = isCapped
-      ? `<span class="cap-warning" title="Excess earns 1x">⚠️ over $${cap.toLocaleString()} cap</span>`
+      ? `<span class="cap-warning" title="Excess earns 1x">over $${cap.toLocaleString()} cap</span>`
       : '';
     html += `
       <tr>
@@ -1042,8 +1045,8 @@ function openDetail(card) {
             </div>
           </div>
         </div>
-        ${card.creditsCaveat ? `<div class="credits-caveat">⚠️ ${card.creditsCaveat}</div>` : ''}
-        <p class="credits-disclaimer">* Each credit is valued by how usable it is in practice — automatic 100%, flexible 90%, monthly expiring 60%, portal-only 50%, single-merchant 30%. The advertised amount is shown struck through.</p>
+        ${card.creditsCaveat ? `<div class="credits-caveat">${card.creditsCaveat}</div>` : ''}
+        <p class="credits-disclaimer">* Each credit is valued by how usable it is in practice: automatic 100%, flexible 90%, monthly expiring 60%, portal-only 50%, single-merchant 30%. The advertised amount is shown struck through.</p>
       </div>
     `;
   }
@@ -1103,7 +1106,7 @@ function openDetail(card) {
 
     html += `
       <div class="detail-section tier-section ${isBoosted ? 'is-boosted' : ''}">
-        <div class="detail-section-title">🏦 ${card.tierRewards.program} ${isBoosted ? '<span class="tier-active-pill">Active</span>' : '<span class="tier-eligible-pill">Eligible</span>'}</div>
+        <div class="detail-section-title">${card.tierRewards.program} ${isBoosted ? '<span class="tier-active-pill">Active</span>' : '<span class="tier-eligible-pill">Eligible</span>'}</div>
         ${!isBoosted ? `
           <p class="tier-cta">Open the Personalize panel and enter your deposits at ${card.tierRewards.depositBank} to see your boosted rewards.</p>
         ` : ''}
@@ -1125,7 +1128,7 @@ function openDetail(card) {
               <span>True net value</span>
               <strong class="${trueNet >= 0 ? 'green' : 'red'}">${trueNet >= 0 ? '+' : ''}$${trueNet.toLocaleString()}/yr</strong>
             </div>
-            ${trueNet < 0 ? `<div class="tier-warning">⚠️ Tier deposits cost more than this card earns. Lower your tier or compare against a lower-yield benchmark.</div>` : ''}
+            ${trueNet < 0 ? `<div class="tier-warning">Tier deposits cost more than this card earns. Lower your tier or compare against a lower-yield benchmark.</div>` : ''}
           </div>
         ` : ''}
       </div>
@@ -1140,7 +1143,7 @@ function openDetail(card) {
       const bonusCash = Math.round(bonus.points * (pv / 100));
       bonusText = `<strong>${bonus.points.toLocaleString()} bonus points</strong> ≈ <strong>$${bonusCash.toLocaleString()} in value</strong>`;
       if (bonus.spendRequired) {
-        bonusText += ` — spend $${bonus.spendRequired.toLocaleString()} in ${bonus.months} months`;
+        bonusText += ` after spending $${bonus.spendRequired.toLocaleString()} in ${bonus.months} months`;
       }
     } else if (bonus.description) {
       bonusText = `<strong>${bonus.description}</strong>`;
@@ -1148,7 +1151,7 @@ function openDetail(card) {
     html += `
       <div class="detail-section">
         <div class="detail-section-title">Sign-Up Bonus</div>
-        <div class="bonus-box">🎁 ${bonusText}</div>
+        <div class="bonus-box">${bonusText}</div>
       </div>
     `;
   }
@@ -1338,7 +1341,7 @@ function applyPersonalization() {
       const top = list.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: 'smooth' });
     }
-    showToast('✓ Ranking updated for your spending', 'success');
+    showToast('Ranking updated for your spending', 'success');
   }, 500);
 }
 
@@ -1660,7 +1663,7 @@ async function validateLicenseKey(key) {
 
 function unlockWith(key) {
   try { localStorage.setItem(GATE_KEYS.license, key); } catch (e) {}
-  showToast('✓ Unlocked — welcome to CardValue', 'success');
+  showToast('Unlocked. Welcome to CardValue.', 'success');
   hideGate();
   renderCards();
 }
@@ -1693,7 +1696,7 @@ async function autoUnlockFromUrl() {
   if (result === 'ok') {
     unlockWith(key);
   } else if (result === 'network') {
-    showToast('Payment received — couldn\'t reach the license server. Your key is in your receipt email.', 'error');
+    showToast('Payment received, but we couldn\'t reach the license server. Your key is in your receipt email.', 'error');
   }
 }
 
@@ -1769,7 +1772,7 @@ async function init() {
   } catch (err) {
     document.getElementById('cardList').innerHTML = `
       <div class="loading-state">
-        <p>⚠️ Error loading card data. Make sure you're running this from a local server or just opening the file directly.</p>
+        <p>Error loading card data. Make sure you're running this from a local server or just opening the file directly.</p>
       </div>
     `;
     console.error('Failed to load cards.json:', err);
