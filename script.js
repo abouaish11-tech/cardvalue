@@ -1714,21 +1714,39 @@ async function activateLicense() {
 }
 
 /** Handle the return trip from checkout.
- *  Polar's success URL carries ?checkout_id=... (never the key itself; the key
- *  goes to the buyer by email and in their Polar purchases page), so we open
- *  the gate straight on the "paste your key" step. ?license_key=/?key= is
- *  still honored so a support reply can send a one-click unlock link. */
+ *  Polar's success redirect carries ?checkout_id=... plus a short-lived
+ *  ?customer_session_token=... for the buyer. That token can read the buyer's
+ *  own license keys from Polar's customer-portal API, so we fetch the key and
+ *  unlock without any pasting. If that fails for any reason we fall back to
+ *  the "paste your key" step (the key is also in the Polar email and portal).
+ *  ?license_key=/?key= is still honored so a support reply can send a
+ *  one-click unlock link. */
 let postCheckout = false;
+async function fetchKeyWithSessionToken(token) {
+  try {
+    const url = polarApiBase() + '/v1/customer-portal/license-keys/?limit=10'
+      + (PAYWALL.benefitId ? '&benefit_id=' + encodeURIComponent(PAYWALL.benefitId) : '');
+    const res = await fetch(url, { headers: { 'Accept': 'application/json', 'Authorization': 'Bearer ' + token } });
+    if (!res.ok) return '';
+    const data = await res.json();
+    const granted = (data.items || []).find(k => k.status === 'granted' && k.key);
+    return granted ? granted.key : '';
+  } catch (err) {
+    return '';
+  }
+}
 async function autoUnlockFromUrl() {
   const params = new URLSearchParams(location.search);
-  const key = (params.get('license_key') || params.get('key') || '').trim();
+  let key = (params.get('license_key') || params.get('key') || '').trim();
   const checkoutId = (params.get('checkout_id') || '').trim();
-  if (!key && !checkoutId) return;
+  const sessionToken = (params.get('customer_session_token') || '').trim();
+  if (!key && !checkoutId && !sessionToken) return;
   // Clean the params out of the address bar either way (don't leave them in history).
-  params.delete('license_key'); params.delete('key'); params.delete('checkout_id');
+  ['license_key', 'key', 'checkout_id', 'customer_session_token'].forEach(k => params.delete(k));
   const qs = params.toString();
   history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
   if (isLicensed()) return;
+  if (!key && sessionToken) key = await fetchKeyWithSessionToken(sessionToken);
   if (key) {
     const result = await validateLicenseKey(key);
     if (result === 'ok') { unlockWith(key); return; }
@@ -1736,7 +1754,7 @@ async function autoUnlockFromUrl() {
       showToast('Payment received, but we couldn\'t reach the license server. Your key is in your receipt email.', 'error');
     }
   }
-  if (checkoutId || key) postCheckout = true;
+  postCheckout = true;
 }
 
 /** Swap the pay step into its "you just paid" state. */
