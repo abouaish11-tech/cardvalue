@@ -1591,23 +1591,31 @@ function bindEvents() {
 }
 
 /* ---------- Onboarding gate + paywall ---------- */
-// Flip `enabled` to true once the checkout product exists and checkoutUrl is set.
-// With enabled=false the gate only asks for a spending basis, then opens the site.
+// Payments run through Polar (merchant of record). Three things are needed
+// from the Polar dashboard; the checkout link lives on #gateBuy's href in
+// index.html, the two ids live here.
+//   organizationId: Settings > General > Organization ID
+//   benefitId:      the License Keys benefit attached to the product
+// A sandbox.polar.sh checkout link automatically routes validation to
+// sandbox-api.polar.sh, so test purchases (card 4242 4242 4242 4242) unlock
+// the site exactly like real ones.
 const PAYWALL = {
   enabled: true,
-  // ?embed=1 makes lemon.js open this as an in-page overlay so the address bar
-  // stays on cardvalue.org (buyer never sees the raw store subdomain).
-  // checkout[billing_address][country]=US prefills the country so the phone
-  // and address pickers default to United States instead of the store's or
-  // visitor's detected locale.
-  checkoutUrl: 'https://card-value.lemonsqueezy.com/checkout/buy/ee98a08c-2536-4391-a44c-2fa6ce091c24?embed=1&checkout%5Bbilling_address%5D%5Bcountry%5D=US',
+  organizationId: 'd1bb307d-f54f-45a5-a635-a5de6d64ba66',
+  benefitId: '669eea83-dcc3-4480-86cf-b701c61dbcaa',
+  // Customer portal where buyers can re-read their key.
+  portalUrl: 'https://polar.sh/card-value/portal',
   price: '$19',
-  // License keys from any Lemon Squeezy store validate against the same public
-  // endpoint, so a key is only accepted when it belongs to OUR store + product.
-  storeId: 469620,
-  productId: 1362367,
   freeRanks: [4, 5],      // only these net-value ranks stay visible unlicensed
 };
+function polarCheckoutUrl() {
+  const a = document.getElementById('gateBuy');
+  const href = a ? (a.getAttribute('href') || '') : '';
+  return href.startsWith('http') ? href : '';
+}
+function polarApiBase() {
+  return polarCheckoutUrl().includes('sandbox.polar.sh') ? 'https://sandbox-api.polar.sh' : 'https://api.polar.sh';
+}
 const GATE_KEYS = { mode: 'cv_gate_mode', spending: 'cv_spending', license: 'cv_license' };
 let gatePending = false;   // true while "enter my spending" chose but not applied
 
@@ -1660,19 +1668,25 @@ function completeGateChoice(mode) {
   hideGate();
 }
 
-/** Validate a key against our store+product. Returns 'ok' | 'wrong-product' | 'invalid' | 'network'. */
+/** Validate a key against our Polar organization + license benefit.
+ *  Returns 'ok' | 'revoked' | 'invalid' | 'network'. Polar's validate endpoint
+ *  is public and scoped by organization_id (and benefit_id when set), so a key
+ *  from any other seller or product comes back 404. */
 async function validateLicenseKey(key) {
+  if (!PAYWALL.organizationId) return 'network';
+  const body = { key, organization_id: PAYWALL.organizationId };
+  if (PAYWALL.benefitId) body.benefit_id = PAYWALL.benefitId;
   try {
-    const res = await fetch('https://api.lemonsqueezy.com/v1/licenses/validate', {
+    const res = await fetch(polarApiBase() + '/v1/customer-portal/license-keys/validate', {
       method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'license_key=' + encodeURIComponent(key),
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
     });
+    if (res.status === 404 || res.status === 422) return 'invalid';
+    if (!res.ok) return 'network';
     const data = await res.json();
-    const meta = (data && data.meta) || {};
-    const ours = Number(meta.store_id) === PAYWALL.storeId && Number(meta.product_id) === PAYWALL.productId;
-    if (data && data.valid && ours) return 'ok';
-    if (data && data.valid && !ours) return 'wrong-product';
+    if (data && data.status === 'granted') return 'ok';
+    if (data && (data.status === 'revoked' || data.status === 'disabled')) return 'revoked';
     return 'invalid';
   } catch (err) {
     return 'network';
@@ -1694,28 +1708,46 @@ async function activateLicense() {
   msg.textContent = 'Checking…';
   const result = await validateLicenseKey(key);
   if (result === 'ok') { msg.textContent = ''; unlockWith(key); }
-  else if (result === 'wrong-product') msg.textContent = 'That key belongs to a different product.';
+  else if (result === 'revoked') msg.textContent = 'That key has been refunded or disabled.';
   else if (result === 'network') msg.textContent = 'Couldn\'t reach the license server. Try again in a minute.';
   else msg.textContent = 'That key didn\'t validate. Check for typos, or reply to your receipt email for help.';
 }
 
-/** Auto-unlock when Lemon Squeezy's post-checkout redirect lands with
- *  ?license_key=... — the buyer never has to paste anything. */
+/** Handle the return trip from checkout.
+ *  Polar's success URL carries ?checkout_id=... (never the key itself; the key
+ *  goes to the buyer by email and in their Polar purchases page), so we open
+ *  the gate straight on the "paste your key" step. ?license_key=/?key= is
+ *  still honored so a support reply can send a one-click unlock link. */
+let postCheckout = false;
 async function autoUnlockFromUrl() {
   const params = new URLSearchParams(location.search);
   const key = (params.get('license_key') || params.get('key') || '').trim();
-  if (!key) return;
-  // Clean the key out of the address bar either way (don't leave it in history).
-  params.delete('license_key'); params.delete('key');
+  const checkoutId = (params.get('checkout_id') || '').trim();
+  if (!key && !checkoutId) return;
+  // Clean the params out of the address bar either way (don't leave them in history).
+  params.delete('license_key'); params.delete('key'); params.delete('checkout_id');
   const qs = params.toString();
   history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
   if (isLicensed()) return;
-  const result = await validateLicenseKey(key);
-  if (result === 'ok') {
-    unlockWith(key);
-  } else if (result === 'network') {
-    showToast('Payment received, but we couldn\'t reach the license server. Your key is in your receipt email.', 'error');
+  if (key) {
+    const result = await validateLicenseKey(key);
+    if (result === 'ok') { unlockWith(key); return; }
+    if (result === 'network') {
+      showToast('Payment received, but we couldn\'t reach the license server. Your key is in your receipt email.', 'error');
+    }
   }
+  if (checkoutId || key) postCheckout = true;
+}
+
+/** Swap the pay step into its "you just paid" state. */
+function showPostCheckoutState() {
+  document.getElementById('gatePayTitle').textContent = 'Payment received';
+  document.getElementById('gatePaySub').textContent = 'Your license key is in the email from Polar (check spam if it\'s not there). Paste it below and you\'re in.';
+  document.getElementById('gateBuyWrap').hidden = true;
+  const note = document.getElementById('gatePortalNote');
+  const link = document.getElementById('gatePortalLink');
+  if (PAYWALL.portalUrl) { link.href = PAYWALL.portalUrl; note.hidden = false; }
+  document.getElementById('gateLater').textContent = 'I\'ll do this later';
 }
 
 function restoreSavedSpending() {
@@ -1741,7 +1773,13 @@ function initGate() {
   // Bind the pay step unconditionally: locked rows can open it at any time.
   document.getElementById('gatePriceAmt').textContent = PAYWALL.price;
   const buy = document.getElementById('gateBuy');
-  buy.href = PAYWALL.checkoutUrl || '#';
+  if (!polarCheckoutUrl()) {
+    // No checkout link yet: don't send anyone to a dead button.
+    buy.textContent = 'Checkout opens soon';
+    buy.setAttribute('aria-disabled', 'true');
+    buy.style.opacity = '0.5';
+    buy.style.pointerEvents = 'none';
+  }
 
   document.getElementById('gateAvg').addEventListener('click', () => {
     // Picking "average" must actually mean average — a returning visitor may
@@ -1770,7 +1808,14 @@ function initGate() {
 
   // Every visit lands on the spending-basis chooser. Saved custom spending
   // still prefills the drawer when they pick "enter my spending" again.
-  showGate('choice');
+  // Coming back from checkout skips straight to the key step.
+  if (postCheckout) {
+    showPostCheckoutState();
+    showGate('pay');
+    setTimeout(() => document.getElementById('gateLicense').focus(), 50);
+  } else {
+    showGate('choice');
+  }
 }
 
 // ---- INIT ----
