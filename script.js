@@ -1601,11 +1601,10 @@ function bindEvents() {
 // the site exactly like real ones.
 const PAYWALL = {
   enabled: true,
-  organizationId: '',
-  benefitId: '',
-  // Customer portal where buyers can re-read their key. Usually
-  // https://polar.sh/<org-slug>/portal
-  portalUrl: '',
+  organizationId: 'd1bb307d-f54f-45a5-a635-a5de6d64ba66',
+  benefitId: '669eea83-dcc3-4480-86cf-b701c61dbcaa',
+  // Customer portal where buyers can re-read their key.
+  portalUrl: 'https://polar.sh/card-value/portal',
   price: '$19',
   freeRanks: [4, 5],      // only these net-value ranks stay visible unlicensed
 };
