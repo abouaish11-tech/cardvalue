@@ -68,9 +68,9 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="style.css?v=20" />
 
-  <!-- Lemon Squeezy overlay checkout: opens the checkout as a modal on cardvalue.org
-       so the address bar never leaves this domain. -->
-  <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
+  <!-- Polar overlay checkout: any <a data-polar-checkout> opens as an in-page
+       modal so the address bar never leaves cardvalue.org. -->
+  <script defer data-auto-init src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@latest/dist/embed.global.js"></script>
 </head>
 <body>
   <a href="#cardList" class="skip-link">Skip to card list</a>
@@ -415,16 +415,21 @@
       </div>
 
       <div class="gate-step" id="gateStepPay" hidden>
-        <h2>Unlock your full rankings</h2>
-        <p class="gate-sub">All 42 cards ranked for your spending, including the 3 that pay you the most, stay hidden until you unlock. One payment, yours forever. The banks never pay us. That's why the math stays honest.</p>
-        <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> USD · one-time</span></div>
-        <a class="gate-buy lemonsqueezy-button" id="gateBuy" href="#" rel="noopener">Unlock with card</a>
-        <p class="gate-trust">Secure checkout · Billed in USD</p>
+        <h2 id="gatePayTitle">Unlock your full rankings</h2>
+        <p class="gate-sub" id="gatePaySub">All 42 cards ranked for your spending, including the 3 that pay you the most, stay hidden until you unlock. One payment, yours forever. The banks never pay us. That's why the math stays honest.</p>
+        <div class="gate-buy-wrap" id="gateBuyWrap">
+          <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> USD · one-time</span></div>
+          <!-- href is the single source of truth for the Polar checkout link.
+               A sandbox.polar.sh link switches license validation to the sandbox API. -->
+          <a class="gate-buy" id="gateBuy" href="#" data-polar-checkout data-polar-checkout-theme="light" rel="noopener">Unlock with card</a>
+          <p class="gate-trust">Secure checkout by Polar · Billed in USD</p>
+        </div>
         <div class="gate-license">
-          <input id="gateLicense" type="text" placeholder="Bought on another device? Paste your key" autocomplete="off" />
+          <input id="gateLicense" type="text" placeholder="Paste your license key" autocomplete="off" />
           <button id="gateLicenseGo" type="button">Activate</button>
         </div>
         <p class="gate-note" id="gateLicenseMsg" aria-live="polite"></p>
+        <p class="gate-note" id="gatePortalNote" hidden>Can't find the email? <a id="gatePortalLink" href="#" target="_blank" rel="noopener">Open your Polar purchases</a> to copy the key.</p>
         <button type="button" class="gate-later" id="gateLater">Maybe later, keep the free preview</button>
       </div>
     </div>
@@ -433,6 +438,6 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="script.js?v=23"></script>
+  <script src="script.js?v=24"></script>
 </body>
 </html>
