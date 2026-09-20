@@ -66,7 +66,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="style.css?v=20" />
+  <link rel="stylesheet" href="style.css?v=21" />
 
   <!-- Polar overlay checkout: any <a data-polar-checkout> opens as an in-page
        modal so the address bar never leaves cardvalue.org. -->
@@ -85,7 +85,7 @@
         </svg>
         <span class="logo-text">CardValue</span>
       </div>
-      <p class="header-tagline">42 cards. Ranked in dollars. No affiliate links.</p>
+      <p class="header-tagline"><span data-card-count>52</span> cards. Ranked in dollars. No affiliate links.</p>
     </div>
   </header>
 
@@ -138,7 +138,7 @@
         <h3>Your monthly spending</h3>
         <button class="drawer-close" id="drawerClose" aria-label="Close spending panel">✕</button>
       </div>
-      <p class="drawer-sub">Rough numbers are fine. We re-rank all 42 cards for you.</p>
+      <p class="drawer-sub">Rough numbers are fine. We re-rank all <span data-card-count>52</span> cards for you.</p>
       <div class="spending-inputs">
         <div class="spending-row">
           <label>Dining & restaurants</label>
@@ -158,9 +158,46 @@
         </div>
         <div class="spending-row">
           <label>Everything else</label>
-          <div class="input-wrap"><span>$</span><input type="number" id="sp_other" value="750" min="0" max="99999" /></div>
+          <div class="input-wrap"><span>$</span><input type="number" id="sp_other" value="300" min="0" max="99999" /></div>
         </div>
       </div>
+
+      <!-- Finer categories: the ones issuers pay bonus rates on -->
+      <details class="banking-relationships more-categories" id="moreCategories">
+        <summary class="banking-summary">
+          <span class="banking-title">More categories <em>(optional)</em></span>
+          <span class="banking-hint">Streaming, transit, online shopping, drugstores, entertainment, rent. Many cards pay 3 to 6% here.</span>
+        </summary>
+        <div class="banking-body">
+          <div class="spending-inputs spending-inputs-more">
+            <div class="spending-row">
+              <label>Streaming</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_streaming" value="40" min="0" max="99999" /></div>
+            </div>
+            <div class="spending-row">
+              <label>Transit & rideshare</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_transit" value="60" min="0" max="99999" /></div>
+            </div>
+            <div class="spending-row">
+              <label>Online shopping (Amazon, etc.)</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_online" value="250" min="0" max="99999" /></div>
+            </div>
+            <div class="spending-row">
+              <label>Drugstores</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_drugstores" value="40" min="0" max="99999" /></div>
+            </div>
+            <div class="spending-row">
+              <label>Entertainment (tickets, events)</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_entertainment" value="60" min="0" max="99999" /></div>
+            </div>
+            <div class="spending-row">
+              <label>Rent</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_rent" value="0" min="0" max="99999" /></div>
+            </div>
+          </div>
+          <p class="banking-explainer">Rent counts only for Bilt, the one card that earns on rent without a transaction fee. Leave it at $0 if you would not put rent on a card.</p>
+        </div>
+      </details>
 
       <!-- Banking Relationships (Phase 3) -->
       <details class="banking-relationships" id="bankingRelationships">
@@ -405,18 +442,18 @@
         <p class="gate-sub">The best card depends on where your money goes. Pick a starting point.</p>
         <button class="gate-option" id="gateMine" type="button">
           <span class="gate-opt-title">Enter my spending</span>
-          <span class="gate-opt-desc">About 60 seconds. Rankings computed for your dining, groceries, travel, and gas.</span>
+          <span class="gate-opt-desc">About 60 seconds. Rankings computed for your dining, groceries, travel, gas, and the categories cards pay extra on.</span>
         </button>
         <button class="gate-option gate-option-secondary" id="gateAvg" type="button">
           <span class="gate-opt-title">Use average American spending</span>
-          <span class="gate-opt-desc">$500 dining · $400 groceries · $200 travel · $150 gas · $750 other per month</span>
+          <span class="gate-opt-desc">$500 dining · $400 groceries · $200 travel · $150 gas · $750 everything else (online, streaming, transit) per month</span>
         </button>
         <p class="gate-note">No signup · no affiliate links</p>
       </div>
 
       <div class="gate-step" id="gateStepPay" hidden>
         <h2 id="gatePayTitle">Unlock your full rankings</h2>
-        <p class="gate-sub" id="gatePaySub">All 42 cards ranked for your spending, including the 3 that pay you the most, stay hidden until you unlock. One payment, yours forever. The banks never pay us. That's why the math stays honest.</p>
+        <p class="gate-sub" id="gatePaySub">All <span data-card-count>52</span> cards ranked for your spending, including the 3 that pay you the most, stay hidden until you unlock. One payment, yours forever. The banks never pay us. That's why the math stays honest.</p>
         <div class="gate-buy-wrap" id="gateBuyWrap">
           <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> USD · one-time</span></div>
           <!-- href is the single source of truth for the Polar checkout link.
@@ -441,6 +478,6 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="script.js?v=26"></script>
+  <script src="script.js?v=27"></script>
 </body>
 </html>

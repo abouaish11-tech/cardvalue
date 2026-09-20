@@ -13,7 +13,14 @@ let currentSearch = '';
 let compareList = []; // max 3 cards
 let isPersonalized = false;
 
-const DEFAULT_SPENDING = { dining: 500, groceries: 400, travel: 200, gas: 150, other: 750 };
+// Average American monthly card spending, split the way issuers actually
+// define bonus categories. Totals $2,000/mo; the six finer buckets are carved
+// out of the old $750 "everything else".
+const DEFAULT_SPENDING = {
+  dining: 500, groceries: 400, travel: 200, gas: 150,
+  streaming: 40, transit: 60, online: 250, drugstores: 40, entertainment: 60,
+  rent: 0, other: 300,
+};
 let currentSpending = { ...DEFAULT_SPENDING };
 
 // ---- BANK TIER REWARDS STATE (Phase 3) ----
@@ -133,13 +140,22 @@ function getCurrencyLabel(currency) {
 }
 
 // ---- CATEGORY CONFIG ----
+// Categories mirror how issuers define bonus earning. Every card in cards.json
+// carries a rate for each key; the personalize drawer has an input per key.
 const CATEGORIES = [
-  { key: 'dining',     label: 'Dining',     emoji: '' },
-  { key: 'groceries',  label: 'Groceries',  emoji: '' },
-  { key: 'travel',     label: 'Travel',     emoji: '' },
-  { key: 'gas',        label: 'Gas',        emoji: '' },
-  { key: 'other',      label: 'Everything Else', emoji: '' },
+  { key: 'dining',        label: 'Dining',              emoji: '' },
+  { key: 'groceries',     label: 'Groceries',           emoji: '' },
+  { key: 'travel',        label: 'Travel',              emoji: '' },
+  { key: 'gas',           label: 'Gas',                 emoji: '' },
+  { key: 'streaming',     label: 'Streaming',           emoji: '' },
+  { key: 'transit',       label: 'Transit & rideshare', emoji: '' },
+  { key: 'online',        label: 'Online shopping',     emoji: '' },
+  { key: 'drugstores',    label: 'Drugstores',          emoji: '' },
+  { key: 'entertainment', label: 'Entertainment',       emoji: '' },
+  { key: 'rent',          label: 'Rent',                emoji: '' },
+  { key: 'other',         label: 'Everything Else',     emoji: '' },
 ];
+const CATEGORY_KEYS = CATEGORIES.map(c => c.key);
 
 // ---- ISSUER LOGO HELPER ----
 function issuerInitials(issuer) {
@@ -176,7 +192,8 @@ function getActiveTier(card) {
 
 /** Returns the effective per-category multiplier for this card+category, applying tier boost. */
 function getEffectiveMultiplier(card, categoryKey) {
-  const baseRate = card.rewards[categoryKey] || 1;
+  const baseRate = card.rewards[categoryKey] ?? 1;
+  if (baseRate === 0) return 0;   // category the card does not earn on at all
   const active = getActiveTier(card);
   if (!active) return baseRate;
   const { tier, info } = active;
@@ -293,7 +310,7 @@ function calcCardValuePerCategoryFull(card, spending) {
         const cappedShare = cappedTotal * share;
         const excessShare = excessTotal * share;
         const mult = getEffectiveMultiplier(card, cat.key);
-        map[cat.key] = _earn(cappedShare, mult, pv) + _earn(excessShare, 1, pv);
+        map[cat.key] = mult === 0 ? 0 : _earn(cappedShare, mult, pv) + _earn(excessShare, 1, pv);
         overriddenCats.add(cat.key);
       }
     }
@@ -321,8 +338,10 @@ function calcCardValuePerCategoryFull(card, spending) {
     const annualCappedSpend = (rb.capPerQuarter || 1500) * (rb.quarters || 4) * fulfillment;
     const extraRate = (rb.rate || 5) - 1;
     const totalExtra = _earn(annualCappedSpend, extraRate, pv);
-    for (const cat of CATEGORIES) {
-      const share = (annualSpend[cat.key] || 0) / totalAnnualSpend;
+    const earning = CATEGORIES.filter(cat => getEffectiveMultiplier(card, cat.key) > 0);
+    const earningSpend = earning.reduce((sum, cat) => sum + (annualSpend[cat.key] || 0), 0);
+    for (const cat of earning) {
+      const share = earningSpend > 0 ? (annualSpend[cat.key] || 0) / earningSpend : 0;
       map[cat.key] = (map[cat.key] || 0) + totalExtra * share;
     }
   }
@@ -660,7 +679,7 @@ function renderWalletBuilder() {
             ? '<span class="wallet-uses-empty">kept for credits and perks</span>'
             : cats.map(cat => {
                 const rate = getEffectiveMultiplier(c, cat.key);
-                const baseRate = c.rewards[cat.key] || 1;
+                const baseRate = c.rewards[cat.key] ?? 1;
                 const isBoosted = hasActiveBoost(c) && rate !== baseRate;
                 const rateLabel = isBoosted
                   ? `<em class="boosted">${(+rate.toFixed(2))}x ↑</em>`
@@ -952,7 +971,7 @@ function openDetail(card) {
     sorted.slice(0, cyc.maxCategories || 1).forEach(c => chosenCats.add(c));
   }
   for (const cat of CATEGORIES) {
-    const baseMultiplier = card.rewards[cat.key] || 1;
+    const baseMultiplier = card.rewards[cat.key] ?? 1;
     const effectiveMultiplier = getEffectiveMultiplier(card, cat.key);
     const monthlySpend = currentSpending[cat.key] || 0;
     const catAnnual = Math.round(fullValueMap[cat.key] || 0);
@@ -972,6 +991,8 @@ function openDetail(card) {
       rateStr = `<s style="color:var(--text-dim)">${baseMultiplier}x</s> <strong style="color:var(--purple-light)">${(+effectiveMultiplier.toFixed(2))}x ↑</strong>`;
     } else if (effectiveMultiplier > 1) {
       rateStr = `${effectiveMultiplier}x ${card.currency === 'cashback' ? 'cash' : 'pts'}`;
+    } else if (effectiveMultiplier === 0) {
+      rateStr = `<span class="cat-multiplier">not earned</span>`;
     } else {
       rateStr = `1x`;
     }
@@ -1252,13 +1273,13 @@ function openCompareModal() {
     ...CATEGORIES.map(cat => ({
       label: `${cat.label}`,
       fn: (c) => {
-        const m = c.rewards[cat.key] || 1;
+        const m = c.rewards[cat.key] ?? 1;
         const pv = pointsValuations[c.currency] || 1;
         return `${m}x = ${(m * pv).toFixed(1)}¢/$`;
       },
       compare: true,
       better: 'max',
-      valueKey: (c) => (c.rewards[cat.key] || 1) * (pointsValuations[c.currency] || 1),
+      valueKey: (c) => (c.rewards[cat.key] ?? 1) * (pointsValuations[c.currency] || 1),
     })),
     { label: 'Best For', fn: (c) => c.bestFor || '—' },
   ];
@@ -1286,13 +1307,20 @@ function openCompareModal() {
 
 // ---- PERSONALIZE ----
 function getSpendingFromInputs() {
-  return {
-    dining:     parseFloat(document.getElementById('sp_dining').value) || 0,
-    groceries:  parseFloat(document.getElementById('sp_groceries').value) || 0,
-    travel:     parseFloat(document.getElementById('sp_travel').value) || 0,
-    gas:        parseFloat(document.getElementById('sp_gas').value) || 0,
-    other:      parseFloat(document.getElementById('sp_other').value) || 0,
-  };
+  const out = {};
+  for (const k of CATEGORY_KEYS) {
+    const inp = document.getElementById('sp_' + k);
+    out[k] = inp ? (parseFloat(inp.value) || 0) : 0;
+  }
+  return out;
+}
+
+/** Write a spending profile into the drawer inputs. */
+function setSpendingInputs(spending) {
+  for (const k of CATEGORY_KEYS) {
+    const inp = document.getElementById('sp_' + k);
+    if (inp) inp.value = spending[k] != null ? spending[k] : 0;
+  }
 }
 
 /** Reads tier selections + deposit amounts + comparison APY from the drawer. */
@@ -1412,11 +1440,7 @@ function showToast(message, variant = 'success', duration = 2500) {
 function resetPersonalization() {
   currentSpending = { ...DEFAULT_SPENDING };
   isPersonalized = false;
-  document.getElementById('sp_dining').value = DEFAULT_SPENDING.dining;
-  document.getElementById('sp_groceries').value = DEFAULT_SPENDING.groceries;
-  document.getElementById('sp_travel').value = DEFAULT_SPENDING.travel;
-  document.getElementById('sp_gas').value = DEFAULT_SPENDING.gas;
-  document.getElementById('sp_other').value = DEFAULT_SPENDING.other;
+  setSpendingInputs(DEFAULT_SPENDING);
 
   // Reset banking relationships
   bankRelationships = {
@@ -1784,13 +1808,12 @@ function restoreSavedSpending() {
     if (!raw) return;
     const saved = JSON.parse(raw);
     if (!saved || typeof saved !== 'object') return;
-    for (const k of ['dining', 'groceries', 'travel', 'gas', 'other']) {
-      if (typeof saved[k] === 'number' && saved[k] >= 0) {
-        currentSpending[k] = saved[k];
-        const inp = document.getElementById('sp_' + k);
-        if (inp) inp.value = saved[k];
-      }
+    // Profiles saved before the category split lack the newer keys; those keep
+    // the default so the total stays realistic instead of dropping to zero.
+    for (const k of CATEGORY_KEYS) {
+      if (typeof saved[k] === 'number' && saved[k] >= 0) currentSpending[k] = saved[k];
     }
+    setSpendingInputs(currentSpending);
     isPersonalized = true;
     const label = document.querySelector('.default-profile-label');
     if (label) label.innerHTML = '<span class="profile-dot personalized"></span> Ranked by your spending';
@@ -1814,10 +1837,7 @@ function initGate() {
     // have personalized spending saved from a previous session.
     currentSpending = { ...DEFAULT_SPENDING };
     isPersonalized = false;
-    for (const k of ['dining', 'groceries', 'travel', 'gas', 'other']) {
-      const inp = document.getElementById('sp_' + k);
-      if (inp) inp.value = DEFAULT_SPENDING[k];
-    }
+    setSpendingInputs(DEFAULT_SPENDING);
     const label = document.querySelector('.default-profile-label');
     if (label) label.innerHTML = '<span class="profile-dot default"></span> Ranked by average American spending';
     renderCards();
@@ -1852,6 +1872,7 @@ async function init() {
     const res = await fetch('data/cards.json?v=' + Date.now());
     const data = await res.json();
     allCards = data.cards;
+    document.querySelectorAll('[data-card-count]').forEach(el => { el.textContent = allCards.length; });
     pointsValuations = data.pointsValuations;
     transferValuations = { ...data.pointsValuations };
     bindEvents();

@@ -26,13 +26,19 @@
     "hyatt_points": 1.7,
     "ihg_points": 0.5
   },
-  "lastUpdated": "2026-09-15",
+  "lastUpdated": "2026-09-20",
   "defaultSpending": {
     "dining": 500,
     "groceries": 400,
     "travel": 200,
     "gas": 150,
-    "other": 750
+    "streaming": 40,
+    "transit": 60,
+    "online": 250,
+    "drugstores": 40,
+    "entertainment": 60,
+    "rent": 0,
+    "other": 300
   },
   "cards": [
     {
@@ -56,7 +62,13 @@
         "groceries": 1,
         "travel": 2,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 3,
+        "transit": 2,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "3x on online groceries; 5x on travel via Chase Travel portal",
       "credits": [
@@ -104,7 +116,13 @@
         "groceries": 1,
         "travel": 4,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "8x on travel via Chase Travel portal; 4x on direct travel purchases",
       "credits": [
@@ -170,7 +188,13 @@
         "groceries": 1.5,
         "travel": 1.5,
         "gas": 1.5,
-        "other": 1.5
+        "other": 1.5,
+        "streaming": 1.5,
+        "transit": 1.5,
+        "online": 1.5,
+        "drugstores": 3,
+        "entertainment": 1.5,
+        "rent": 0
       },
       "note": "5x on travel via Chase Travel portal; 3x on drugstores",
       "signupBonus": {
@@ -207,7 +231,13 @@
         "groceries": 1,
         "travel": 1,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 3,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5% on rotating quarterly categories (up to $1,500/quarter, activation required); 5x travel via Chase Travel; 3x drugstores",
       "signupBonus": {
@@ -253,7 +283,13 @@
         "groceries": 1,
         "travel": 5,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5x on flights booked directly with airlines or via Amex Travel",
       "credits": [
@@ -331,7 +367,13 @@
         "groceries": 4,
         "travel": 3,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "4x dining capped at $50,000/yr; 4x groceries at U.S. supermarkets capped at $25,000/yr; 3x flights booked direct or via Amex Travel",
       "credits": [
@@ -401,7 +443,13 @@
         "groceries": 6,
         "travel": 1,
         "gas": 3,
-        "other": 1
+        "other": 1,
+        "streaming": 6,
+        "transit": 3,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "6% at U.S. supermarkets up to $6,000/yr (then 1%); excludes Costco, Walmart, Target. 6% on select streaming.",
       "signupBonus": {
@@ -443,7 +491,13 @@
         "groceries": 3,
         "travel": 1,
         "gas": 3,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 3,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "3% at U.S. supermarkets, U.S. gas stations, and U.S. online retail (each up to $6,000/yr, then 1%)",
       "signupBonus": {
@@ -463,7 +517,7 @@
       "rewardCaps": {
         "groceries": 6000,
         "gas": 6000,
-        "other": 6000
+        "online": 6000
       }
     },
     {
@@ -486,7 +540,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "note": "2% on everything (1% when you buy + 1% when you pay). Earns ThankYou Points (transferable when paired with Strata Premier). 5x via Citi Travel.",
       "signupBonus": {
@@ -527,7 +587,13 @@
         "groceries": 3,
         "travel": 3,
         "gas": 3,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "3x on dining, groceries, gas, EV charging, and all travel. 10x on hotels via Citi Travel. Uncapped.",
       "credits": [
@@ -573,7 +639,13 @@
         "groceries": 1,
         "travel": 1,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5% on your highest eligible spend category each billing cycle (up to $500/cycle, then 1%). Categories: dining, gas, grocery, travel, transit, streaming, drugstores, etc.",
       "signupBonus": {
@@ -596,7 +668,11 @@
           "dining",
           "gas",
           "groceries",
-          "travel"
+          "travel",
+          "transit",
+          "streaming",
+          "drugstores",
+          "entertainment"
         ],
         "capPerCycle": 500,
         "cyclesPerYear": 12,
@@ -624,7 +700,13 @@
         "groceries": 2,
         "travel": 5,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "note": "10x hotels/rental cars via Capital One Travel; 5x flights/vacation rentals via Capital One Travel; 2x on everything else",
       "credits": [
@@ -677,7 +759,13 @@
         "groceries": 2,
         "travel": 5,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "note": "5x hotels/rental cars via Capital One Travel; 2x on everything else",
       "signupBonus": {
@@ -715,7 +803,13 @@
         "groceries": 1.5,
         "travel": 1.5,
         "gas": 1.5,
-        "other": 1.5
+        "other": 1.5,
+        "streaming": 1.5,
+        "transit": 1.5,
+        "online": 1.5,
+        "drugstores": 1.5,
+        "entertainment": 1.5,
+        "rent": 0
       },
       "note": "5% on travel via Capital One Travel portal",
       "signupBonus": {
@@ -755,7 +849,13 @@
         "groceries": 3,
         "travel": 1,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 3,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 3,
+        "rent": 0
       },
       "note": "3% dining, entertainment, streaming, groceries (excludes Walmart/Target). 8% via Capital One Entertainment. $0 annual fee for excellent credit.",
       "signupBonus": {
@@ -793,7 +893,13 @@
         "groceries": 3,
         "travel": 1,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 3,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 3,
+        "rent": 0
       },
       "note": "Relaunched for fair credit. 3% dining, entertainment, streaming, groceries (excludes Walmart/Target).",
       "signupBonus": null,
@@ -824,7 +930,13 @@
         "groceries": 1,
         "travel": 1,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5% on rotating quarterly categories (up to $1,500/quarter, activation required). First-year Cashback Match effectively doubles all rewards.",
       "signupBonus": {
@@ -869,7 +981,13 @@
         "groceries": 1.5,
         "travel": 1.5,
         "gas": 1.5,
-        "other": 1.5
+        "other": 1.5,
+        "streaming": 1.5,
+        "transit": 1.5,
+        "online": 1.5,
+        "drugstores": 1.5,
+        "entertainment": 1.5,
+        "rent": 0
       },
       "note": "First-year Miles Match effectively gives 3x on everything in year 1",
       "signupBonus": {
@@ -906,7 +1024,13 @@
         "groceries": 1.5,
         "travel": 2,
         "gas": 1.5,
-        "other": 1.5
+        "other": 1.5,
+        "streaming": 1.5,
+        "transit": 1.5,
+        "online": 1.5,
+        "drugstores": 1.5,
+        "entertainment": 1.5,
+        "rent": 0
       },
       "credits": [
         {
@@ -979,7 +1103,13 @@
         "groceries": 2,
         "travel": 1,
         "gas": 3,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "3% on chosen category (gas, online shopping, dining, travel, drugstores, home improvement). 2% grocery & wholesale clubs. Up to $2,500/quarter combined cap.",
       "signupBonus": {
@@ -1030,6 +1160,8 @@
           "dining",
           "gas",
           "travel",
+          "online",
+          "drugstores",
           "other"
         ],
         "capPerCycle": 2500,
@@ -1065,7 +1197,13 @@
         "groceries": 1.5,
         "travel": 1.5,
         "gas": 1.5,
-        "other": 1.5
+        "other": 1.5,
+        "streaming": 1.5,
+        "transit": 1.5,
+        "online": 1.5,
+        "drugstores": 1.5,
+        "entertainment": 1.5,
+        "rent": 0
       },
       "signupBonus": {
         "points": 25000,
@@ -1131,7 +1269,13 @@
         "groceries": 1,
         "travel": 3,
         "gas": 3,
-        "other": 1
+        "other": 1,
+        "streaming": 3,
+        "transit": 3,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "3x on dining, travel, gas, transit, streaming, and phone plans",
       "signupBonus": {
@@ -1169,7 +1313,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "note": "3% foreign transaction fee — best for domestic use",
       "signupBonus": {
@@ -1209,7 +1359,13 @@
         "groceries": 2,
         "travel": 5,
         "gas": 4,
-        "other": 1
+        "other": 1,
+        "streaming": 2,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5x on prepaid hotels/car rentals via Altitude Rewards Center; 4x on gas and EV charging",
       "signupBonus": {
@@ -1245,7 +1401,13 @@
         "groceries": 2,
         "travel": 1,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5% on two chosen categories (up to $2,000/quarter combined), 2% on one everyday category, 1% on all else",
       "signupBonus": {
@@ -1268,6 +1430,9 @@
           "gas",
           "groceries",
           "travel",
+          "streaming",
+          "transit",
+          "entertainment",
           "other"
         ],
         "capPerCycle": 2000,
@@ -1297,7 +1462,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "credits": [],
       "note": "Earn up to 4% cash back on all purchases when paired with US Bank Smartly Savings. Rate increases with deposit balance.",
@@ -1362,7 +1533,13 @@
         "groceries": 1,
         "travel": 1,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 1
       },
       "note": "1x on rent/mortgage (no transaction fee). 4% Bilt Cash option. Replaced original Bilt Mastercard (Feb 2026).",
       "signupBonus": null,
@@ -1395,7 +1572,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "note": "2% on everything via Apple Pay (1% with physical card). 3% at Apple, Nike, Uber, T-Mobile, Walgreens, and other partners.",
       "signupBonus": {
@@ -1434,7 +1617,13 @@
         "groceries": 3,
         "travel": 1,
         "gas": 2,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "50% bonus on points when you make 30+ transactions per billing period",
       "signupBonus": {
@@ -1470,7 +1659,13 @@
         "groceries": 1,
         "travel": 1,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5% on office supplies, internet, cable, phone (up to $25k combined/yr). 2% at gas and restaurants (up to $25k combined/yr).",
       "signupBonus": {
@@ -1512,7 +1707,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "note": "2x MR on everything up to $50,000/yr in purchases (then 1x)",
       "signupBonus": {
@@ -1533,7 +1734,12 @@
         "groceries": 50000,
         "travel": 50000,
         "gas": 50000,
-        "other": 50000
+        "other": 50000,
+        "streaming": 50000,
+        "transit": 50000,
+        "online": 50000,
+        "drugstores": 50000,
+        "entertainment": 50000
       },
       "rewardCapsCombined": 50000
     },
@@ -1560,7 +1766,13 @@
         "groceries": 3,
         "travel": 3,
         "gas": 3,
-        "other": 3
+        "other": 3,
+        "streaming": 3,
+        "transit": 3,
+        "online": 3,
+        "drugstores": 3,
+        "entertainment": 3,
+        "rent": 0
       },
       "note": "3% cashback on everything. Requires Robinhood Gold ($5/mo). No category restrictions.",
       "signupBonus": null,
@@ -1593,7 +1805,13 @@
         "groceries": 2.5,
         "travel": 2.5,
         "gas": 2.5,
-        "other": 2.5
+        "other": 2.5,
+        "streaming": 2.5,
+        "transit": 2.5,
+        "online": 2.5,
+        "drugstores": 2.5,
+        "entertainment": 2.5,
+        "rent": 0
       },
       "note": "2.5% cashback on everything. Must maintain $1,000 avg daily balance in Alliant checking to earn 2.5% (otherwise 1.5%).",
       "signupBonus": null,
@@ -1630,7 +1848,13 @@
         "groceries": 1,
         "travel": 3,
         "gas": 4,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "4% on gas worldwide (up to $7,000/yr, then 1%). 3% on dining and eligible travel. Rewards paid as annual Costco credit.",
       "signupBonus": null,
@@ -1667,7 +1891,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "note": "2% on everything when deposited into eligible Fidelity account",
       "signupBonus": {
@@ -1704,7 +1934,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 2,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "note": "2% cashback on everything when redeemed to SoFi checking/savings or invested",
       "signupBonus": null,
@@ -1736,7 +1972,13 @@
         "groceries": 3,
         "travel": 2,
         "gas": 2,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "Auto-detects your top spend category for 3% each month (grocery, bills, dining, etc.); next category gets 2%; all else 1%",
       "signupBonus": null,
@@ -1771,7 +2013,13 @@
         "groceries": 2,
         "travel": 1,
         "gas": 4,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "signupBonus": {
         "points": 200,
@@ -1810,7 +2058,13 @@
         "groceries": 5,
         "travel": 2,
         "gas": 2,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 2,
+        "online": 5,
+        "drugstores": 2,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5% at Amazon.com, Amazon Fresh, and Whole Foods. 2% at restaurants, gas, drugstores, transit. 5% via Chase Travel.",
       "signupBonus": {
@@ -1845,7 +2099,13 @@
         "groceries": 1,
         "travel": 3,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "3x on travel, shipping, internet, cable, phone, advertising (up to $150k combined/yr)",
       "signupBonus": {
@@ -1887,7 +2147,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 2,
-        "other": 1
+        "other": 1,
+        "streaming": 2,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "signupBonus": {
         "points": 25000,
@@ -1923,7 +2189,13 @@
         "groceries": 1,
         "travel": 5,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 3,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "5x on hotels via Wells Fargo; 3x on dining, transit",
       "signupBonus": {
@@ -1962,7 +2234,13 @@
         "groceries": 2,
         "travel": 2,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "2x on Delta purchases, restaurants worldwide, and U.S. supermarkets; 1x elsewhere. The travel rate applies to Delta purchases only, not other airlines or hotels. $0 intro annual fee the first year.",
       "credits": [
@@ -2018,7 +2296,13 @@
         "groceries": 2,
         "travel": 3,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "3x on Delta purchases and hotels booked direct; 2x at restaurants and U.S. supermarkets; 1x elsewhere. Travel rate applies to Delta and direct hotel bookings only.",
       "credits": [
@@ -2072,7 +2356,13 @@
         "groceries": 1,
         "travel": 2,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "2x on United purchases, dining, and hotel stays; 1x elsewhere. Travel rate applies to United and hotel purchases. Fee rose from $95 to $150 in the 2025 refresh; $0 the first year.",
       "credits": [
@@ -2132,7 +2422,13 @@
         "groceries": 1,
         "travel": 4,
         "gas": 2,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "4x on Southwest purchases; 2x at restaurants and gas stations; 1x elsewhere. Travel rate applies to Southwest only. The 2025 refresh raised the fee from $149 to $229 and removed the $75 Southwest credit and upgraded boardings.",
       "credits": [
@@ -2178,7 +2474,13 @@
         "groceries": 1,
         "travel": 2,
         "gas": 2,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 1,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "2x on American Airlines purchases, restaurants, and gas stations; 1x elsewhere. Travel rate applies to American Airlines only. $0 annual fee the first year, then $99.",
       "credits": [],
@@ -2219,7 +2521,13 @@
         "groceries": 3,
         "travel": 6,
         "gas": 3,
-        "other": 2
+        "other": 2,
+        "streaming": 2,
+        "transit": 2,
+        "online": 2,
+        "drugstores": 2,
+        "entertainment": 2,
+        "rent": 0
       },
       "rewardCaps": {
         "dining": 2900,
@@ -2271,7 +2579,13 @@
         "groceries": 6,
         "travel": 12,
         "gas": 6,
-        "other": 3
+        "other": 3,
+        "streaming": 3,
+        "transit": 3,
+        "online": 4,
+        "drugstores": 3,
+        "entertainment": 3,
+        "rent": 0
       },
       "note": "12x at Hilton properties; 6x at restaurants, U.S. supermarkets, and gas stations; 4x on U.S. online retail; 3x elsewhere. Travel rate applies to Hilton stays only. Hilton points are worth about 0.5¢ each, so the big multipliers are smaller than they look.",
       "credits": [
@@ -2318,7 +2632,13 @@
         "groceries": 1,
         "travel": 4,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 2,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "4x at Hyatt hotels; 2x at restaurants, on airline tickets bought direct, local transit, and fitness clubs; 1x elsewhere. Travel rate applies to Hyatt stays only. Hyatt points are the most valuable hotel currency (~1.7¢ each).",
       "credits": [
@@ -2365,7 +2685,13 @@
         "groceries": 3,
         "travel": 10,
         "gas": 5,
-        "other": 3
+        "other": 3,
+        "streaming": 3,
+        "transit": 3,
+        "online": 3,
+        "drugstores": 3,
+        "entertainment": 3,
+        "rent": 0
       },
       "note": "10x at IHG hotels (26x total with status); 5x on travel, gas stations, and restaurants; 3x elsewhere. IHG points are worth about 0.5¢ each. The travel multiplier applies broadly, unlike most co-brands.",
       "credits": [
@@ -2419,7 +2745,13 @@
         "groceries": 1,
         "travel": 3,
         "gas": 1,
-        "other": 1
+        "other": 1,
+        "streaming": 1,
+        "transit": 3,
+        "online": 1,
+        "drugstores": 1,
+        "entertainment": 1,
+        "rent": 0
       },
       "note": "3x on travel (airfare, hotels, cruises, tours), transit (rideshare, trains, tolls, parking), and restaurants worldwide; 1x elsewhere. The broadest travel definition of any Amex card.",
       "credits": [

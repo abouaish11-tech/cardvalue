@@ -792,3 +792,8 @@ body.gate-open { overflow: hidden; }
   .gate-card { padding: 24px 20px 20px; }
   .gate-step h2 { font-size: 22px; }
 }
+
+/* ---- MORE CATEGORIES (drawer) ---- */
+.more-categories { margin-top: 16px; }
+.spending-inputs-more { margin-bottom: 0; }
+.more-categories .banking-explainer { margin-top: 12px; }

@@ -9,6 +9,7 @@ class NoCacheHandler(http.server.SimpleHTTPRequestHandler):
         super().end_headers()
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
-server = http.server.HTTPServer(('', 3456), NoCacheHandler)
-print("Serving on http://localhost:3456 (no-cache)")
+PORT = int(os.environ.get('PORT', 3456))
+server = http.server.HTTPServer(('', PORT), NoCacheHandler)
+print(f"Serving on http://localhost:{PORT} (no-cache)")
 server.serve_forever()
