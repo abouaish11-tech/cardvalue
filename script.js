@@ -856,7 +856,7 @@ function renderCards() {
       </td>
       ${orderedCols.map(c => cellMap[c.key]).join('')}
       <td class="td-apply"><a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="table" onclick="event.stopPropagation()">Apply</a></td>
-      <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" ${isCompared ? 'checked' : ''} /></td>
+      <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" aria-label="Add ${card.name} to compare" ${isCompared ? 'checked' : ''} /></td>
     `;
 
     el.addEventListener('click', (e) => {
