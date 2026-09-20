@@ -897,6 +897,31 @@ function updateHeroArt() {
 }
 
 // ---- DETAIL DRAWER ----
+/** "Can you hit the bonus?" check for the detail drawer.
+ *  Compares the visitor's total monthly spending (the same five inputs the
+ *  ranking uses) against the bonus spend requirement and window. Pure display:
+ *  it never feeds the ranking, wallet, or unlock logic. */
+function renderBonusCheck(bonus) {
+  if (!bonus || !bonus.spendRequired || !bonus.months) return '';
+  const monthly = CATEGORIES.reduce((sum, c) => sum + (Number(currentSpending[c.key]) || 0), 0);
+  if (monthly <= 0) return '';
+  const needPerMonth = bonus.spendRequired / bonus.months;
+  const monthsToHit = bonus.spendRequired / monthly;
+  const fmt = (n) => Math.round(n).toLocaleString();
+  const spendLine = `At your $${fmt(monthly)}/month`;
+  let body, cls;
+  if (monthly >= needPerMonth) {
+    const when = monthsToHit < 1 ? 'the first month' : `about ${monthsToHit.toFixed(1).replace(/\.0$/, '')} months`;
+    cls = 'ok';
+    body = `<strong>You'd hit this bonus.</strong> ${spendLine} you'd reach $${fmt(bonus.spendRequired)} in ${when}, inside the ${bonus.months}-month window.`;
+  } else {
+    const shortfall = bonus.spendRequired - monthly * bonus.months;
+    cls = 'warn';
+    body = `<strong>You'd likely miss this bonus.</strong> ${spendLine} you'd spend about $${fmt(monthly * bonus.months)} in ${bonus.months} months, $${fmt(shortfall)} short. You'd need roughly $${fmt(needPerMonth - monthly)}/month more.`;
+  }
+  return `<div class="bonus-check bonus-check-${cls}">${body} <span class="bonus-check-note">Annual fees, refunds, and balance transfers don't count toward the spend.</span></div>`;
+}
+
 function openDetail(card) {
   if (isCardLocked(card.id)) { showGate('pay'); return; }
   const annualValue = calcAnnualValue(card, currentSpending);
@@ -1191,6 +1216,7 @@ function openDetail(card) {
       <div class="detail-section">
         <div class="detail-section-title">Sign-Up Bonus</div>
         <div class="bonus-box">${bonusText}</div>
+        ${renderBonusCheck(bonus)}
       </div>
     `;
   }
