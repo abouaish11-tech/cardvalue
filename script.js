@@ -1353,14 +1353,24 @@ function applyPersonalization() {
       btn.dataset.busy = '0';
       btn.textContent = btn.dataset.originalText || 'Show my ranking →';
     }
-    // Smooth-scroll to the card list
-    const list = document.getElementById('cardList');
-    if (list) {
-      const top = list.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
     showToast('Ranking updated for your spending', 'success');
+    // Scroll so the #1 card sits right under the sticky filter bar. Wait for
+    // the drawer's collapse animation to finish first, otherwise the page is
+    // still shrinking while we measure and the list lands too far down.
+    setTimeout(scrollToTopCards, 400);
   }, 500);
+}
+
+/** Put the table header and the top 3 rows at the top of the viewport. */
+function scrollToTopCards() {
+  const head = document.getElementById('cardTableHead');
+  const firstRow = document.querySelector('#cardList .card-row');
+  const target = (head && head.offsetHeight) ? head : firstRow;
+  if (!target) return;
+  const bar = document.querySelector('.filter-bar');
+  const barH = bar ? bar.getBoundingClientRect().height : 0;
+  const top = target.getBoundingClientRect().top + window.scrollY - barH - 8;
+  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
 }
 
 /** Flash the top 3 card rows briefly when ranking updates. */
