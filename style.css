@@ -415,6 +415,11 @@ button, input, select { font-family: inherit; }
 .membership-note strong { display: block; margin-bottom: 2px; }
 .bonus-box { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
 .bonus-box strong { color: var(--ink); }
+.bonus-check { margin-top: 10px; border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13px; line-height: 1.55; }
+.bonus-check-ok { background: var(--green-soft); color: var(--green); }
+.bonus-check-warn { background: var(--amber-soft); color: var(--amber); }
+.bonus-check strong { color: inherit; }
+.bonus-check-note { display: block; margin-top: 4px; font-size: 12px; opacity: 0.85; }
 .btn-apply-card { display: block; width: 100%; text-align: center; padding: 15px; border-radius: 12px; font-size: 15px; margin-top: 8px; }
 
 /* ---- COMPARE BAR ---- */
