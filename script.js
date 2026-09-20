@@ -856,7 +856,7 @@ function renderCards() {
       </td>
       ${orderedCols.map(c => cellMap[c.key]).join('')}
       <td class="td-apply"><a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="table" onclick="event.stopPropagation()">Apply</a></td>
-      <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" ${isCompared ? 'checked' : ''} /></td>
+      <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" aria-label="Add ${card.name} to compare" ${isCompared ? 'checked' : ''} /></td>
     `;
 
     el.addEventListener('click', (e) => {
@@ -897,6 +897,31 @@ function updateHeroArt() {
 }
 
 // ---- DETAIL DRAWER ----
+/** "Can you hit the bonus?" check for the detail drawer.
+ *  Compares the visitor's total monthly spending (the same five inputs the
+ *  ranking uses) against the bonus spend requirement and window. Pure display:
+ *  it never feeds the ranking, wallet, or unlock logic. */
+function renderBonusCheck(bonus) {
+  if (!bonus || !bonus.spendRequired || !bonus.months) return '';
+  const monthly = CATEGORIES.reduce((sum, c) => sum + (Number(currentSpending[c.key]) || 0), 0);
+  if (monthly <= 0) return '';
+  const needPerMonth = bonus.spendRequired / bonus.months;
+  const monthsToHit = bonus.spendRequired / monthly;
+  const fmt = (n) => Math.round(n).toLocaleString();
+  const spendLine = `At your $${fmt(monthly)}/month`;
+  let body, cls;
+  if (monthly >= needPerMonth) {
+    const when = monthsToHit < 1 ? 'the first month' : `about ${monthsToHit.toFixed(1).replace(/\.0$/, '')} months`;
+    cls = 'ok';
+    body = `<strong>You'd hit this bonus.</strong> ${spendLine} you'd reach $${fmt(bonus.spendRequired)} in ${when}, inside the ${bonus.months}-month window.`;
+  } else {
+    const shortfall = bonus.spendRequired - monthly * bonus.months;
+    cls = 'warn';
+    body = `<strong>You'd likely miss this bonus.</strong> ${spendLine} you'd spend about $${fmt(monthly * bonus.months)} in ${bonus.months} months, $${fmt(shortfall)} short. You'd need roughly $${fmt(needPerMonth - monthly)}/month more.`;
+  }
+  return `<div class="bonus-check bonus-check-${cls}">${body} <span class="bonus-check-note">Annual fees, refunds, and balance transfers don't count toward the spend.</span></div>`;
+}
+
 function openDetail(card) {
   if (isCardLocked(card.id)) { showGate('pay'); return; }
   const annualValue = calcAnnualValue(card, currentSpending);
@@ -1178,7 +1203,16 @@ function openDetail(card) {
   if (card.signupBonus) {
     const bonus = card.signupBonus;
     let bonusText = '';
-    if (bonus.points && typeof bonus.points === 'number') {
+    // Cash bonuses are stored in dollars (e.g. 200 = $200), even on cards whose
+    // ongoing rewards are points (Citi Double Cash, Freedom Unlimited). No real
+    // points bonus is under 5,000, so a small number means dollars.
+    const isCashBonus = typeof bonus.points === 'number' && bonus.points < 5000;
+    if (isCashBonus) {
+      bonusText = `<strong>$${bonus.points.toLocaleString()} cash back</strong>`;
+      if (bonus.spendRequired) {
+        bonusText += ` after spending $${bonus.spendRequired.toLocaleString()} in ${bonus.months} months`;
+      }
+    } else if (bonus.points && typeof bonus.points === 'number') {
       const bonusCash = Math.round(bonus.points * (pv / 100));
       bonusText = `<strong>${bonus.points.toLocaleString()} bonus points</strong> ≈ <strong>$${bonusCash.toLocaleString()} in value</strong>`;
       if (bonus.spendRequired) {
@@ -1191,6 +1225,7 @@ function openDetail(card) {
       <div class="detail-section">
         <div class="detail-section-title">Sign-Up Bonus</div>
         <div class="bonus-box">${bonusText}</div>
+        ${renderBonusCheck(bonus)}
       </div>
     `;
   }
