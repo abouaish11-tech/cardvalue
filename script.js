@@ -1203,7 +1203,16 @@ function openDetail(card) {
   if (card.signupBonus) {
     const bonus = card.signupBonus;
     let bonusText = '';
-    if (bonus.points && typeof bonus.points === 'number') {
+    // Cash bonuses are stored in dollars (e.g. 200 = $200), even on cards whose
+    // ongoing rewards are points (Citi Double Cash, Freedom Unlimited). No real
+    // points bonus is under 5,000, so a small number means dollars.
+    const isCashBonus = typeof bonus.points === 'number' && bonus.points < 5000;
+    if (isCashBonus) {
+      bonusText = `<strong>$${bonus.points.toLocaleString()} cash back</strong>`;
+      if (bonus.spendRequired) {
+        bonusText += ` after spending $${bonus.spendRequired.toLocaleString()} in ${bonus.months} months`;
+      }
+    } else if (bonus.points && typeof bonus.points === 'number') {
       const bonusCash = Math.round(bonus.points * (pv / 100));
       bonusText = `<strong>${bonus.points.toLocaleString()} bonus points</strong> ≈ <strong>$${bonusCash.toLocaleString()} in value</strong>`;
       if (bonus.spendRequired) {
