@@ -415,6 +415,19 @@ button, input, select { font-family: inherit; }
 .membership-note strong { display: block; margin-bottom: 2px; }
 .bonus-box { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
 .bonus-box strong { color: var(--ink); }
+
+/* Keep, downgrade, or cancel? (drawer, annual-fee cards) */
+.keep-box { border-radius: var(--radius-sm); padding: 14px 16px; border: 1px solid var(--line); background: var(--surface-2); }
+.keep-box.keep-keep { background: var(--green-soft); border-color: transparent; }
+.keep-box.keep-downgrade { background: var(--amber-soft); border-color: transparent; }
+.keep-box.keep-cancel { background: var(--red-soft); border-color: transparent; }
+.keep-verdict { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 6px; }
+.keep-keep .keep-verdict { color: var(--green); }
+.keep-downgrade .keep-verdict { color: var(--amber); }
+.keep-cancel .keep-verdict { color: var(--red); }
+.keep-detail { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+.keep-detail strong { color: var(--ink); }
+.keep-note { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 10px; }
 .btn-apply-card { display: block; width: 100%; text-align: center; padding: 15px; border-radius: 12px; font-size: 15px; margin-top: 8px; }
 
 /* ---- COMPARE BAR ---- */
