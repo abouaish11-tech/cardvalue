@@ -157,6 +157,24 @@ const CATEGORIES = [
 ];
 const CATEGORY_KEYS = CATEGORIES.map(c => c.key);
 
+// Product-change paths issuers commonly offer, limited to targets in our data.
+// Used only by the "Keep, downgrade, or cancel?" box in the detail drawer;
+// nothing here feeds the ranking. Confirm the path with the issuer before
+// calling: they change, and some are offered only on request.
+const DOWNGRADE_PATHS = {
+  chase_sapphire_reserve: ['chase_sapphire_preferred', 'chase_freedom_unlimited', 'chase_freedom_flex'],
+  chase_sapphire_preferred: ['chase_freedom_unlimited', 'chase_freedom_flex'],
+  chase_ink_preferred: ['chase_ink_cash'],
+  amex_platinum: ['amex_gold', 'amex_green'],
+  amex_gold: ['amex_green'],
+  amex_blue_cash_preferred: ['amex_blue_cash_everyday'],
+  capital_one_venture_x: ['capital_one_venture'],
+  citi_strata_premier: ['citi_double_cash'],
+  bofa_premium_rewards: ['bofa_travel_rewards', 'bofa_customized_cash'],
+  wells_fargo_autograph_journey: ['wells_fargo_autograph'],
+  delta_skymiles_platinum: ['delta_skymiles_gold'],
+};
+
 // ---- ISSUER LOGO HELPER ----
 function issuerInitials(issuer) {
   return issuer.replace(/\(.*?\)/g, '').trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
@@ -896,6 +914,73 @@ function updateHeroArt() {
   if (yours) yours.textContent = `$${Math.round(monthly * 12 * 0.01).toLocaleString()}/yr`;
 }
 
+// ---- KEEP, DOWNGRADE, OR CANCEL? ----
+/** The renewal question for annual-fee cards, answered from numbers the drawer
+ *  already shows. Display only: reads calcNetValue for this card and for any
+ *  no-fee/lower-fee card it can be product-changed to. */
+function keepOrDowngradeHTML(card, netValue, totalFee) {
+  if (totalFee <= 0) return '';
+  const pv = pointsValuations[card.currency] || 1;
+  const fmt = n => `$${Math.abs(Math.round(n)).toLocaleString()}`;
+
+  // Best in-data downgrade target at the visitor's spending.
+  const targets = (DOWNGRADE_PATHS[card.id] || [])
+    .map(id => allCards.find(c => c.id === id)).filter(Boolean)
+    .map(t => ({ card: t, net: calcNetValue(t, currentSpending) }))
+    .sort((a, b) => b.net - a.net);
+  const best = targets[0] || null;
+
+  // Break-even: how much more monthly spend in the card's best category would
+  // cover the shortfall. Approximate; caps and choose-your-category rules are
+  // ignored, which is why the copy says "about".
+  let breakEven = '';
+  if (netValue < 0) {
+    let bestCat = null, bestRate = 0;
+    for (const cat of CATEGORIES) {
+      const rate = getEffectiveMultiplier(card, cat.key) * pv / 100;
+      if (rate > bestRate) { bestRate = rate; bestCat = cat; }
+    }
+    if (bestCat && bestRate > 0) {
+      const more = Math.ceil((-netValue) / (12 * bestRate) / 10) * 10;
+      breakEven = `You'd need about <strong>$${more.toLocaleString()} more a month</strong> on ${bestCat.label.toLowerCase()} just to break even.`;
+    }
+  }
+
+  let tone, verdict, detail;
+  if (best && best.net > netValue) {
+    const targetFee = best.card.annualFee + (best.card.membershipRequired ? best.card.membershipRequired.cost : 0);
+    tone = 'downgrade';
+    verdict = `Downgrade to ${best.card.name}`;
+    detail = `At your spending, ${best.card.name} (${targetFee > 0 ? `$${targetFee} fee` : 'no fee'}) nets <strong>${best.net >= 0 ? '+' : '−'}${fmt(best.net)}/yr</strong>, ` +
+      `<strong>${fmt(best.net - netValue)} more</strong> than this card's ${netValue >= 0 ? '+' : '−'}${fmt(netValue)}. ` +
+      `Product-changing keeps your account open, so your credit history stays intact. ${breakEven}`;
+  } else if (netValue >= 0) {
+    tone = 'keep';
+    verdict = 'Keep it';
+    const margin = best ? netValue - best.net : 0;
+    detail = `At your spending it clears the $${totalFee.toLocaleString()} fee by <strong>${fmt(netValue)}/yr</strong>` +
+      (!best ? '.'
+        : margin < 1 ? `, and ties with ${best.card.name} (${best.net >= 0 ? '+' : '−'}${fmt(best.net)}/yr), the card you'd downgrade to, so the perks decide.`
+        : `, and beats ${best.card.name} (${best.net >= 0 ? '+' : '−'}${fmt(best.net)}/yr), the card you'd downgrade to, by ${fmt(margin)}.`);
+  } else {
+    tone = 'cancel';
+    verdict = 'Cancel or downgrade';
+    detail = `At your spending this card loses <strong>${fmt(netValue)}/yr</strong> after the $${totalFee.toLocaleString()} fee. ${breakEven}` +
+      (best ? '' : ' We don\'t list a no-fee card in this family; ask the issuer what it can be product-changed to before closing it.');
+  }
+
+  return `
+    <div class="detail-section">
+      <div class="detail-section-title">Keep, downgrade, or cancel?</div>
+      <div class="keep-box keep-${tone}">
+        <div class="keep-verdict">${verdict}</div>
+        <p class="keep-detail">${detail}</p>
+        <p class="keep-note">Numbers use your spending and our credit discounts; the sign-up bonus is not counted, since this is the renewal question. Most issuers refund the annual fee if you close within about 30 days of it posting (rules vary). Confirm any product change with the issuer.</p>
+      </div>
+    </div>
+  `;
+}
+
 // ---- DETAIL DRAWER ----
 function openDetail(card) {
   if (isCardLocked(card.id)) { showGate('pay'); return; }
@@ -1118,6 +1203,9 @@ function openDetail(card) {
       </div>
     </div>
   `;
+
+  // Keep, downgrade, or cancel? (annual-fee cards only)
+  html += keepOrDowngradeHTML(card, netValue, totalFee);
 
   // Tier Boost & True Net Value (Phase 3)
   if (card.tierRewards) {
