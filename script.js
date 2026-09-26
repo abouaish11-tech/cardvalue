@@ -164,7 +164,7 @@ function issuerInitials(issuer) {
 function getIssuerLogoHTML(issuer, size = 28) {
   const logoUrl = ISSUER_LOGOS[issuer];
   if (logoUrl) {
-    return `<img src="${logoUrl}" alt="${issuer}" width="${size}" height="${size}" style="border-radius:4px; object-fit:contain;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="logo-fallback" style="display:none;width:${size}px;height:${size}px;align-items:center;justify-content:center;font-size:${Math.round(size*0.4)}px">${issuerInitials(issuer)}</span>`;
+    return `<img src="${logoUrl}" alt="${issuer}" width="${size}" height="${size}" style="border-radius:4px; object-fit:contain;" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='flex'"><span class="logo-fallback" style="display:none;width:${size}px;height:${size}px;align-items:center;justify-content:center;font-size:${Math.round(size*0.4)}px">${issuerInitials(issuer)}</span>`;
   }
   return `<span class="logo-fallback" style="font-size:${Math.round(size*0.4)}px">${issuerInitials(issuer)}</span>`;
 }
