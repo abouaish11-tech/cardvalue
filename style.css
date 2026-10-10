@@ -509,6 +509,8 @@ button, input, select { font-family: inherit; }
 .footer { color: var(--muted); padding: 40px 24px 48px; border-top: 1px solid var(--line); }
 .footer-inner { max-width: 1100px; margin: 0 auto; font-size: 13px; line-height: 1.7; }
 .footer-inner strong { color: var(--ink-2); }
+.footer-inner a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
+.footer-inner a:hover { color: var(--ink); }
 .footer-note { margin-top: 10px; }
 
 /* ---- CAP WARNING CHIP ---- */
