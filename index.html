@@ -65,11 +65,11 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" />
-  <!-- Card-face type: files download only when a card that uses them is on screen. -->
+  <!-- Geist sets the site; the other families draw the card faces and only
+       download when a card that uses them is on screen. -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Allura&family=Cormorant+Garamond:wght@300&family=Geist:wght@200..700&family=Geist+Mono:wght@500&family=Libre+Caslon+Text:wght@400;700&family=Montserrat:ital,wght@0,700;1,600;1,700&family=Yellowtail&display=swap" />
-  <link rel="stylesheet" href="cardart.css?v=1" />
-  <link rel="stylesheet" href="style.css?v=22" />
+  <link rel="stylesheet" href="cardart.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=23" />
 
   <!-- Polar overlay checkout: any <a data-polar-checkout> opens as an in-page
        modal so the address bar never leaves cardvalue.org. -->
@@ -81,44 +81,56 @@
   <!-- HEADER -->
   <header class="header">
     <div class="header-inner">
-      <div class="logo">
-        <svg class="logo-icon" width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="2" y="5" width="20" height="14" rx="4" fill="#171412"/>
+      <nav class="header-nav" aria-label="About CardValue">
+        <a class="pillnav" href="#how">How it works</a>
+        <a class="pillnav" href="#methodology">Methodology</a>
+      </nav>
+      <a class="logo" href="/" aria-label="CardValue home">
+        <svg class="logo-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="5" width="20" height="14" rx="3.5" fill="#171412"/>
           <rect x="2" y="9" width="20" height="3" fill="#ffe86b"/>
         </svg>
         <span class="logo-text">CardValue</span>
+      </a>
+      <div class="header-nav header-nav-r">
+        <a class="pillnav pill-count" href="#cardTable"><span><span data-card-count>52</span> cards</span></a>
+        <button type="button" class="pillnav pill-dark" id="navUnlock">Unlock · $19</button>
       </div>
-      <p class="header-tagline"><span data-card-count>52</span> cards. Ranked in dollars. No affiliate links.</p>
     </div>
   </header>
 
-  <!-- HERO / SPENDING PANEL -->
+  <!-- HERO: the showroom. Top card in front, the next four fanned behind it. -->
   <section class="hero">
     <div class="hero-inner">
-      <div class="hero-copy">
-        <h1>Your credit card is costing you <em>$500+ a year.</em></h1>
-        <p>Enter what you spend. Every card gets ranked by what it's worth to you, in dollars, after the annual fee. Free, no signup, and nobody pays us for placement.</p>
+      <p class="eyebrow default-profile-label"><span class="profile-dot default"></span> Ranked by average American spending</p>
+      <h1>Your credit card is costing you <em>$500+ a year.</em></h1>
+      <div class="flow" id="flow" tabindex="0" aria-roledescription="carousel" aria-label="Top cards for your spending. Use the arrow keys to move between them.">
+        <div class="shadow-floor" aria-hidden="true"></div>
+        <div class="slot c-l1" aria-hidden="true"><div class="lk white"><span class="brand">CARDVALUE</span><span class="rank">#2</span><span class="emv"></span><span class="val">+$822<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
+        <div class="slot c-r1" aria-hidden="true"><div class="lk stone"><span class="brand">CARDVALUE</span><span class="rank">#3</span><span class="emv"></span><span class="val">+$765<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
+        <div class="slot c-main" aria-hidden="true"><div class="lk ink"><span class="brand">CARDVALUE</span><span class="rank">#1</span><span class="emv"></span><span class="val">+$914<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
+        <button type="button" class="arrow l" id="flowPrev" aria-label="Previous card">&#8249;</button>
+        <button type="button" class="arrow r" id="flowNext" aria-label="Next card">&#8250;</button>
       </div>
-      <div class="personalize-toggle-bar">
-        <div class="default-profile-label">
-          <span class="profile-dot default"></span>
-          Ranked by average American spending
-        </div>
-        <button class="btn-personalize" id="btnPersonalize">
-          Rank for my spending
-        </button>
+      <div class="readout" aria-live="polite">
+        <p class="who" id="stageWho">#1 of 52 · name hidden until you unlock</p>
+        <p class="big" id="stageBig">+$914<small>a year</small></p>
+        <p class="math" id="stageMath">$914 earned · no credits · $0 annual fee · a plain 1% card earns $240</p>
       </div>
-      <div class="hero-art" id="heroArt" aria-hidden="true">
-        <div class="hero-stack">
-          <div class="hero-card hero-card-3" data-hero-rank="3"><div class="lk stone"><span class="brand">CARDVALUE</span><span class="rank">#3</span><span class="emv"></span><span class="val">+$765<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
-          <div class="hero-card hero-card-2" data-hero-rank="2"><div class="lk white"><span class="brand">CARDVALUE</span><span class="rank">#2</span><span class="emv"></span><span class="val">+$822<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
-          <div class="hero-card hero-card-1" data-hero-rank="1"><div class="lk ink"><span class="brand">CARDVALUE</span><span class="rank">#1</span><span class="emv"></span><span class="val">+$914<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
-        </div>
-        <div class="hero-yours">
-          <span class="hero-yours-card"></span>
-          <span class="hero-yours-text">A plain 1% card on the same spending: <b id="heroYoursValue">$240/yr</b></span>
-        </div>
+      <div class="ctas" id="stageCtas">
+        <a class="btn-sr apply-link" id="stageApply" href="#" target="_blank" rel="noopener" data-apply-location="stage" hidden>Apply</a>
+        <button type="button" class="btn-sr" id="stageSeeMath" hidden>See the math</button>
+        <button type="button" class="btn-sr dark" id="btnPersonalize">Rank for my spending</button>
+        <button type="button" class="btn-sr" id="stageUnlock">Unlock all 52 · $19</button>
       </div>
+    </div>
+  </section>
+
+  <!-- RAIL: the top six, then the full table -->
+  <section class="rail-sec" aria-labelledby="railTitle">
+    <div class="rail-inner">
+      <div class="rail-head"><h2 id="railTitle">All <span data-card-count>52</span>, ranked</h2><span>Sorted by net value · tap a card to put it on stage</span></div>
+      <div class="rail" id="rail"></div>
     </div>
   </section>
 
@@ -411,7 +423,8 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <p>CardValue uses industry-standard points valuations (Chase UR: 1.5¢, Amex MR: 1.5¢, Citi TY: 1.5¢, Capital One: 1¢). Actual value depends on how you redeem. <strong>Not financial advice.</strong></p>
+      <p id="how"><strong>How it works.</strong> Enter what you spend. Every card gets ranked by what it's worth to you, in dollars, after the annual fee. No signup, and nobody pays us for placement.</p>
+      <p id="methodology">CardValue uses industry-standard points valuations (Chase UR: 1.5¢, Amex MR: 1.5¢, Citi TY: 1.5¢, Capital One: 1¢). Actual value depends on how you redeem. <strong>Not financial advice.</strong></p>
       <p class="footer-note">Rankings reflect your spending profile. Where a card requires a paid membership to hold, that cost is included in Net Value.</p>
       <p class="footer-note"><strong>* How we value statement credits.</strong> Issuers advertise credits at face value. We don't, because most cardholders never redeem them in full. A $15 monthly Uber credit is worthless in a month you don't ride, and a hotel credit tied to one booking portal is worth less than cash. Each credit is discounted by how usable it is: automatic 100%, flexible 90%, monthly expiring 60%, portal-only 50%, single-merchant 30%. We take no affiliate commission on any card listed here.</p>
     </div>
@@ -469,7 +482,7 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="cardart.js?v=1"></script>
-  <script src="script.js?v=28"></script>
+  <script src="cardart.js?v=2"></script>
+  <script src="script.js?v=29"></script>
 </body>
 </html>

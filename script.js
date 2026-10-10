@@ -879,24 +879,201 @@ function renderCards() {
   updateHeroArt();
 }
 
-/** The hero product shot shows the real top 3 and what a plain 1% card would
- *  earn on the same spending, so the image is the argument. Locked cards are
- *  embossed with their value; once unlocked they turn into the real cards. */
+/* ========== SHOWROOM STAGE + RAIL ========== */
+// The hero is a stage: the selected rank in front, the next four fanned behind
+// it (left, right, far left, far right). Locked cards are embossed with their
+// value; free and unlocked ones are the real cards. The rail under it lists the
+// top six. Both always rank ALL cards, whatever the table's filter or search.
+const STAGE_POS = ['c-main', 'c-l1', 'c-r1', 'c-l2', 'c-r2'];
+const STAGE_ISSUER_SHORT = {
+  'American Express': 'Amex', 'Chase (Amazon)': 'Amazon', 'Wells Fargo (Bilt)': 'Bilt', 'Goldman Sachs (Apple)': 'Apple',
+  'Robinhood (Coastal Community Bank)': 'Robinhood', 'SoFi (The Bank of Missouri)': 'SoFi', 'Synchrony (Venmo)': 'Venmo',
+  'Elan Financial (Fidelity)': 'Fidelity', 'Alliant Credit Union': 'Alliant',
+};
+let stageIndex = 0;          // 0-based rank of the card in front
+let stageTopId = null;       // a new #1 means a new ranking: start over at #1
+let stageReady = false;      // first render places cards without animating
+const stageEls = new Map();  // card id -> slot element on stage
+
+function escHTML(str) {
+  return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function fmtNet(v) { return `${v >= 0 ? '+' : '-'}$${Math.abs(Math.round(v)).toLocaleString()}`; }
+function stageRanked() { return sortCards(allCards, 'net-value', currentSpending); }
+function issuerShort(issuer) { return STAGE_ISSUER_SHORT[issuer] || issuer.replace(/\s*\(.*\)\s*/, ''); }
+
+/** Called by renderCards() on every re-rank, unlock, and valuation change. */
 function updateHeroArt() {
-  const art = document.getElementById('heroArt');
-  if (!art || !allCards.length) return;
-  const top = sortCards(allCards, 'net-value', currentSpending).slice(0, 3);
+  if (!allCards.length) return;
+  const ranked = stageRanked();
+  if (ranked[0] && ranked[0].id !== stageTopId) { stageTopId = ranked[0].id; stageIndex = 0; }
+  stageIndex = Math.min(Math.max(0, stageIndex), ranked.length - 1);
   const lockedIds = getLockedCardIds();
-  top.forEach((card, i) => {
-    const el = art.querySelector(`[data-hero-rank="${i + 1}"]`);
-    if (!el) return;
-    el.innerHTML = lockedIds.has(card.id)
-      ? lockedCardHTML(i + 1, calcNetValue(card, currentSpending))
-      : cardFaceHTML(card.id, 0, card.name);
+  renderStage(ranked, lockedIds);
+  renderRail(ranked, lockedIds);
+  renderHeaderUnlock();
+}
+
+function setStage(i) {
+  const ranked = stageRanked();
+  const next = Math.min(Math.max(0, i), ranked.length - 1);
+  if (next === stageIndex) return;
+  stageIndex = next;
+  renderStage(ranked, getLockedCardIds());
+  document.querySelectorAll('#rail .tile[data-rank]').forEach(t => t.classList.toggle('sel', +t.dataset.rank === stageIndex + 1));
+}
+
+function renderStage(ranked, lockedIds) {
+  const flow = document.getElementById('flow');
+  if (!flow) return;
+  flow.querySelectorAll('.slot:not([data-id])').forEach(el => el.remove());   // static first-paint cards
+
+  const want = new Map();
+  STAGE_POS.forEach((pos, d) => {
+    const card = ranked[stageIndex + d];
+    if (card) want.set(card.id, { card, rank: stageIndex + d + 1, pos });
   });
+  const rankOf = id => ranked.findIndex(c => c.id === id);
+
+  // Leaving: a card we stepped past lifts off the front, the rest sink to the back.
+  stageEls.forEach((el, id) => {
+    if (want.has(id)) return;
+    el.className = 'slot ' + (rankOf(id) < stageIndex ? 'c-out' : 'c-back');
+    el.setAttribute('aria-hidden', 'true');
+    stageEls.delete(id);
+    setTimeout(() => { if (!stageEls.has(id)) el.remove(); }, 520);
+  });
+
+  want.forEach(({ card, rank, pos }, id) => {
+    let el = stageEls.get(id);
+    if (!el) {
+      el = document.createElement('div');
+      el.dataset.id = id;
+      if (stageReady) {   // arrive from where it would come from, then glide in
+        el.className = 'slot ' + (rank - 1 < stageIndex ? 'c-out' : 'c-back');
+        flow.appendChild(el);
+        void el.offsetWidth;
+      } else {
+        flow.appendChild(el);
+      }
+      stageEls.set(id, el);
+    }
+    const locked = lockedIds.has(id);
+    el.innerHTML = locked ? lockedCardHTML(rank, calcNetValue(card, currentSpending)) : cardFaceHTML(card.id, 0, card.name);
+    el.dataset.rank = rank;
+    el.className = 'slot ' + pos;
+    el.setAttribute('aria-hidden', 'true');   // the readout below speaks for the stage
+  });
+  stageReady = true;
+
+  // Readout and buttons describe the card in front.
+  const card = ranked[stageIndex];
+  if (!card) return;
+  const rank = stageIndex + 1;
+  const locked = lockedIds.has(card.id);
+  const net = calcNetValue(card, currentSpending);
+  const earned = calcAnnualValue(card, currentSpending);
+  const credits = calcRealisticCredits(card);
+  const fee = card.annualFee + (card.membershipRequired ? card.membershipRequired.cost : 0);
   const monthly = Object.values(currentSpending).reduce((a, b) => a + (Number(b) || 0), 0);
-  const yours = document.getElementById('heroYoursValue');
-  if (yours) yours.textContent = `$${Math.round(monthly * 12 * 0.01).toLocaleString()}/yr`;
+  const plain = Math.round(monthly * 12 * 0.01);
+  document.getElementById('stageWho').innerHTML = locked
+    ? `#${rank} of ${ranked.length} · name hidden until you unlock`
+    : `#${rank} of ${ranked.length} · <b>${escHTML(card.name)}</b>`;
+  document.getElementById('stageBig').innerHTML = `${fmtNet(net)}<small>a year</small>`;
+  document.getElementById('stageMath').textContent =
+    `$${earned.toLocaleString()} earned · ${credits > 0 ? `+~$${credits.toLocaleString()} credits` : 'no credits'} · $${fee.toLocaleString()} annual fee · a plain 1% card earns $${plain.toLocaleString()}`;
+
+  const licensed = !PAYWALL.enabled || isLicensed();
+  const apply = document.getElementById('stageApply');
+  const see = document.getElementById('stageSeeMath');
+  const mine = document.getElementById('btnPersonalize');
+  const unlock = document.getElementById('stageUnlock');
+  apply.hidden = see.hidden = locked;
+  if (!locked) {
+    apply.href = card.applyUrl;
+    apply.textContent = `Apply at ${issuerShort(card.issuer)}`;
+    apply.dataset.cardId = card.id;
+    apply.dataset.cardName = card.name;
+    apply.dataset.cardIssuer = card.issuer;
+  }
+  mine.hidden = !locked && !licensed;   // a free card before paying: Apply, See the math, Unlock
+  unlock.hidden = licensed;
+  unlock.textContent = `Unlock all ${ranked.length} · ${PAYWALL.price}`;
+  [apply, mine].forEach(b => b.classList.remove('dark'));
+  (locked ? mine : apply).classList.add('dark');
+
+  document.getElementById('flowPrev').disabled = stageIndex === 0;
+  document.getElementById('flowNext').disabled = stageIndex >= ranked.length - 1;
+}
+
+function renderRail(ranked, lockedIds) {
+  const rail = document.getElementById('rail');
+  if (!rail) return;
+  rail.innerHTML = ranked.slice(0, 6).map((c, i) => {
+    const rank = i + 1;
+    const locked = lockedIds.has(c.id);
+    const net = calcNetValue(c, currentSpending);
+    const name = c.name.replace('American Express', 'Amex');
+    return `<button type="button" class="tile${i === stageIndex ? ' sel' : ''}" data-rank="${rank}"
+        aria-label="${locked ? `Rank ${rank}, ${fmtNet(net)} a year, locked` : `Rank ${rank}, ${escHTML(c.name)}, ${fmtNet(net)} a year`}">
+      ${locked ? lockedCardHTML(rank, net) : cardFaceHTML(c.id, 0, c.name)}
+      <span class="meta"><span>${locked ? `#${rank}` : escHTML(name)}</span><b>${locked ? '' : fmtNet(net)}</b></span>
+    </button>`;
+  }).join('') + `<a class="tile more" href="#cardTable">View all ${ranked.length}</a>`;
+}
+
+function renderHeaderUnlock() {
+  const pill = document.getElementById('navUnlock');
+  if (!pill) return;
+  const licensed = !PAYWALL.enabled || isLicensed();
+  pill.textContent = licensed ? 'Unlocked' : `Unlock · ${PAYWALL.price}`;
+  pill.classList.toggle('pill-dark', !licensed);
+  pill.classList.toggle('pill-ok', licensed);
+  pill.disabled = licensed;
+}
+
+/** Tap the front card: its math if visible, the unlock if not. Tap any other card: bring it forward. */
+function stageCardAction(rankIdx) {
+  if (rankIdx !== stageIndex) { setStage(rankIdx); return; }
+  const card = stageRanked()[stageIndex];
+  if (card) openDetail(card);   // openDetail sends locked cards to the unlock step
+}
+
+function bindStage() {
+  const flow = document.getElementById('flow');
+  if (!flow) return;
+  let swipeX = null, swiped = false;
+  flow.addEventListener('pointerdown', e => { swipeX = e.clientX; swiped = false; });
+  flow.addEventListener('pointerup', e => {
+    if (swipeX === null) return;
+    const dx = e.clientX - swipeX;
+    swipeX = null;
+    if (Math.abs(dx) > 40) { swiped = true; setStage(stageIndex + (dx < 0 ? 1 : -1)); }
+  });
+  flow.addEventListener('click', e => {
+    if (swiped) { swiped = false; return; }
+    if (e.target.closest('.arrow')) return;
+    const slot = e.target.closest('.slot[data-rank]');
+    if (slot) stageCardAction(+slot.dataset.rank - 1);
+  });
+  flow.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); setStage(stageIndex + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); setStage(stageIndex - 1); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); stageCardAction(stageIndex); }
+  });
+  document.getElementById('flowPrev').addEventListener('click', () => setStage(stageIndex - 1));
+  document.getElementById('flowNext').addEventListener('click', () => setStage(stageIndex + 1));
+  document.getElementById('stageSeeMath').addEventListener('click', () => stageCardAction(stageIndex));
+  document.getElementById('stageUnlock').addEventListener('click', () => showGate('pay'));
+  document.getElementById('navUnlock').addEventListener('click', () => showGate('pay'));
+  document.getElementById('rail').addEventListener('click', e => {
+    const tile = e.target.closest('.tile[data-rank]');
+    if (!tile) return;
+    setStage(+tile.dataset.rank - 1);
+    const r = flow.getBoundingClientRect();
+    if (r.top < 0 || r.bottom > window.innerHeight) flow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
 }
 
 // ---- DETAIL DRAWER ----
@@ -1392,15 +1569,11 @@ function applyPersonalization() {
   }, 500);
 }
 
-/** Put the table header and the top 3 rows at the top of the viewport. */
+/** After a re-rank, bring the stage (the new top cards) into view. */
 function scrollToTopCards() {
-  const head = document.getElementById('cardTableHead');
-  const firstRow = document.querySelector('#cardList .card-row');
-  const target = (head && head.offsetHeight) ? head : firstRow;
+  const target = document.querySelector('.hero .eyebrow') || document.getElementById('flow');
   if (!target) return;
-  const bar = document.querySelector('.filter-bar');
-  const barH = bar ? bar.getBoundingClientRect().height : 0;
-  const top = target.getBoundingClientRect().top + window.scrollY - barH - 8;
+  const top = target.getBoundingClientRect().top + window.scrollY - 16;
   window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
 }
 
@@ -1500,6 +1673,7 @@ function bindEvents() {
     }
   });
   document.getElementById('drawerClose').addEventListener('click', closePersonalizeDrawer);
+  bindStage();
   document.getElementById('btnApply').addEventListener('click', applyPersonalization);
   document.getElementById('btnReset').addEventListener('click', resetPersonalization);
 
