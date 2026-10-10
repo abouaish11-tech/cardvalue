@@ -666,7 +666,7 @@ function renderWalletBuilder() {
            aria-label="View details for ${c.name}">
         <div class="wallet-card-header">
           <span class="wallet-card-num">${idx + 1}</span>
-          <span class="wallet-card-logo">${getIssuerLogoHTML(c.issuer, 28)}</span>
+          <span class="wallet-card-thumb">${cardFaceHTML(c.id, 0, c.name)}</span>
           <div class="wallet-card-id">
             <span class="wallet-card-name">${c.name}</span>
             <span class="wallet-card-issuer">${c.issuer}</span>
@@ -791,7 +791,7 @@ function renderCards() {
         <td class="td-rank"><span>${rank}</span></td>
         <td class="td-card">
           <div class="card-identity">
-            <span class="locked-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
+            <span class="card-thumb">${lockedCardHTML(rank, netValueL)}</span>
             <div>
               <span class="card-name locked-name">█████ ████████</span>
               <span class="card-issuer">Unlock to reveal</span>
@@ -847,7 +847,7 @@ function renderCards() {
       <td class="td-rank"><span>${rankLabel}</span></td>
       <td class="td-card">
         <div class="card-identity">
-          <span class="card-logo-inline">${getIssuerLogoHTML(card.issuer, 32)}</span>
+          <span class="card-thumb">${cardFaceHTML(card.id, 0, card.name)}</span>
           <div>
             <span class="card-name">${card.name}</span>
             <span class="card-issuer">${card.issuer}</span>
@@ -879,17 +879,20 @@ function renderCards() {
   updateHeroArt();
 }
 
-/** The hero product shot shows the real top-3 net values and what a plain
- *  1% card would earn on the same spending, so the image is the argument. */
+/** The hero product shot shows the real top 3 and what a plain 1% card would
+ *  earn on the same spending, so the image is the argument. Locked cards are
+ *  embossed with their value; once unlocked they turn into the real cards. */
 function updateHeroArt() {
   const art = document.getElementById('heroArt');
   if (!art || !allCards.length) return;
   const top = sortCards(allCards, 'net-value', currentSpending).slice(0, 3);
+  const lockedIds = getLockedCardIds();
   top.forEach((card, i) => {
     const el = art.querySelector(`[data-hero-rank="${i + 1}"]`);
     if (!el) return;
-    const v = calcNetValue(card, currentSpending);
-    el.innerHTML = `${v >= 0 ? '+' : '-'}$${Math.abs(v).toLocaleString()}<small>/yr</small>`;
+    el.innerHTML = lockedIds.has(card.id)
+      ? lockedCardHTML(i + 1, calcNetValue(card, currentSpending))
+      : cardFaceHTML(card.id, 0, card.name);
   });
   const monthly = Object.values(currentSpending).reduce((a, b) => a + (Number(b) || 0), 0);
   const yours = document.getElementById('heroYoursValue');
@@ -910,10 +913,10 @@ function openDetail(card) {
 
   document.getElementById('detailName').textContent = card.name;
   document.getElementById('detailIssuer').textContent = card.issuer;
-  document.getElementById('detailLogo').innerHTML = getIssuerLogoHTML(card.issuer, 36);
+  document.getElementById('detailLogo').innerHTML = '';
 
-  // Build body
-  let html = '';
+  // Build body: the card itself first
+  let html = `<div class="detail-card-face">${cardFaceHTML(card.id, 0, card.name)}</div>`;
 
   // Value highlight
   html += `

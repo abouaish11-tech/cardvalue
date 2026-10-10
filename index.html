@@ -66,7 +66,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" />
-  <link rel="stylesheet" href="style.css?v=21" />
+  <!-- Card-face type: files download only when a card that uses them is on screen. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Allura&family=Cormorant+Garamond:wght@300&family=Geist:wght@200..700&family=Geist+Mono:wght@500&family=Libre+Caslon+Text:wght@400;700&family=Montserrat:ital,wght@0,700;1,600;1,700&family=Yellowtail&display=swap" />
+  <link rel="stylesheet" href="cardart.css?v=1" />
+  <link rel="stylesheet" href="style.css?v=22" />
 
   <!-- Polar overlay checkout: any <a data-polar-checkout> opens as an in-page
        modal so the address bar never leaves cardvalue.org. -->
@@ -107,21 +110,9 @@
       </div>
       <div class="hero-art" id="heroArt" aria-hidden="true">
         <div class="hero-stack">
-          <div class="hero-card hero-card-3">
-            <span class="hero-card-chip"></span>
-            <span class="hero-card-rank">#3</span>
-            <span class="hero-card-tag" data-hero-rank="3">+$765<small>/yr</small></span>
-          </div>
-          <div class="hero-card hero-card-2">
-            <span class="hero-card-chip"></span>
-            <span class="hero-card-rank">#2</span>
-            <span class="hero-card-tag" data-hero-rank="2">+$822<small>/yr</small></span>
-          </div>
-          <div class="hero-card hero-card-1">
-            <span class="hero-card-chip"></span>
-            <span class="hero-card-rank">#1</span>
-            <span class="hero-card-tag hero-card-tag-top" data-hero-rank="1">+$900<small>/yr</small></span>
-          </div>
+          <div class="hero-card hero-card-3" data-hero-rank="3"><div class="lk stone"><span class="brand">CARDVALUE</span><span class="rank">#3</span><span class="emv"></span><span class="val">+$765<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
+          <div class="hero-card hero-card-2" data-hero-rank="2"><div class="lk white"><span class="brand">CARDVALUE</span><span class="rank">#2</span><span class="emv"></span><span class="val">+$822<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
+          <div class="hero-card hero-card-1" data-hero-rank="1"><div class="lk ink"><span class="brand">CARDVALUE</span><span class="rank">#1</span><span class="emv"></span><span class="val">+$914<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
         </div>
         <div class="hero-yours">
           <span class="hero-yours-card"></span>
@@ -478,6 +469,7 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="script.js?v=27"></script>
+  <script src="cardart.js?v=1"></script>
+  <script src="script.js?v=28"></script>
 </body>
 </html>
