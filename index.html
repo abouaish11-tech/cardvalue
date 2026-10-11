@@ -107,16 +107,16 @@
       <h1>Your credit card is costing you <em>$500+ a year.</em></h1>
       <div class="flow" id="flow" tabindex="0" aria-roledescription="carousel" aria-label="Top cards for your spending. Use the arrow keys to move between them.">
         <div class="shadow-floor" aria-hidden="true"></div>
-        <div class="slot c-l1" aria-hidden="true"><div class="lk white"><span class="brand">CARDVALUE</span><span class="rank">#2</span><span class="emv"></span><span class="val">+$822<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
-        <div class="slot c-r1" aria-hidden="true"><div class="lk stone"><span class="brand">CARDVALUE</span><span class="rank">#3</span><span class="emv"></span><span class="val">+$765<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
-        <div class="slot c-main" aria-hidden="true"><div class="lk ink"><span class="brand">CARDVALUE</span><span class="rank">#1</span><span class="emv"></span><span class="val">+$914<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div></div>
+        <div class="slot c-l1" aria-hidden="true"><div class="lk white"><span class="brand">CARDVALUE</span><span class="rank">#2</span><span class="emv"></span><span class="val">+$822<small>/YR</small></span><span class="nm">UNLOCK TO SEE</span><span class="lock"></span></div></div>
+        <div class="slot c-r1" aria-hidden="true"><div class="lk stone"><span class="brand">CARDVALUE</span><span class="rank">#3</span><span class="emv"></span><span class="val">+$765<small>/YR</small></span><span class="nm">UNLOCK TO SEE</span><span class="lock"></span></div></div>
+        <div class="slot c-main" aria-hidden="true"><div class="lk ink"><span class="brand">CARDVALUE</span><span class="rank">#1</span><span class="emv"></span><span class="val">+$914<small>/YR</small></span><span class="nm">UNLOCK TO SEE</span><span class="lock"></span></div></div>
         <button type="button" class="arrow l" id="flowPrev" aria-label="Previous card">&#8249;</button>
         <button type="button" class="arrow r" id="flowNext" aria-label="Next card">&#8250;</button>
       </div>
       <div class="readout" aria-live="polite">
-        <p class="who" id="stageWho">#1 of 52 · name hidden until you unlock</p>
+        <p class="who" id="stageWho">Your #1 of 52 · unlock to see which card it is</p>
         <p class="big" id="stageBig">+$914<small>a year</small></p>
-        <p class="math" id="stageMath">$914 earned · no credits · $0 annual fee · a plain 1% card earns $240</p>
+        <p class="math" id="stageMath">$914 in rewards · no statement credits · $0 annual fee · a basic 1% card would earn $240</p>
       </div>
       <div class="ctas" id="stageCtas">
         <a class="btn-sr apply-link" id="stageApply" href="#" target="_blank" rel="noopener" data-apply-location="stage" hidden>Apply</a>
@@ -130,7 +130,7 @@
   <!-- RAIL: the top six, then the full table -->
   <section class="rail-sec" aria-labelledby="railTitle">
     <div class="rail-inner">
-      <div class="rail-head"><h2 id="railTitle">All <span data-card-count>52</span>, ranked</h2><span>Sorted by net value · tap a card to put it on stage</span></div>
+      <div class="rail-head"><h2 id="railTitle">All <span data-card-count>52</span>, ranked</h2><span>Best value first · tap any card to take a closer look</span></div>
       <div class="rail" id="rail"></div>
     </div>
   </section>
@@ -436,10 +436,10 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <p id="how"><strong>How it works.</strong> Enter what you spend. Every card gets ranked by what it's worth to you, in dollars, after the annual fee. No signup, and nobody pays us for placement.</p>
-      <p id="methodology">CardValue uses industry-standard points valuations (Chase UR: 1.5¢, Amex MR: 1.5¢, Citi TY: 1.5¢, Capital One: 1¢). Actual value depends on how you redeem. <strong>Not financial advice.</strong></p>
-      <p class="footer-note">Rankings reflect your spending profile. Where a card requires a paid membership to hold, that cost is included in Net Value.</p>
-      <p class="footer-note"><strong>* How we value statement credits.</strong> Issuers advertise credits at face value. We don't, because most cardholders never redeem them in full. A $15 monthly Uber credit is worthless in a month you don't ride, and a hotel credit tied to one booking portal is worth less than cash. Each credit is discounted by how usable it is: automatic 100%, flexible 90%, monthly expiring 60%, portal-only 50%, single-merchant 30%. We take no affiliate commission on any card listed here.</p>
+      <p id="how"><strong>How it works.</strong> Tell us roughly what you spend each month in a few categories, like dining, groceries and gas. For every card, we add up the rewards you'd earn at that card's rates, add the statement credits you'd realistically use, and subtract the annual fee. The result is one number: what the card would put in your pocket over a year. Cards are ranked by that number, so the card at the top is the one that pays you the most for the way you already spend. Ranks 4 and 5 are free to see. The top 3, the full list and the wallet builder are a one-time $19 unlock. No signup, and no bank pays us for placement.</p>
+      <p id="methodology"><strong>How we turn points into dollars.</strong> Cash back counts at face value. Points and miles count at what they're typically worth when moved to airline and hotel partners: Chase, Amex, Citi and Bilt points at 1.5¢ each, Capital One miles at 1¢, and hotel points lower. Prefer the simple view? Switch to Cash Value above the list to count every point at 1¢. Real value depends on how you redeem, so treat these numbers as a well-informed estimate rather than a promise. <strong>Not financial advice.</strong></p>
+      <p class="footer-note">Where a card can only be held with a paid membership, like Costco or Robinhood Gold, we count that cost against the card too.</p>
+      <p class="footer-note"><strong>* Why our credit values look lower than the bank's.</strong> Issuers advertise statement credits at face value. Most people never use them in full: a $15 monthly Uber credit is worth nothing in a month you don't ride, and a hotel credit that only works through one booking site is worth less than cash. So we discount each credit by how easy it is to use: automatic 100%, flexible 90%, monthly expiring 60%, portal-only 50%, single-merchant 30%. We take no affiliate commission on any card listed here.</p>
       <p class="footer-note" id="support"><strong>Support.</strong> Spotted a wrong number, or an unlock that didn't come through? Email <a href="mailto:support@cardvalue.org">support@cardvalue.org</a> and a human will reply.</p>
     </div>
   </footer>
@@ -460,18 +460,18 @@
         <p class="gate-sub">The best card depends on where your money goes. Pick a starting point.</p>
         <button class="gate-option" id="gateMine" type="button">
           <span class="gate-opt-title">Enter my spending</span>
-          <span class="gate-opt-desc">About 60 seconds. Rankings computed for your dining, groceries, travel, gas, and the categories cards pay extra on.</span>
+          <span class="gate-opt-desc">Takes about a minute. Tell us roughly what you spend on dining, groceries, travel, gas and a few other categories, and we rank every card for you.</span>
         </button>
         <button class="gate-option gate-option-secondary" id="gateAvg" type="button">
-          <span class="gate-opt-title">Use average American spending</span>
-          <span class="gate-opt-desc">$500 dining · $400 groceries · $200 travel · $150 gas · $750 everything else (online, streaming, transit) per month</span>
+          <span class="gate-opt-title">Start with average American spending</span>
+          <span class="gate-opt-desc">$500 dining · $350 groceries · $200 travel · $150 gas · $800 across online shopping, streaming, bills and everything else, per month. You can change it any time.</span>
         </button>
         <p class="gate-note">No signup · no affiliate links</p>
       </div>
 
       <div class="gate-step" id="gateStepPay" hidden>
-        <h2 id="gatePayTitle">Unlock your full rankings</h2>
-        <p class="gate-sub" id="gatePaySub">All <span data-card-count>52</span> cards ranked for your spending, including the 3 that pay you the most, stay hidden until you unlock. One payment, yours forever. The banks never pay us. That's why the math stays honest.</p>
+        <h2 id="gatePayTitle">See your full ranking</h2>
+        <p class="gate-sub" id="gatePaySub">Unlock all <span data-card-count>52</span> cards ranked for your spending, including the top 3 that pay you the most, plus the wallet builder that tells you which card to use for each purchase. One payment, yours forever, no subscription. No bank pays us, so the ranking only answers to your numbers.</p>
         <div class="gate-buy-wrap" id="gateBuyWrap">
           <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> USD · one-time</span></div>
           <!-- href is the single source of truth for the Polar checkout link.
@@ -479,7 +479,7 @@
                Hosted checkout for now (same tab, so the success redirect still
                auto-unlocks). Add data-polar-checkout data-polar-checkout-theme="light"
                back once Polar enables Apple Pay for embedded checkout on cardvalue.org. -->
-          <a class="gate-buy" id="gateBuy" href="https://buy.polar.sh/polar_cl_zQeETdF1E5SxcItZLwH5LBTEVupqkUMqgYAfd0Ift3t" rel="noopener">Unlock with card</a>
+          <a class="gate-buy" id="gateBuy" href="https://buy.polar.sh/polar_cl_zQeETdF1E5SxcItZLwH5LBTEVupqkUMqgYAfd0Ift3t" rel="noopener">Continue to secure checkout</a>
           <p class="gate-trust">Secure checkout by Polar · Billed in USD</p>
         </div>
         <div class="gate-license">
@@ -496,7 +496,7 @@
   <!-- Toast notifications -->
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
-  <script src="cardart.js?v=2"></script>
-  <script src="script.js?v=32"></script>
+  <script src="cardart.js?v=3"></script>
+  <script src="script.js?v=33"></script>
 </body>
 </html>

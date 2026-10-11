@@ -660,8 +660,8 @@ function renderWalletBuilder() {
     root.innerHTML = `
       <div class="wallet-locked">
         <span class="wallet-locked-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-        <p class="wallet-locked-title">The optimizer builds your exact best 1 to 3 card wallet.</p>
-        <p class="wallet-locked-sub">It names names. That's the part behind the unlock.</p>
+        <p class="wallet-locked-title">The wallet builder picks the best 1 to 3 cards to carry together, and tells you which one to use for each purchase.</p>
+        <p class="wallet-locked-sub">The card names are part of the unlock.</p>
         <button type="button" class="wallet-locked-btn" onclick="showGate('pay')">Unlock for ${PAYWALL.price}</button>
       </div>`;
     return;
@@ -817,7 +817,7 @@ function renderCards() {
             <span class="card-thumb">${lockedCardHTML(rank, netValueL)}</span>
             <div>
               <span class="card-name locked-name">█████ ████████</span>
-              <span class="card-issuer">Unlock to reveal</span>
+              <span class="card-issuer">Unlock to see this card</span>
             </div>
           </div>
         </td>
@@ -1001,11 +1001,11 @@ function renderStage(ranked, lockedIds) {
   const monthly = Object.values(currentSpending).reduce((a, b) => a + (Number(b) || 0), 0);
   const plain = Math.round(monthly * 12 * 0.01);
   document.getElementById('stageWho').innerHTML = locked
-    ? `#${rank} of ${ranked.length} · name hidden until you unlock`
-    : `#${rank} of ${ranked.length} · <b>${escHTML(card.name)}</b>`;
+    ? `Your #${rank} of ${ranked.length} · unlock to see which card it is`
+    : `Your #${rank} of ${ranked.length} · <b>${escHTML(card.name)}</b>`;
   document.getElementById('stageBig').innerHTML = `${fmtNet(net)}<small>a year</small>`;
   document.getElementById('stageMath').textContent =
-    `$${earned.toLocaleString()} earned · ${credits > 0 ? `+~$${credits.toLocaleString()} credits` : 'no credits'} · $${fee.toLocaleString()} annual fee · a plain 1% card earns $${plain.toLocaleString()}`;
+    `$${earned.toLocaleString()} in rewards · ${credits > 0 ? `about $${credits.toLocaleString()} in credits you'd use` : 'no statement credits'} · $${fee.toLocaleString()} annual fee · a basic 1% card would earn $${plain.toLocaleString()}`;
 
   const licensed = !PAYWALL.enabled || isLicensed();
   const apply = document.getElementById('stageApply');
@@ -1149,9 +1149,9 @@ function keepOrDowngradeHTML(card, netValue, totalFee) {
         : `, and beats ${best.card.name} (${best.net >= 0 ? '+' : '−'}${fmt(best.net)}/yr), the card you'd downgrade to, by ${fmt(margin)}.`);
   } else {
     tone = 'cancel';
-    verdict = 'Cancel or downgrade';
-    detail = `At your spending this card loses <strong>${fmt(netValue)}/yr</strong> after the $${totalFee.toLocaleString()} fee. ${breakEven}` +
-      (best ? '' : ' We don\'t list a no-fee card in this family; ask the issuer what it can be product-changed to before closing it.');
+    verdict = 'Probably not worth the fee';
+    detail = `At your spending this card costs you <strong>${fmt(netValue)}/yr</strong> more than it earns, once the $${totalFee.toLocaleString()} fee is paid. ${breakEven}` +
+      (best ? '' : ' We don\'t list a no-fee card in this family. Before closing it, ask the issuer whether you can switch to a no-fee card instead, which keeps your credit history intact.');
   }
 
   return `
@@ -1187,7 +1187,7 @@ function renderBonusCheck(bonus) {
   } else {
     const shortfall = bonus.spendRequired - monthly * bonus.months;
     cls = 'warn';
-    body = `<strong>You'd likely miss this bonus.</strong> ${spendLine} you'd spend about $${fmt(monthly * bonus.months)} in ${bonus.months} months, $${fmt(shortfall)} short. You'd need roughly $${fmt(needPerMonth - monthly)}/month more.`;
+    body = `<strong>This bonus would be a stretch.</strong> ${spendLine} you'd spend about $${fmt(monthly * bonus.months)} in ${bonus.months} months, which is $${fmt(shortfall)} short. You'd need roughly $${fmt(needPerMonth - monthly)} more a month to reach it.`;
   }
   return `<div class="bonus-check bonus-check-${cls}">${body} <span class="bonus-check-note">Annual fees, refunds, and balance transfers don't count toward the spend.</span></div>`;
 }
@@ -1238,7 +1238,7 @@ function openDetail(card) {
   // Category breakdown
   html += `
     <div class="detail-section">
-      <div class="detail-section-title">Reward Breakdown by Category</div>
+      <div class="detail-section-title">What you'd earn, by category</div>
       <table class="cat-table">
         <thead>
           <tr>
@@ -1354,7 +1354,7 @@ function openDetail(card) {
   if (card.credits && card.credits.length > 0) {
     html += `
       <div class="detail-section">
-        <div class="detail-section-title">Annual Credits & Statement Credits</div>
+        <div class="detail-section-title">Statement credits, and what they're really worth</div>
         <div class="credits-list">
     `;
     for (const credit of card.credits) {
@@ -1388,27 +1388,27 @@ function openDetail(card) {
   // Fee summary
   html += `
     <div class="detail-section">
-      <div class="detail-section-title">Value vs. Cost</div>
+      <div class="detail-section-title">Is the fee worth it?</div>
       <div class="fee-summary">
         <div class="fee-box">
           <div class="fee-num green">$${annualValue.toLocaleString()}</div>
-          <div class="fee-lbl">Rewards Earned</div>
+          <div class="fee-lbl">Rewards earned</div>
         </div>
         ${totalCredits > 0 ? `
         <div class="fee-box">
           <div class="fee-num green">~$${totalCredits.toLocaleString()}</div>
-          <div class="fee-lbl">Realistic Credits*</div>
+          <div class="fee-lbl">Credits you'd use*</div>
         </div>
         ` : ''}
         <div class="fee-box">
           <div class="fee-num red">$${totalFee.toLocaleString()}</div>
-          <div class="fee-lbl">Annual Fee</div>
+          <div class="fee-lbl">Annual fee</div>
         </div>
         <div class="fee-box">
           <div class="fee-num ${netValue >= 0 ? 'green' : 'red'}">
             ${netValue >= 0 ? '+' : ''}$${netValue.toLocaleString()}
           </div>
-          <div class="fee-lbl">Net Annual Value</div>
+          <div class="fee-lbl">What you keep per year</div>
         </div>
       </div>
     </div>
@@ -1496,7 +1496,7 @@ function openDetail(card) {
     }
     html += `
       <div class="detail-section">
-        <div class="detail-section-title">Sign-Up Bonus</div>
+        <div class="detail-section-title">Sign-up bonus</div>
         <div class="bonus-box">${bonusText}</div>
         ${renderBonusCheck(bonus)}
       </div>
@@ -1507,7 +1507,7 @@ function openDetail(card) {
   if (card.perks && card.perks.length) {
     html += `
       <div class="detail-section">
-        <div class="detail-section-title">Key Perks & Benefits</div>
+        <div class="detail-section-title">Perks worth knowing about</div>
         <ul class="perks-list">
           ${card.perks.map(p => `<li>${p}</li>`).join('')}
         </ul>
@@ -2049,7 +2049,7 @@ async function activateLicense() {
   if (result === 'ok') { msg.textContent = ''; unlockWith(key); }
   else if (result === 'revoked') msg.textContent = 'That key has been refunded or disabled.';
   else if (result === 'network') msg.textContent = 'Couldn\'t reach the license server. Try again in a minute.';
-  else msg.textContent = 'That key didn\'t validate. Check for typos, or reply to your receipt email for help.';
+  else msg.textContent = 'That key didn\'t work. Check for typos, or email support@cardvalue.org and we\'ll sort it out.';
 }
 
 /** Handle the return trip from checkout.

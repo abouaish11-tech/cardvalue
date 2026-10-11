@@ -305,6 +305,6 @@ window.lockedCardHTML = function (rank, net, w) {
   const size = w ? ` style="--w:${w}px"` : '';
   const m = LOCK_MATERIALS[(Math.max(1, rank) - 1) % LOCK_MATERIALS.length];
   return `<div class="lk ${m}"${size} aria-hidden="true"><span class="brand">CARDVALUE</span><span class="rank">#${rank}</span>`
-    + `<span class="emv"></span><span class="val">${money(net)}<small>/YR</small></span><span class="nm">NAME HIDDEN</span><span class="lock"></span></div>`;
+    + `<span class="emv"></span><span class="val">${money(net)}<small>/YR</small></span><span class="nm">UNLOCK TO SEE</span><span class="lock"></span></div>`;
 };
 })();
