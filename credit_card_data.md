@@ -10,10 +10,10 @@
 | **Dining** | 3x |
 | **Groceries** | 3x (online groceries only; in-store = 1x) |
 | **Travel** | 5x via Chase Travel; 2x direct travel |
-| **Gas** | 1x |
+| **Gas** | 3x (gas stations and EV charging; added in the 2026 refresh) |
 | **Other** | 1x |
 | **Sign-Up Bonus** | 75,000 points after $5,000 spend in 3 months |
-| **Top Perks** | $50 annual hotel credit (Chase Travel); 10% anniversary points bonus on prior year spend; DoorDash DashPass through 12/31/2027; No foreign transaction fees; Points transfer to Hyatt, Southwest, United, etc. |
+| **Top Perks** | $100 annual hotel credit (Chase Travel); 10% anniversary points bonus on prior year spend; DoorDash DashPass through 12/31/2027; No foreign transaction fees; Points transfer to Hyatt, Southwest, United, etc. |
 
 ---
 
@@ -27,7 +27,7 @@
 | **Travel** | 8x via Chase Travel; 4x direct travel |
 | **Gas** | 1x |
 | **Other** | 1x |
-| **Sign-Up Bonus** | 125,000 points after $6,000 spend in 3 months |
+| **Sign-Up Bonus** | 100,000 points after $6,000 spend in 3 months |
 | **Top Perks** | $300 annual travel credit; Up to $500/yr credit for The Edit (Chase luxury hotels); Up to $300/yr Exclusive Tables dining credit; Up to $300/yr StubHub credit; Up to $250/yr Apple TV+/Music credit; $300/yr DoorDash credits + DashPass; Up to $120/yr Peloton credit; Chase Sapphire Lounge + Priority Pass access; IHG Platinum Elite status |
 
 ---
@@ -43,7 +43,7 @@
 | **Gas** | 1.5% |
 | **Drugstores** | 3% |
 | **Other** | 1.5% |
-| **Sign-Up Bonus** | $250 after $500 spend in 3 months (limited-time; standard is $200) |
+| **Sign-Up Bonus** | $200 after $500 spend in 3 months |
 | **Top Perks** | 0% intro APR for 15 months on purchases and balance transfers; Earns Ultimate Rewards (poolable with Sapphire cards); Purchase protection; Extended warranty |
 
 ---
@@ -342,7 +342,7 @@
 | **Travel** | 2% |
 | **Gas** | 2% |
 | **Other** | 2% (flat rate on everything) |
-| **Sign-Up Bonus** | $200 after $500 spend in 3 months |
+| **Sign-Up Bonus** | $100 after $500 spend in 3 months |
 | **Top Perks** | Flat 2% on everything; 0% intro APR for 12 months; Cell phone protection (up to $600); No rewards cap; Pairs well with Autograph for WF trifecta |
 
 **Limitation:** 3% foreign transaction fee.
