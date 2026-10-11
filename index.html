@@ -13,7 +13,7 @@
     gtag('config', 'G-3WW18GF2ZM');
   </script>
   <title>CardValue: Find Your Best Credit Card Based on Your Spending</title>
-  <meta name="description" content="Compare 40+ credit cards ranked by real dollar value. Enter your spending to see which card earns you the most. Points, miles, and cashback translated into dollars." />
+  <meta name="description" content="Compare 50+ credit cards ranked by real dollar value. Enter your spending to see which card earns you the most. Points, miles, and cashback translated into dollars." />
   <meta name="keywords" content="credit card comparison, best credit card, rewards calculator, cashback, travel rewards, points value, credit card ranking" />
   <meta name="author" content="CardValue" />
   <meta name="robots" content="index, follow" />
@@ -23,7 +23,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://cardvalue.org/" />
   <meta property="og:title" content="CardValue: Find Your Best Credit Card" />
-  <meta property="og:description" content="Compare 40+ credit cards ranked by real dollar value based on your actual spending. Points, miles, and cashback, all in dollars." />
+  <meta property="og:description" content="Compare 50+ credit cards ranked by real dollar value based on your actual spending. Points, miles, and cashback, all in dollars." />
   <meta property="og:image" content="https://cardvalue.org/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -32,7 +32,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="CardValue: Find Your Best Credit Card" />
-  <meta name="twitter:description" content="Compare 40+ credit cards ranked by real dollar value based on your actual spending." />
+  <meta name="twitter:description" content="Compare 50+ credit cards ranked by real dollar value based on your actual spending." />
   <meta name="twitter:image" content="https://cardvalue.org/og-image.png" />
 
   <!-- Favicon -->
@@ -69,7 +69,7 @@
        download when a card that uses them is on screen. -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Allura&family=Cormorant+Garamond:wght@300&family=Geist:wght@200..700&family=Geist+Mono:wght@500&family=Libre+Caslon+Text:wght@400;700&family=Montserrat:ital,wght@0,700;1,600;1,700&family=Yellowtail&display=swap" />
   <link rel="stylesheet" href="cardart.css?v=2" />
-  <link rel="stylesheet" href="style.css?v=24" />
+  <link rel="stylesheet" href="style.css?v=25" />
 
   <!-- Polar overlay checkout: any <a data-polar-checkout> opens as an in-page
        modal so the address bar never leaves cardvalue.org. -->
@@ -145,23 +145,23 @@
       <p class="drawer-sub">Rough numbers are fine. We re-rank all <span data-card-count>52</span> cards for you.</p>
       <div class="spending-inputs">
         <div class="spending-row">
-          <label>Dining & restaurants</label>
+          <label for="sp_dining">Dining & restaurants</label>
           <div class="input-wrap"><span>$</span><input type="number" id="sp_dining" value="500" min="0" max="99999" /></div>
         </div>
         <div class="spending-row">
-          <label>Groceries</label>
+          <label for="sp_groceries">Groceries</label>
           <div class="input-wrap"><span>$</span><input type="number" id="sp_groceries" value="400" min="0" max="99999" /></div>
         </div>
         <div class="spending-row">
-          <label>Travel (flights, hotels)</label>
+          <label for="sp_travel">Travel (flights, hotels)</label>
           <div class="input-wrap"><span>$</span><input type="number" id="sp_travel" value="200" min="0" max="99999" /></div>
         </div>
         <div class="spending-row">
-          <label>Gas</label>
+          <label for="sp_gas">Gas</label>
           <div class="input-wrap"><span>$</span><input type="number" id="sp_gas" value="150" min="0" max="99999" /></div>
         </div>
         <div class="spending-row">
-          <label>Everything else</label>
+          <label for="sp_other">Everything else</label>
           <div class="input-wrap"><span>$</span><input type="number" id="sp_other" value="300" min="0" max="99999" /></div>
         </div>
       </div>
@@ -175,27 +175,27 @@
         <div class="banking-body">
           <div class="spending-inputs spending-inputs-more">
             <div class="spending-row">
-              <label>Streaming</label>
+              <label for="sp_streaming">Streaming</label>
               <div class="input-wrap"><span>$</span><input type="number" id="sp_streaming" value="40" min="0" max="99999" /></div>
             </div>
             <div class="spending-row">
-              <label>Transit & rideshare</label>
+              <label for="sp_transit">Transit & rideshare</label>
               <div class="input-wrap"><span>$</span><input type="number" id="sp_transit" value="60" min="0" max="99999" /></div>
             </div>
             <div class="spending-row">
-              <label>Online shopping (Amazon, etc.)</label>
+              <label for="sp_online">Online shopping (Amazon, etc.)</label>
               <div class="input-wrap"><span>$</span><input type="number" id="sp_online" value="250" min="0" max="99999" /></div>
             </div>
             <div class="spending-row">
-              <label>Drugstores</label>
+              <label for="sp_drugstores">Drugstores</label>
               <div class="input-wrap"><span>$</span><input type="number" id="sp_drugstores" value="40" min="0" max="99999" /></div>
             </div>
             <div class="spending-row">
-              <label>Entertainment (tickets, events)</label>
+              <label for="sp_entertainment">Entertainment (tickets, events)</label>
               <div class="input-wrap"><span>$</span><input type="number" id="sp_entertainment" value="60" min="0" max="99999" /></div>
             </div>
             <div class="spending-row">
-              <label>Rent</label>
+              <label for="sp_rent">Rent</label>
               <div class="input-wrap"><span>$</span><input type="number" id="sp_rent" value="0" min="0" max="99999" /></div>
             </div>
           </div>
@@ -290,7 +290,7 @@
           <input type="text" id="searchInput" placeholder="Search cards..." autocomplete="off" aria-label="Search credit cards" />
         </div>
         <div class="sort-wrap">
-          <label class="sort-label">Sort by</label>
+          <label class="sort-label" for="sortSelect">Sort by</label>
           <select id="sortSelect">
             <option value="net-value">Net Value</option>
             <option value="effective-rate">Effective Rate</option>
@@ -471,7 +471,7 @@
           <p class="gate-trust">Secure checkout by Polar · Billed in USD</p>
         </div>
         <div class="gate-license">
-          <input id="gateLicense" type="text" placeholder="Paste your license key" autocomplete="off" />
+          <input id="gateLicense" type="text" placeholder="Paste your license key" aria-label="License key" autocomplete="off" />
           <button id="gateLicenseGo" type="button">Activate</button>
         </div>
         <p class="gate-note" id="gateLicenseMsg" aria-live="polite"></p>
@@ -485,6 +485,6 @@
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
   <script src="cardart.js?v=2"></script>
-  <script src="script.js?v=29"></script>
+  <script src="script.js?v=31"></script>
 </body>
 </html>

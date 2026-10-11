@@ -472,6 +472,27 @@ button, input, select { font-family: inherit; }
 .membership-note strong { display: block; margin-bottom: 2px; }
 .bonus-box { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
 .bonus-box strong { color: var(--ink); }
+<<<<<<< HEAD
+.bonus-check { margin-top: 10px; border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13px; line-height: 1.55; }
+.bonus-check-ok { background: var(--green-soft); color: var(--green); }
+.bonus-check-warn { background: var(--amber-soft); color: var(--amber); }
+.bonus-check strong { color: inherit; }
+.bonus-check-note { display: block; margin-top: 4px; font-size: 12px; opacity: 0.85; }
+=======
+
+/* Keep, downgrade, or cancel? (drawer, annual-fee cards) */
+.keep-box { border-radius: var(--radius-sm); padding: 14px 16px; border: 1px solid var(--line); background: var(--surface-2); }
+.keep-box.keep-keep { background: var(--green-soft); border-color: transparent; }
+.keep-box.keep-downgrade { background: var(--amber-soft); border-color: transparent; }
+.keep-box.keep-cancel { background: var(--red-soft); border-color: transparent; }
+.keep-verdict { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 6px; }
+.keep-keep .keep-verdict { color: var(--green); }
+.keep-downgrade .keep-verdict { color: var(--amber); }
+.keep-cancel .keep-verdict { color: var(--red); }
+.keep-detail { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+.keep-detail strong { color: var(--ink); }
+.keep-note { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 10px; }
+>>>>>>> f6cec24 (Add "Keep, downgrade, or cancel?" verdict to the drawer for annual-fee cards)
 .btn-apply-card { display: block; width: 100%; text-align: center; padding: 15px; border-radius: 12px; font-size: 15px; margin-top: 8px; }
 
 /* ---- COMPARE BAR ---- */
@@ -592,6 +613,7 @@ button, input, select { font-family: inherit; }
 .wallet-card {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
   padding: 14px 16px; cursor: pointer; transition: border-color 0.15s; display: flex; flex-direction: column; gap: 12px;
+  min-width: 0;   /* let the grid track, not the card face, set the width on phones */
 }
 .wallet-card:hover { border-color: var(--ink); }
 .wallet-card-header { display: flex; align-items: center; gap: 10px; }

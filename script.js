@@ -157,6 +157,24 @@ const CATEGORIES = [
 ];
 const CATEGORY_KEYS = CATEGORIES.map(c => c.key);
 
+// Product-change paths issuers commonly offer, limited to targets in our data.
+// Used only by the "Keep, downgrade, or cancel?" box in the detail drawer;
+// nothing here feeds the ranking. Confirm the path with the issuer before
+// calling: they change, and some are offered only on request.
+const DOWNGRADE_PATHS = {
+  chase_sapphire_reserve: ['chase_sapphire_preferred', 'chase_freedom_unlimited', 'chase_freedom_flex'],
+  chase_sapphire_preferred: ['chase_freedom_unlimited', 'chase_freedom_flex'],
+  chase_ink_preferred: ['chase_ink_cash'],
+  amex_platinum: ['amex_gold', 'amex_green'],
+  amex_gold: ['amex_green'],
+  amex_blue_cash_preferred: ['amex_blue_cash_everyday'],
+  capital_one_venture_x: ['capital_one_venture'],
+  citi_strata_premier: ['citi_double_cash'],
+  bofa_premium_rewards: ['bofa_travel_rewards', 'bofa_customized_cash'],
+  wells_fargo_autograph_journey: ['wells_fargo_autograph'],
+  delta_skymiles_platinum: ['delta_skymiles_gold'],
+};
+
 // ---- ISSUER LOGO HELPER ----
 function issuerInitials(issuer) {
   return issuer.replace(/\(.*?\)/g, '').trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
@@ -1076,7 +1094,99 @@ function bindStage() {
   });
 }
 
+// ---- KEEP, DOWNGRADE, OR CANCEL? ----
+/** The renewal question for annual-fee cards, answered from numbers the drawer
+ *  already shows. Display only: reads calcNetValue for this card and for any
+ *  no-fee/lower-fee card it can be product-changed to. */
+function keepOrDowngradeHTML(card, netValue, totalFee) {
+  if (totalFee <= 0) return '';
+  const pv = pointsValuations[card.currency] || 1;
+  const fmt = n => `$${Math.abs(Math.round(n)).toLocaleString()}`;
+
+  // Best in-data downgrade target at the visitor's spending.
+  const targets = (DOWNGRADE_PATHS[card.id] || [])
+    .map(id => allCards.find(c => c.id === id)).filter(Boolean)
+    .map(t => ({ card: t, net: calcNetValue(t, currentSpending) }))
+    .sort((a, b) => b.net - a.net);
+  const best = targets[0] || null;
+
+  // Break-even: how much more monthly spend in the card's best category would
+  // cover the shortfall. Approximate; caps and choose-your-category rules are
+  // ignored, which is why the copy says "about".
+  let breakEven = '';
+  if (netValue < 0) {
+    let bestCat = null, bestRate = 0;
+    for (const cat of CATEGORIES) {
+      const rate = getEffectiveMultiplier(card, cat.key) * pv / 100;
+      if (rate > bestRate) { bestRate = rate; bestCat = cat; }
+    }
+    if (bestCat && bestRate > 0) {
+      const more = Math.ceil((-netValue) / (12 * bestRate) / 10) * 10;
+      breakEven = `You'd need about <strong>$${more.toLocaleString()} more a month</strong> on ${bestCat.label.toLowerCase()} just to break even.`;
+    }
+  }
+
+  let tone, verdict, detail;
+  if (best && best.net > netValue) {
+    const targetFee = best.card.annualFee + (best.card.membershipRequired ? best.card.membershipRequired.cost : 0);
+    tone = 'downgrade';
+    verdict = `Downgrade to ${best.card.name}`;
+    detail = `At your spending, ${best.card.name} (${targetFee > 0 ? `$${targetFee} fee` : 'no fee'}) nets <strong>${best.net >= 0 ? '+' : '−'}${fmt(best.net)}/yr</strong>, ` +
+      `<strong>${fmt(best.net - netValue)} more</strong> than this card's ${netValue >= 0 ? '+' : '−'}${fmt(netValue)}. ` +
+      `Product-changing keeps your account open, so your credit history stays intact. ${breakEven}`;
+  } else if (netValue >= 0) {
+    tone = 'keep';
+    verdict = 'Keep it';
+    const margin = best ? netValue - best.net : 0;
+    detail = `At your spending it clears the $${totalFee.toLocaleString()} fee by <strong>${fmt(netValue)}/yr</strong>` +
+      (!best ? '.'
+        : margin < 1 ? `, and ties with ${best.card.name} (${best.net >= 0 ? '+' : '−'}${fmt(best.net)}/yr), the card you'd downgrade to, so the perks decide.`
+        : `, and beats ${best.card.name} (${best.net >= 0 ? '+' : '−'}${fmt(best.net)}/yr), the card you'd downgrade to, by ${fmt(margin)}.`);
+  } else {
+    tone = 'cancel';
+    verdict = 'Cancel or downgrade';
+    detail = `At your spending this card loses <strong>${fmt(netValue)}/yr</strong> after the $${totalFee.toLocaleString()} fee. ${breakEven}` +
+      (best ? '' : ' We don\'t list a no-fee card in this family; ask the issuer what it can be product-changed to before closing it.');
+  }
+
+  return `
+    <div class="detail-section">
+      <div class="detail-section-title">Keep, downgrade, or cancel?</div>
+      <div class="keep-box keep-${tone}">
+        <div class="keep-verdict">${verdict}</div>
+        <p class="keep-detail">${detail}</p>
+        <p class="keep-note">Numbers use your spending and our credit discounts; the sign-up bonus is not counted, since this is the renewal question. Most issuers refund the annual fee if you close within about 30 days of it posting (rules vary). Confirm any product change with the issuer.</p>
+      </div>
+    </div>
+  `;
+}
+
 // ---- DETAIL DRAWER ----
+/** "Can you hit the bonus?" check for the detail drawer.
+ *  Compares the visitor's total monthly spending (the same five inputs the
+ *  ranking uses) against the bonus spend requirement and window. Pure display:
+ *  it never feeds the ranking, wallet, or unlock logic. */
+function renderBonusCheck(bonus) {
+  if (!bonus || !bonus.spendRequired || !bonus.months) return '';
+  const monthly = CATEGORIES.reduce((sum, c) => sum + (Number(currentSpending[c.key]) || 0), 0);
+  if (monthly <= 0) return '';
+  const needPerMonth = bonus.spendRequired / bonus.months;
+  const monthsToHit = bonus.spendRequired / monthly;
+  const fmt = (n) => Math.round(n).toLocaleString();
+  const spendLine = `At your $${fmt(monthly)}/month`;
+  let body, cls;
+  if (monthly >= needPerMonth) {
+    const when = monthsToHit < 1 ? 'the first month' : `about ${monthsToHit.toFixed(1).replace(/\.0$/, '')} months`;
+    cls = 'ok';
+    body = `<strong>You'd hit this bonus.</strong> ${spendLine} you'd reach $${fmt(bonus.spendRequired)} in ${when}, inside the ${bonus.months}-month window.`;
+  } else {
+    const shortfall = bonus.spendRequired - monthly * bonus.months;
+    cls = 'warn';
+    body = `<strong>You'd likely miss this bonus.</strong> ${spendLine} you'd spend about $${fmt(monthly * bonus.months)} in ${bonus.months} months, $${fmt(shortfall)} short. You'd need roughly $${fmt(needPerMonth - monthly)}/month more.`;
+  }
+  return `<div class="bonus-check bonus-check-${cls}">${body} <span class="bonus-check-note">Annual fees, refunds, and balance transfers don't count toward the spend.</span></div>`;
+}
+
 function openDetail(card) {
   if (isCardLocked(card.id)) { showGate('pay'); return; }
   const annualValue = calcAnnualValue(card, currentSpending);
@@ -1299,6 +1409,9 @@ function openDetail(card) {
     </div>
   `;
 
+  // Keep, downgrade, or cancel? (annual-fee cards only)
+  html += keepOrDowngradeHTML(card, netValue, totalFee);
+
   // Tier Boost & True Net Value (Phase 3)
   if (card.tierRewards) {
     const active = getActiveTier(card);
@@ -1358,7 +1471,16 @@ function openDetail(card) {
   if (card.signupBonus) {
     const bonus = card.signupBonus;
     let bonusText = '';
-    if (bonus.points && typeof bonus.points === 'number') {
+    // Cash bonuses are stored in dollars (e.g. 200 = $200), even on cards whose
+    // ongoing rewards are points (Citi Double Cash, Freedom Unlimited). No real
+    // points bonus is under 5,000, so a small number means dollars.
+    const isCashBonus = typeof bonus.points === 'number' && bonus.points < 5000;
+    if (isCashBonus) {
+      bonusText = `<strong>$${bonus.points.toLocaleString()} cash back</strong>`;
+      if (bonus.spendRequired) {
+        bonusText += ` after spending $${bonus.spendRequired.toLocaleString()} in ${bonus.months} months`;
+      }
+    } else if (bonus.points && typeof bonus.points === 'number') {
       const bonusCash = Math.round(bonus.points * (pv / 100));
       bonusText = `<strong>${bonus.points.toLocaleString()} bonus points</strong> ≈ <strong>$${bonusCash.toLocaleString()} in value</strong>`;
       if (bonus.spendRequired) {
@@ -1371,6 +1493,7 @@ function openDetail(card) {
       <div class="detail-section">
         <div class="detail-section-title">Sign-Up Bonus</div>
         <div class="bonus-box">${bonusText}</div>
+        ${renderBonusCheck(bonus)}
       </div>
     `;
   }
