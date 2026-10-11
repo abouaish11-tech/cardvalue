@@ -14,12 +14,13 @@ let compareList = []; // max 3 cards
 let isPersonalized = false;
 
 // Average American monthly card spending, split the way issuers actually
-// define bonus categories. Totals $2,000/mo; the six finer buckets are carved
-// out of the old $750 "everything else".
+// define bonus categories. Totals $2,000/mo; the finer buckets are carved out
+// of groceries, online and "everything else". Utilities and rent default to
+// $0 because many people pay those by bank transfer or face a card fee.
 const DEFAULT_SPENDING = {
-  dining: 500, groceries: 400, travel: 200, gas: 150,
-  streaming: 40, transit: 60, online: 250, drugstores: 40, entertainment: 60,
-  rent: 0, other: 300,
+  dining: 500, groceries: 350, travel: 200, gas: 150,
+  streaming: 40, transit: 60, online: 200, drugstores: 40, entertainment: 60,
+  wholesale: 100, phone: 100, utilities: 0, rent: 0, other: 200,
 };
 let currentSpending = { ...DEFAULT_SPENDING };
 
@@ -146,12 +147,16 @@ const CATEGORIES = [
   { key: 'dining',        label: 'Dining',              emoji: '' },
   { key: 'groceries',     label: 'Groceries',           emoji: '' },
   { key: 'travel',        label: 'Travel',              emoji: '' },
-  { key: 'gas',           label: 'Gas',                 emoji: '' },
+  { key: 'gas',           label: 'Gas & EV charging',   emoji: '' },
   { key: 'streaming',     label: 'Streaming',           emoji: '' },
   { key: 'transit',       label: 'Transit & rideshare', emoji: '' },
   { key: 'online',        label: 'Online shopping',     emoji: '' },
   { key: 'drugstores',    label: 'Drugstores',          emoji: '' },
   { key: 'entertainment', label: 'Entertainment',       emoji: '' },
+  // Costco, Sam's, BJ's, Walmart, Target: most grocery bonuses exclude them.
+  { key: 'wholesale',     label: 'Warehouse clubs & superstores', emoji: '' },
+  { key: 'phone',         label: 'Phone & internet',    emoji: '' },
+  { key: 'utilities',     label: 'Home utilities',      emoji: '' },
   { key: 'rent',          label: 'Rent',                emoji: '' },
   { key: 'other',         label: 'Everything Else',     emoji: '' },
 ];

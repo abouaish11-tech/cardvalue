@@ -149,20 +149,20 @@
           <div class="input-wrap"><span>$</span><input type="number" id="sp_dining" value="500" min="0" max="99999" /></div>
         </div>
         <div class="spending-row">
-          <label for="sp_groceries">Groceries</label>
-          <div class="input-wrap"><span>$</span><input type="number" id="sp_groceries" value="400" min="0" max="99999" /></div>
+          <label for="sp_groceries">Groceries (supermarkets)</label>
+          <div class="input-wrap"><span>$</span><input type="number" id="sp_groceries" value="350" min="0" max="99999" /></div>
         </div>
         <div class="spending-row">
           <label for="sp_travel">Travel (flights, hotels)</label>
           <div class="input-wrap"><span>$</span><input type="number" id="sp_travel" value="200" min="0" max="99999" /></div>
         </div>
         <div class="spending-row">
-          <label for="sp_gas">Gas</label>
+          <label for="sp_gas">Gas & EV charging</label>
           <div class="input-wrap"><span>$</span><input type="number" id="sp_gas" value="150" min="0" max="99999" /></div>
         </div>
         <div class="spending-row">
           <label for="sp_other">Everything else</label>
-          <div class="input-wrap"><span>$</span><input type="number" id="sp_other" value="300" min="0" max="99999" /></div>
+          <div class="input-wrap"><span>$</span><input type="number" id="sp_other" value="200" min="0" max="99999" /></div>
         </div>
       </div>
 
@@ -170,7 +170,7 @@
       <details class="banking-relationships more-categories" id="moreCategories">
         <summary class="banking-summary">
           <span class="banking-title">More categories <em>(optional)</em></span>
-          <span class="banking-hint">Streaming, transit, online shopping, drugstores, entertainment, rent. Many cards pay 3 to 6% here.</span>
+          <span class="banking-hint">Streaming, transit, online shopping, drugstores, entertainment, Costco and Walmart, phone and utility bills, rent. Many cards pay 3 to 6% here, and most pay nothing extra at warehouse clubs.</span>
         </summary>
         <div class="banking-body">
           <div class="spending-inputs spending-inputs-more">
@@ -184,7 +184,7 @@
             </div>
             <div class="spending-row">
               <label for="sp_online">Online shopping (Amazon, etc.)</label>
-              <div class="input-wrap"><span>$</span><input type="number" id="sp_online" value="250" min="0" max="99999" /></div>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_online" value="200" min="0" max="99999" /></div>
             </div>
             <div class="spending-row">
               <label for="sp_drugstores">Drugstores</label>
@@ -195,11 +195,23 @@
               <div class="input-wrap"><span>$</span><input type="number" id="sp_entertainment" value="60" min="0" max="99999" /></div>
             </div>
             <div class="spending-row">
+              <label for="sp_wholesale">Warehouse clubs & superstores (Costco, Sam's, Walmart, Target)</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_wholesale" value="100" min="0" max="99999" /></div>
+            </div>
+            <div class="spending-row">
+              <label for="sp_phone">Phone & internet</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_phone" value="100" min="0" max="99999" /></div>
+            </div>
+            <div class="spending-row">
+              <label for="sp_utilities">Home utilities (electric, gas, water)</label>
+              <div class="input-wrap"><span>$</span><input type="number" id="sp_utilities" value="0" min="0" max="99999" /></div>
+            </div>
+            <div class="spending-row">
               <label for="sp_rent">Rent</label>
               <div class="input-wrap"><span>$</span><input type="number" id="sp_rent" value="0" min="0" max="99999" /></div>
             </div>
           </div>
-          <p class="banking-explainer">Rent counts only for Bilt, the one card that earns on rent without a transaction fee. Leave it at $0 if you would not put rent on a card.</p>
+          <p class="banking-explainer">Warehouse clubs and superstores are separate because Amex, Chase, Citi and Capital One exclude them from grocery bonuses; only a couple of cards pay extra there. Utilities and rent start at $0: many providers charge a 2 to 3% card fee that wipes out the reward, and rent counts only for Bilt, which earns on rent without a transaction fee.</p>
         </div>
       </details>
 
@@ -485,6 +497,6 @@
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
   <script src="cardart.js?v=2"></script>
-  <script src="script.js?v=31"></script>
+  <script src="script.js?v=32"></script>
 </body>
 </html>

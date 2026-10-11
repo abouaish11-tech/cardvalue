@@ -29,16 +29,19 @@
   "lastUpdated": "2026-09-20",
   "defaultSpending": {
     "dining": 500,
-    "groceries": 400,
+    "groceries": 350,
     "travel": 200,
     "gas": 150,
     "streaming": 40,
     "transit": 60,
-    "online": 250,
+    "online": 200,
     "drugstores": 40,
     "entertainment": 60,
+    "wholesale": 100,
+    "phone": 100,
+    "utilities": 0,
     "rent": 0,
-    "other": 300
+    "other": 200
   },
   "cards": [
     {
@@ -68,6 +71,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3x on online groceries; 3x on gas stations and EV charging; 5x on travel via Chase Travel portal",
@@ -123,6 +129,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "8x on travel via Chase Travel portal; 4x on direct travel purchases",
@@ -196,6 +205,9 @@
         "online": 1.5,
         "drugstores": 3,
         "entertainment": 1.5,
+        "wholesale": 1.5,
+        "phone": 1.5,
+        "utilities": 1.5,
         "rent": 0
       },
       "note": "5x on travel via Chase Travel portal; 3x on drugstores",
@@ -240,6 +252,9 @@
         "online": 1,
         "drugstores": 3,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5% on rotating quarterly categories (up to $1,500/quarter, activation required); 5x travel via Chase Travel; 3x drugstores",
@@ -293,6 +308,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5x on flights booked directly with airlines or via Amex Travel",
@@ -378,6 +396,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "4x dining capped at $50,000/yr; 4x groceries at U.S. supermarkets capped at $25,000/yr; 3x flights booked direct or via Amex Travel",
@@ -455,6 +476,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "6% at U.S. supermarkets up to $6,000/yr (then 1%); excludes Costco, Walmart, Target. 6% on select streaming.",
@@ -504,6 +528,9 @@
         "online": 3,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3% at U.S. supermarkets, U.S. gas stations, and U.S. online retail (each up to $6,000/yr, then 1%)",
@@ -554,6 +581,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "2% on everything (1% when you buy + 1% when you pay). Earns ThankYou Points (transferable when paired with Strata Premier). 5x via Citi Travel.",
@@ -602,6 +632,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3x on dining, groceries, gas, EV charging, and all travel. 10x on hotels via Citi Travel. Uncapped.",
@@ -655,6 +688,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5% on your highest eligible spend category each billing cycle (up to $500/cycle, then 1%). Categories: dining, gas, grocery, travel, transit, streaming, drugstores, etc.",
@@ -716,6 +752,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "10x hotels/rental cars via Capital One Travel; 5x flights/vacation rentals via Capital One Travel; 2x on everything else",
@@ -776,6 +815,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "5x hotels/rental cars via Capital One Travel; 2x on everything else",
@@ -821,6 +863,9 @@
         "online": 1.5,
         "drugstores": 1.5,
         "entertainment": 1.5,
+        "wholesale": 1.5,
+        "phone": 1.5,
+        "utilities": 1.5,
         "rent": 0
       },
       "note": "5% on travel via Capital One Travel portal",
@@ -868,6 +913,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 3,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3% dining, entertainment, streaming, groceries (excludes Walmart/Target). 8% via Capital One Entertainment. $0 annual fee for excellent credit.",
@@ -913,6 +961,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 3,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "Relaunched for fair credit. 3% dining, entertainment, streaming, groceries (excludes Walmart/Target).",
@@ -951,6 +1002,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5% on rotating quarterly categories (up to $1,500/quarter, activation required). First-year Cashback Match effectively doubles all rewards.",
@@ -1003,6 +1057,9 @@
         "online": 1.5,
         "drugstores": 1.5,
         "entertainment": 1.5,
+        "wholesale": 1.5,
+        "phone": 1.5,
+        "utilities": 1.5,
         "rent": 0
       },
       "note": "First-year Miles Match effectively gives 3x on everything in year 1",
@@ -1047,6 +1104,9 @@
         "online": 1.5,
         "drugstores": 1.5,
         "entertainment": 1.5,
+        "wholesale": 1.5,
+        "phone": 1.5,
+        "utilities": 1.5,
         "rent": 0
       },
       "credits": [
@@ -1127,6 +1187,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 2,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3% on chosen category (gas, online shopping, dining, travel, drugstores, home improvement). 2% grocery & wholesale clubs. Up to $2,500/quarter combined cap.",
@@ -1188,6 +1251,10 @@
           {
             "category": "groceries",
             "rate": 2
+          },
+          {
+            "category": "wholesale",
+            "rate": 2
           }
         ],
         "alsoCoversShareCap": true,
@@ -1222,6 +1289,9 @@
         "online": 1.5,
         "drugstores": 1.5,
         "entertainment": 1.5,
+        "wholesale": 1.5,
+        "phone": 1.5,
+        "utilities": 1.5,
         "rent": 0
       },
       "signupBonus": {
@@ -1295,6 +1365,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 3,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3x on dining, travel, gas, transit, streaming, and phone plans",
@@ -1340,6 +1413,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "3% foreign transaction fee — best for domestic use",
@@ -1387,6 +1463,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5x on prepaid hotels/car rentals via Altitude Rewards Center; 4x on gas and EV charging",
@@ -1430,6 +1509,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5% on two chosen categories (up to $2,000/quarter combined), 2% on one everyday category, 1% on all else",
@@ -1456,7 +1538,8 @@
           "streaming",
           "transit",
           "entertainment",
-          "other"
+          "other",
+          "utilities"
         ],
         "capPerCycle": 2000,
         "cyclesPerYear": 4,
@@ -1492,6 +1575,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "credits": [],
@@ -1564,6 +1650,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 1
       },
       "note": "1x on rent/mortgage (no transaction fee). 4% Bilt Cash option. Replaced original Bilt Mastercard (Feb 2026).",
@@ -1603,6 +1692,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "2% on everything via Apple Pay (1% with physical card). 3% at Apple, Nike, Uber, T-Mobile, Walgreens, and other partners.",
@@ -1649,6 +1741,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "50% bonus on points when you make 30+ transactions per billing period",
@@ -1691,6 +1786,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 5,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5% on office supplies, internet, cable, phone (up to $25k combined/yr). 2% at gas and restaurants (up to $25k combined/yr).",
@@ -1709,7 +1807,8 @@
       "bestFor": "Business Office/Internet Spend",
       "rewardCaps": {
         "gas": 25000,
-        "dining": 25000
+        "dining": 25000,
+        "phone": 25000
       },
       "lastVerified": "2026-09-20"
     },
@@ -1740,6 +1839,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "2x MR on everything up to $50,000/yr in purchases (then 1x)",
@@ -1800,6 +1902,9 @@
         "online": 3,
         "drugstores": 3,
         "entertainment": 3,
+        "wholesale": 3,
+        "phone": 3,
+        "utilities": 3,
         "rent": 0
       },
       "note": "3% cashback on everything. Requires Robinhood Gold ($5/mo). No category restrictions.",
@@ -1839,6 +1944,9 @@
         "online": 1.5,
         "drugstores": 1.5,
         "entertainment": 1.5,
+        "wholesale": 1.5,
+        "phone": 1.5,
+        "utilities": 1.5,
         "rent": 0
       },
       "note": "1.5% cash back on everything, no categories or caps. Must be an Alliant member for 90 days before applying.",
@@ -1883,9 +1991,12 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 2,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
-      "note": "4% on gas worldwide (up to $7,000/yr, then 1%). 3% on dining and eligible travel. Rewards paid as annual Costco credit.",
+      "note": "4% on gas worldwide (up to $7,000/yr, then 1%). 3% on dining and eligible travel. Rewards paid as annual Costco credit. 2% at Costco and Costco.com.",
       "signupBonus": null,
       "perks": [
         "4% gas (up to $7k/yr)",
@@ -1927,6 +2038,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "2% on everything when deposited into eligible Fidelity account",
@@ -1971,6 +2085,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "2% cashback on everything when redeemed to SoFi checking/savings or invested",
@@ -2009,6 +2126,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "note": "Auto-detects your top spend category for 3% each month (grocery, bills, dining, etc.); next category gets 2%; all else 1%",
@@ -2050,6 +2170,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "signupBonus": {
@@ -2096,6 +2219,9 @@
         "online": 5,
         "drugstores": 2,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5% at Amazon.com, Amazon Fresh, and Whole Foods. 2% at restaurants, gas, drugstores, transit. 5% via Chase Travel.",
@@ -2138,6 +2264,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 3,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3x on travel, shipping, internet, cable, phone, advertising (up to $150k combined/yr)",
@@ -2156,7 +2285,8 @@
       "applyUrl": "https://creditcards.chase.com/business-credit-cards/ink/business-preferred",
       "bestFor": "Best Signup Bonus",
       "rewardCaps": {
-        "travel": 150000
+        "travel": 150000,
+        "phone": 150000
       },
       "lastVerified": "2026-09-20"
     },
@@ -2187,6 +2317,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "signupBonus": {
@@ -2230,6 +2363,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "5x on hotels via Wells Fargo; 3x on dining, transit",
@@ -2276,6 +2412,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "2x on Delta purchases, restaurants worldwide, and U.S. supermarkets; 1x elsewhere. The travel rate applies to Delta purchases only, not other airlines or hotels. $0 intro annual fee the first year.",
@@ -2339,6 +2478,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3x on Delta purchases and hotels booked direct; 2x at restaurants and U.S. supermarkets; 1x elsewhere. Travel rate applies to Delta and direct hotel bookings only.",
@@ -2400,6 +2542,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "2x on United purchases, dining, and hotel stays; 1x elsewhere. Travel rate applies to United and hotel purchases. Fee rose from $95 to $150 in the 2025 refresh; $0 the first year.",
@@ -2467,6 +2612,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "4x on Southwest purchases; 2x at restaurants and gas stations; 1x elsewhere. Travel rate applies to Southwest only. The 2025 refresh raised the fee from $149 to $229 and removed the $75 Southwest credit and upgraded boardings.",
@@ -2520,6 +2668,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "2x on American Airlines purchases, restaurants, and gas stations; 1x elsewhere. Travel rate applies to American Airlines only. $0 annual fee the first year, then $99.",
@@ -2568,6 +2719,9 @@
         "online": 2,
         "drugstores": 2,
         "entertainment": 2,
+        "wholesale": 2,
+        "phone": 2,
+        "utilities": 2,
         "rent": 0
       },
       "rewardCaps": {
@@ -2627,6 +2781,9 @@
         "online": 4,
         "drugstores": 3,
         "entertainment": 3,
+        "wholesale": 3,
+        "phone": 3,
+        "utilities": 3,
         "rent": 0
       },
       "note": "12x at Hilton properties; 6x at restaurants, U.S. supermarkets, and gas stations; 4x on U.S. online retail; 3x elsewhere. Travel rate applies to Hilton stays only. Hilton points are worth about 0.5¢ each, so the big multipliers are smaller than they look.",
@@ -2681,6 +2838,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "4x at Hyatt hotels; 2x at restaurants, on airline tickets bought direct, local transit, and fitness clubs; 1x elsewhere. Travel rate applies to Hyatt stays only. Hyatt points are the most valuable hotel currency (~1.7¢ each).",
@@ -2735,6 +2895,9 @@
         "online": 3,
         "drugstores": 3,
         "entertainment": 3,
+        "wholesale": 3,
+        "phone": 3,
+        "utilities": 3,
         "rent": 0
       },
       "note": "10x at IHG hotels (26x total with status); 5x on travel, gas stations, and restaurants; 3x elsewhere. IHG points are worth about 0.5¢ each. The travel multiplier applies broadly, unlike most co-brands.",
@@ -2796,6 +2959,9 @@
         "online": 1,
         "drugstores": 1,
         "entertainment": 1,
+        "wholesale": 1,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
       "note": "3x on travel (airfare, hotels, cruises, tours), transit (rideshare, trains, tolls, parking), and restaurants worldwide; 1x elsewhere. The broadest travel definition of any Amex card.",
