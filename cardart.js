@@ -72,42 +72,44 @@ const mosaic = () => { const C = ['#d71e28', '#0c2074', '#5a8ed6', '#c9ced6', '#
 
 /* ---------- the 52 faces ---------- */
 const ART = {
-  chase_sapphire_preferred: { bg: 'linear-gradient(140deg,#2a62ae 0%,#0f3170 26%,#061535 55%,#02060f 100%)', h:
-    lines('<path d="M60 101L160 6"/><path d="M84 101L160 30"/><path d="M38 101L150 0"/><path d="M100 0L160 70"/><path d="M118 0L160 40"/>', '#8fdcff', .5, .8)
+  // Colours below were sampled from Chase's own 2026 card art (6x4 average grid per card).
+  chase_sapphire_preferred: { bg: 'radial-gradient(70% 95% at 62% 55%,#1a7aab 0%,#0b5a8f 26%,#063a69 52%,rgba(6,58,105,0) 80%),linear-gradient(135deg,#0a1d3f 0%,#04122e 50%,#010818 100%)', h:
+    lines('<path d="M30 101L160 18"/><path d="M62 101L160 48"/><path d="M90 0L160 60"/>', '#bfefff', 2.6, .22)
+    + lines('<path d="M30 101L160 18"/><path d="M62 101L160 48"/><path d="M90 0L160 60"/>', '#e8fbff', .7, .95)
     + chaseMark('SAPPHIRE', 'PREFERRED') + chip(7.5, 37, 'silver') + visa('Signature') },
-  chase_sapphire_reserve: { bg: 'radial-gradient(120% 95% at 100% 0%,#33598f 0%,#162b4f 32%,#0b1426 62%,#06080e 100%)', h:
-    at('inset:0;-webkit-mask-image:radial-gradient(70% 90% at 100% 0%,#000 0%,transparent 70%);mask-image:radial-gradient(70% 90% at 100% 0%,#000 0%,transparent 70%);background:repeating-linear-gradient(0deg,rgba(255,255,255,.14) 0 .3cqw,transparent .3cqw 2.4cqw),repeating-linear-gradient(90deg,rgba(255,255,255,.14) 0 .3cqw,transparent .3cqw 2.4cqw)')
+  chase_sapphire_reserve: { bg: 'radial-gradient(80% 90% at 100% 0%,#4b5a72 0%,#1d2a44 30%,#090f1e 60%,#000005 100%)', h:
+    at('inset:0;-webkit-mask-image:radial-gradient(60% 80% at 100% 0%,#000 0%,transparent 70%);mask-image:radial-gradient(60% 80% at 100% 0%,#000 0%,transparent 70%);background:repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 .3cqw,transparent .3cqw 2.4cqw),repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 .3cqw,transparent .3cqw 2.4cqw)')
     + chaseMark('SAPPHIRE', 'RESERVE') + chip(7.5, 37, 'silver') + visa('Infinite') },
-  chase_freedom_unlimited: { bg: 'radial-gradient(80% 60% at 28% 78%,#3b7be0 0%,rgba(59,123,224,0) 62%),radial-gradient(55% 50% at 78% 70%,#3d4fc0 0%,rgba(61,79,192,0) 70%),linear-gradient(160deg,#123f93 0%,#0b2766 50%,#081a45 100%)', h:
-    lines('<path d="M-10 92C30 60 80 52 170 64"/><path d="M-10 98C40 70 90 64 170 74"/><path d="M-10 86C25 50 70 40 170 52"/>', '#9cc9ff', .5, .35)
+  chase_freedom_unlimited: { bg: 'radial-gradient(45% 60% at 8% 8%,rgba(150,155,200,.8) 0%,rgba(150,155,200,0) 70%),linear-gradient(112deg,rgba(80,145,110,0) 46%,rgba(125,165,90,.7) 60%,rgba(70,150,140,.55) 70%,rgba(70,150,140,0) 84%),linear-gradient(160deg,#2f4a8c 0%,#17356a 45%,#12213f 100%)', h:
+    lines('<path d="M-10 92C30 60 80 52 170 64"/><path d="M-10 98C40 70 90 64 170 74"/><path d="M-10 86C25 50 70 40 170 52"/>', '#a8e0c4', .5, .4)
     + freedomMark('UNLIMITED') + chip(7.5, 40, 'silver') + nfc(22, 41.5) + visa() },
-  chase_freedom_flex: { bg: 'radial-gradient(48% 34% at 52% 62%,rgba(160,235,255,.95) 0%,rgba(70,170,240,.45) 45%,rgba(30,110,210,0) 75%),linear-gradient(160deg,#2178dc 0%,#1356b8 55%,#0c3d8f 100%)', h:
-    lines('<path d="M10 80C50 50 110 48 165 58"/><path d="M0 88C50 58 115 56 165 66"/>', '#e4fbff', .6, .45)
+  chase_freedom_flex: { bg: 'radial-gradient(50% 36% at 48% 66%,rgba(60,190,215,.95) 0%,rgba(30,150,195,.55) 45%,rgba(0,90,160,0) 78%),radial-gradient(30% 30% at 92% 10%,rgba(120,160,70,.5) 0%,rgba(120,160,70,0) 70%),linear-gradient(160deg,#1a4d8a 0%,#004786 50%,#003b7e 100%)', h:
+    lines('<path d="M10 80C50 50 110 48 165 58"/><path d="M0 88C50 58 115 56 165 66"/>', '#d8fbff', .6, .45)
     + freedomMark('FLEX') + chip(7.5, 40, 'silver') + nfc(22, 41.5) + mc('#fff') },
-  chase_ink_cash: { bg: 'linear-gradient(160deg,#d0d2d6 0%,#a5a9af 42%,#868a91 100%)', h: inkMark('BUSINESS CASH') + chip(7.5, 46, 'silver') + nfc(22, 47.5) + visa('Signature Business') },
-  chase_ink_preferred: { bg: 'linear-gradient(160deg,#21335a 0%,#121e3a 60%,#0a1226 100%)', h: inkMark('BUSINESS PREFERRED') + chip(7.5, 46, 'silver') + nfc(22, 47.5) + visa('Signature Business') },
+  chase_ink_cash: { bg: 'linear-gradient(160deg,#a3a8ad 0%,#7b8186 45%,#5c6269 100%)', h: inkMark('BUSINESS CASH') + chip(7.5, 46, 'silver') + nfc(22, 47.5) + visa('Signature Business') },
+  chase_ink_preferred: { bg: 'linear-gradient(160deg,#0a1b3c 0%,#0b2048 45%,#2c3449 100%)', h: inkMark('BUSINESS PREFERRED') + chip(7.5, 46, 'silver') + nfc(22, 47.5) + visa('Signature Business') },
   amazon_prime_rewards: { bg: 'linear-gradient(150deg,#1e2d48 0%,#111b2e 55%,#0b1220 100%)', h:
     at('right:7%;top:8%;color:#3fb6ec;font:700 9cqw/1 \'Montserrat\',sans-serif;letter-spacing:-.03em', `prime<span style="position:absolute;left:4%;right:-6%;top:86%;height:4.4cqw">${S('0 0 60 12', '<path d="M2 3C18 11 40 11 54 4" fill="none" stroke="#3fb6ec" stroke-width="2.6" stroke-linecap="round"/><path d="M49 2L56 3.5L52 9" fill="none" stroke="#3fb6ec" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>')}</span>`, 't')
     + chip(8, 40, 'silver') + nfc(23, 41.5) + visa('Signature') },
-  united_explorer: { bg: 'radial-gradient(70% 80% at 0% 100%,#2c74d8 0%,rgba(44,116,216,0) 60%),linear-gradient(135deg,#1150b0 0%,#0b3b88 60%,#0a2f6c 100%)', h:
+  united_explorer: { bg: 'radial-gradient(45% 55% at 0% 0%,#4b6a94 0%,rgba(75,106,148,0) 70%),radial-gradient(35% 45% at 100% 100%,#55697f 0%,rgba(85,105,127,0) 70%),linear-gradient(135deg,#2a5a92 0%,#0d4689 45%,#083c7a 100%)', h:
     at('left:-9%;bottom:-24%;width:42cqw;height:42cqw', S('0 0 100 100', '<g fill="none" stroke="#a9d4ff" stroke-opacity=".75" stroke-width="1.6"><circle cx="50" cy="50" r="47"/><ellipse cx="50" cy="50" rx="24" ry="47"/><ellipse cx="50" cy="50" rx="8" ry="47"/><path d="M5 34H95M3 50H97M5 66H95"/></g>'))
     + at('left:6.5%;top:8%;width:5.4cqw;height:5.4cqw', CHASE())
     + at('right:6%;top:8%;font:800 6.2cqw \'Archivo\';font-stretch:125%;letter-spacing:.2em', 'UNITED <span style="font:300 4.2cqw \'Geist\';letter-spacing:0">MileagePlus</span>', 't')
     + at('right:6%;top:20%;color:#8cc7ff;font:700 7cqw \'Archivo\';font-stretch:125%;letter-spacing:.16em', 'EXPLORER', 't')
     + chip(8, 45, 'silver') + visa('Signature') },
-  southwest_priority: { bg: 'linear-gradient(135deg,#30449a 0%,#21327a 55%,#18265c 100%)', h:
+  southwest_priority: { bg: 'radial-gradient(40% 50% at 0% 0%,#6d78a0 0%,rgba(109,120,160,0) 70%),radial-gradient(35% 40% at 100% 100%,#8a92b2 0%,rgba(138,146,178,0) 70%),linear-gradient(135deg,#3a4a85 0%,#2b3d77 50%,#1b2350 100%)', h:
     at('right:-12%;top:-4%;width:56cqw;height:56cqw', S('0 0 100 100', '<path d="M50 88C20 66 6 50 6 32C6 18 17 8 30 8C39 8 46 13 50 21C54 13 61 8 70 8C83 8 94 18 94 32C94 50 80 66 50 88Z" fill="none" stroke="#dfe4f2" stroke-width="3.2" stroke-opacity=".85"/><path d="M50 88L70 8" stroke="#dfe4f2" stroke-width="2" stroke-opacity=".5"/>'))
     + at('left:6%;top:8%;font:800 6.6cqw \'Archivo\';letter-spacing:-.02em', `Southwest<span style="display:inline-block;width:3cqw;height:3cqw;margin-left:.6cqw;vertical-align:top">${S('0 0 20 20', '<path d="M10 18C3 12 1 9 1 6C1 3 3 1 6 1C8 1 9 2 10 4Z" fill="#c8102e"/><path d="M10 18C17 12 19 9 19 6C19 3 17 1 14 1C12 1 11 2 10 4Z" fill="#ffbf27"/><path d="M10 18L6 9L14 9Z" fill="#304cb2"/>')}</span><span style="display:block;font:400 2.9cqw 'Geist';letter-spacing:0;margin-top:1.2cqw">Rapid Rewards</span>`, 't')
     + chip(7, 42, 'silver') + nfc(21.5, 43.5) + at('left:7%;bottom:21%;font:500 3.4cqw \'Geist\'', 'Priority', 't') + visa() },
-  marriott_bonvoy_boundless: { bg: 'linear-gradient(150deg,#26365a 0%,#1a2741 50%,#111a2c 100%)', h:
+  marriott_bonvoy_boundless: { bg: 'linear-gradient(150deg,#5b6a82 0%,#2f4b6d 35%,#1e3859 70%,#263f62 100%)', h:
     lines('<path d="M-4 88C14 70 22 40 34 34C44 30 40 72 50 74C60 76 66 30 78 28C88 26 86 60 96 60C108 60 120 46 132 40"/><circle cx="136" cy="38" r="2.2"/>', '#f2876a', 1.5, .95)
     + at('left:6%;top:8%;width:5cqw;height:5cqw', CHASE())
     + at('right:6%;top:7%;text-align:right;font:500 3cqw \'Geist\';letter-spacing:.24em', 'MARRIOTT<span style="display:block;font:400 7.4cqw/1.05 \'Geist\';letter-spacing:.06em">BONVOY</span><span style="letter-spacing:.3em">BOUNDLESS</span>', 't')
     + chip(7.5, 44, 'silver') + nfc(22, 45.5) + visa('Signature') },
-  world_of_hyatt: { bg: 'repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 .1cqw,rgba(0,0,0,.018) .1cqw .22cqw),linear-gradient(160deg,#e6e8eb 0%,#bfc3c8 42%,#d9dce0 66%,#a8adb3 100%)', h:
+  world_of_hyatt: { bg: 'repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 .1cqw,rgba(0,0,0,.018) .1cqw .22cqw),linear-gradient(160deg,#c8c8c8 0%,#a4a4a6 42%,#bfbfc0 66%,#969699 100%)', h:
     at('right:6%;top:7%;background:#1d3b6e;padding:1.2cqw 1.6cqw;text-align:center;font:400 2.6cqw/1.25 \'Libre Caslon Text\',serif;letter-spacing:.24em;color:#fff', 'WORLD<br>OF<br>HYATT')
     + chip(8, 44, 'silver') + nfc(22.5, 45.5, '#fff') + visa('Signature') },
-  ihg_one_rewards_premier: { bg: 'linear-gradient(160deg,#aab5c3 0%,#8f9bab 45%,#bcc5d0 100%)', h:
+  ihg_one_rewards_premier: { bg: 'linear-gradient(160deg,#9aa7b4 0%,#8595a3 45%,#9da9b6 100%)', h:
     at('left:6%;top:8%;width:5cqw;height:5cqw', CHASE())
     + at('right:6%;top:9%;font:400 2.8cqw \'Geist\';letter-spacing:.4em', 'PREMIER', 't')
     + at('left:50%;top:15%;width:.3cqw;height:14%;background:rgba(255,255,255,.8)')
@@ -116,44 +118,45 @@ const ART = {
 
   amex_platinum: { bg: 'linear-gradient(135deg,#f1f2f4 0%,#c8ccd1 30%,#f6f7f8 52%,#b5bac0 78%,#e1e4e7 100%)', ink: '#2c3036', h:
     amexFrame('rgba(60,64,72,.5)') + AMEX_LINE('#2c3036') + at('left:50%;top:56%;width:34cqw;height:34cqw;transform:translate(-50%,-50%)', CENT('#353a41', '#dfe2e6')) + chip(9, 34, 'silver') },
-  amex_gold: { bg: 'linear-gradient(135deg,#ecd8a0 0%,#caa75c 30%,#f2e0aa 52%,#b8924a 78%,#dcc07c 100%)', ink: '#3b2c12', h:
-    amexFrame('rgba(90,64,20,.45)') + AMEX_LINE('#3b2c12') + at('left:50%;top:56%;width:34cqw;height:34cqw;transform:translate(-50%,-50%)', CENT('#4a3812', '#e3c983')) + chip(9, 34) },
-  amex_green: { bg: 'linear-gradient(135deg,#d9f0dc 0%,#a9d8b2 35%,#cdebd3 60%,#92caa0 100%)', ink: '#203d29', h:
-    amexFrame('rgba(30,70,45,.4)') + AMEX_LINE('#203d29') + at('left:50%;top:56%;width:34cqw;height:34cqw;transform:translate(-50%,-50%)', CENT('#24442d', '#bfe2c6')) + chip(9, 34, 'silver') },
-  amex_blue_cash_preferred: { bg: 'radial-gradient(60% 80% at 22% 45%,#2d64b4 0%,rgba(45,100,180,0) 72%),linear-gradient(135deg,#1b417c 0%,#0f2a57 60%,#0a1d3e 100%)', h:
-    at('left:-12%;top:-16%;width:76cqw;height:76cqw', CENT('rgba(150,190,245,.5)', '#1a3f7a', 'none'))
+  // Amex, Citi, Capital One, BofA, Wells Fargo and Robinhood colours below were sampled from each issuer's own card art.
+  amex_gold: { bg: 'linear-gradient(135deg,#b9a864 0%,#9a8c53 30%,#d0bc71 52%,#8e814c 78%,#bead6e 100%)', ink: '#3b2c12', h:
+    amexFrame('rgba(90,64,20,.45)') + AMEX_LINE('#3b2c12') + at('left:50%;top:56%;width:34cqw;height:34cqw;transform:translate(-50%,-50%)', CENT('#4a3812', '#c9b56d')) + chip(9, 34) },
+  amex_green: { bg: 'linear-gradient(135deg,#a2c2a9 0%,#859f88 35%,#bad0bd 60%,#849e87 100%)', ink: '#203d29', h:
+    amexFrame('rgba(30,70,45,.4)') + AMEX_LINE('#203d29') + at('left:50%;top:56%;width:34cqw;height:34cqw;transform:translate(-50%,-50%)', CENT('#24442d', '#a8c6ad')) + chip(9, 34, 'silver') },
+  amex_blue_cash_preferred: { bg: 'radial-gradient(60% 80% at 22% 45%,#4c6084 0%,rgba(76,96,132,0) 72%),linear-gradient(135deg,#2f3f5e 0%,#1d2539 55%,#0f1528 100%)', h:
+    at('left:-12%;top:-16%;width:76cqw;height:76cqw', CENT('rgba(150,170,205,.45)', '#1d2539', 'none'))
     + AMEX_STACK('#fff', 'CASH PREFERRED') + chip(9, 38, 'silver') + nfc(70, 47) },
-  amex_blue_cash_everyday: { bg: 'linear-gradient(135deg,#3a8ae6 0%,#2268cb 50%,#1a52a8 100%)', h:
+  amex_blue_cash_everyday: { bg: 'radial-gradient(55% 70% at 45% 45%,#8abde5 0%,rgba(138,189,229,0) 70%),linear-gradient(135deg,#1256a4 0%,#2268cb 50%,#063a86 100%)', h:
     at('left:-12%;top:-16%;width:76cqw;height:76cqw', CENT('rgba(185,215,255,.55)', '#2468c8', 'none'))
     + AMEX_STACK('#fff') + chip(9, 38, 'silver') + nfc(70, 47) },
   amex_everyday_preferred: { bg: 'linear-gradient(135deg,#f7f8f9 0%,#e1e5e9 60%,#cbd0d6 100%)', ink: '#1f4f8f', h:
     at('left:-12%;top:-16%;width:76cqw;height:76cqw', CENT('rgba(120,132,148,.32)', '#e4e7ea', 'none'))
     + AMEX_STACK('#1f4f8f', 'PREFERRED') + chip(9, 38, 'silver') + nfc(70, 47, '#1f4f8f') },
-  amex_blue_business_plus: { bg: 'radial-gradient(70% 80% at 50% 55%,#4374c2 0%,#2a549e 55%,#1c3e7e 100%)', h:
+  amex_blue_business_plus: { bg: 'radial-gradient(70% 80% at 50% 55%,#5f7290 0%,#3b5880 55%,#2f466d 100%)', h:
     AMEX_LINE('#fff', 5, 'left:50%;top:8%;transform:translateX(-50%)')
     + at('left:50%;top:16%;transform:translateX(-50%);font:500 2.2cqw \'Geist\';letter-spacing:.26em', 'BUSINESS PLUS', 't')
-    + at('left:50%;top:57%;width:34cqw;height:34cqw;transform:translate(-50%,-50%)', CENT('#dbe6f5', '#2c56a0', 'round')) + chip(9, 38, 'silver') + nfc(76, 47) },
-  delta_skymiles_gold: { bg: 'linear-gradient(135deg,#f2e2ae 0%,#d3b56c 35%,#eed89e 55%,#b89448 100%)', ink: '#3b2c12', h:
-    at('left:26%;top:22%;width:58cqw;height:40cqw', deltaWidget('#f7ebc4', '#b08a3e'))
+    + at('left:50%;top:57%;width:34cqw;height:34cqw;transform:translate(-50%,-50%)', CENT('#dbe6f5', '#3b5880', 'round')) + chip(9, 38, 'silver') + nfc(76, 47) },
+  delta_skymiles_gold: { bg: 'linear-gradient(135deg,#cdb685 0%,#b59f6f 35%,#e0c790 55%,#a5884f 100%)', ink: '#3b2c12', h:
+    at('left:26%;top:22%;width:58cqw;height:40cqw', deltaWidget('#f3deaa', '#a5884f'))
     + at('left:7%;top:8%;font:800 3.6cqw \'Archivo\';font-stretch:108%;letter-spacing:.03em', 'AMERICAN EXPRESS', 't')
     + at('right:6%;top:7%;text-align:right;font:600 2.2cqw \'Geist\';letter-spacing:.26em', '▲ DELTA<span style="display:block;font:300 5.4cqw \'Geist\';letter-spacing:.1em;margin-top:.6cqw">SKYMILES</span>', 't')
     + chip(7, 34) },
-  delta_skymiles_platinum: { bg: 'linear-gradient(135deg,#eff1f3 0%,#c3c7cc 35%,#e8eaec 55%,#a9aeb4 100%)', ink: '#2f333a', h:
+  delta_skymiles_platinum: { bg: 'linear-gradient(135deg,#c6cacb 0%,#aaaeaf 35%,#d8dadb 55%,#959d9e 100%)', ink: '#2f333a', h:
     at('left:26%;top:22%;width:58cqw;height:40cqw', deltaWidget('#ffffff', '#9aa0a8'))
     + at('left:7%;top:8%;font:800 3.6cqw \'Archivo\';font-stretch:108%;letter-spacing:.03em', 'AMERICAN EXPRESS', 't')
     + at('right:6%;top:7%;text-align:right;font:600 2.2cqw \'Geist\';letter-spacing:.26em', '▲ DELTA<span style="display:block;font:300 5.4cqw \'Geist\';letter-spacing:.1em;margin-top:.6cqw">SKYMILES</span>', 't')
     + chip(7, 34, 'silver') },
-  hilton_honors_surpass: { bg: 'repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0 .4cqw,transparent .4cqw .8cqw),linear-gradient(140deg,#264c84 0%,#1b3a69 55%,#142c52 100%)', h:
+  hilton_honors_surpass: { bg: 'repeating-linear-gradient(45deg,rgba(255,255,255,.025) 0 .4cqw,transparent .4cqw .8cqw),radial-gradient(40% 50% at 100% 0%,#5b718e 0%,rgba(91,113,142,0) 70%),linear-gradient(140deg,#2b4a73 0%,#1f3d65 55%,#1c395f 100%)', h:
     at('left:3.4%;top:50%;transform:translate(-38%,-50%) rotate(-90deg);font:700 2.3cqw \'Archivo\';letter-spacing:.22em;opacity:.45', 'AMERICAN EXPRESS', 't')
     + at('right:6%;top:7%;border:.35cqw solid #fff;padding:1cqw 1.8cqw .9cqw;text-align:center;font:700 6cqw/1 \'Libre Caslon Text\',serif', 'Hilton<span style="display:block;font:500 1.9cqw \'Geist\';letter-spacing:.34em;margin-top:.7cqw">HONORS</span>', 't')
     + chip(10, 36, 'silver')
     + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';letter-spacing:.02em', 'AMERICAN<br>EXPRESS') },
 
-  citi_double_cash: { bg: 'linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(120,210,255,.32) 46%,rgba(0,0,0,0) 54%),radial-gradient(55% 55% at 62% 62%,#26b874 0%,rgba(20,150,95,.55) 40%,rgba(0,0,0,0) 72%),linear-gradient(180deg,#0d4f88 0%,#0b5c7a 45%,#0c6a5a 72%,#0a4b52 100%)', h:
+  citi_double_cash: { bg: 'linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(120,210,255,.32) 46%,rgba(0,0,0,0) 54%),radial-gradient(55% 55% at 62% 62%,#279e75 0%,rgba(22,151,100,.55) 40%,rgba(0,0,0,0) 72%),linear-gradient(180deg,#0b3575 0%,#1b72aa 30%,#219ccf 45%,#169764 65%,#0f5340 85%,#0c3637 100%)', h:
     at('left:38%;top:12%;width:36cqw;height:14cqw', S('0 0 60 22', '<path d="M3 21C14 2 46 2 57 21" fill="none" stroke="#bfe6ff" stroke-width="3.4" stroke-opacity=".85"/>'))
     + CITI() + at('left:44%;top:44%;font:700 4.6cqw \'Geist\';letter-spacing:.1em', 'DOUBLE<span style="position:relative;top:2.4cqw;margin-left:1cqw">CASH</span>', 't')
     + nfc(4, 39.5) + chip(9, 37, 'silver') + mc('#e6e8ea') },
-  citi_custom_cash: { bg: 'linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(170,230,255,.4) 47%,rgba(0,0,0,0) 56%),radial-gradient(60% 60% at 35% 70%,#38b4ff 0%,rgba(56,180,255,0) 70%),linear-gradient(180deg,#0f5fc4 0%,#1474dc 45%,#1a6ad0 100%)', h:
+  citi_custom_cash: { bg: 'linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(170,230,255,.4) 47%,rgba(0,0,0,0) 56%),linear-gradient(180deg,#0e2e66 0%,#123f7f 25%,#1280b9 50%,#15afdb 78%,#23b6dd 100%)', h:
     at('left:46%;top:12%;width:36cqw;height:14cqw', S('0 0 60 22', '<path d="M3 21C14 2 46 2 57 21" fill="none" stroke="#e2f4ff" stroke-width="3.4" stroke-opacity=".9"/>'))
     + CITI() + at('left:44%;top:44%;font:700 4.6cqw \'Geist\';letter-spacing:.1em', 'CUSTOM<span style="position:relative;top:2.4cqw;margin-left:1cqw">CASH</span>', 't')
     + nfc(4, 39.5) + chip(9, 37, 'silver') + mc('#e6e8ea') },
@@ -161,7 +164,7 @@ const ART = {
     waves(22, '#111214', .55, -2, 11, 44) + waves(22, '#ffffff', .12, -1.4, 11, 44)
     + CITI() + at('left:28%;top:8%;font:500 2.8cqw/1.15 \'Geist\';letter-spacing:.12em', 'STRATA<br>PREMIER', 't')
     + nfc(4, 39.5) + chip(9, 37, 'silver') + mc('#e6e8ea') },
-  costco_anywhere_visa: { bg: 'linear-gradient(160deg,#18181b 0%,#0e0e10 100%)', h:
+  costco_anywhere_visa: { bg: 'linear-gradient(160deg,#0f1115 0%,#1d1f22 55%,#3a3c3e 100%)', h:
     waves(24, '#ffffff', .07, -6, 12, -10)
     + at('right:0;top:8%;width:1.8%;height:11%;background:#e31837') + at('right:0;top:19%;width:1.8%;height:7%;background:#005daa')
     + CITI() + chip(8, 33, 'silver')
@@ -176,16 +179,16 @@ const ART = {
     + at('right:7%;top:9%;width:7cqw;height:6cqw', S('0 0 30 26', '<path d="M2 24L20 2L28 2L12 24Z" fill="#c8102e"/><path d="M14 24L26 9L29 12L20 24Z" fill="#0078d2"/>'))
     + nfc(4, 39.5) + chip(9, 37, 'silver') + at('left:38%;bottom:20%;font:400 3cqw \'Geist\'', 'Platinum Select', 't') + mc('#f4f5f6') },
 
-  capital_one_venture_x: { bg: 'linear-gradient(160deg,#1b4068 0%,#102d4c 50%,#0b2038 100%)', h:
+  capital_one_venture_x: { bg: 'radial-gradient(55% 60% at 90% 10%,#356f90 0%,#0b4f77 35%,rgba(11,79,119,0) 75%),linear-gradient(160deg,#0b3454 0%,#082642 50%,#06162d 100%)', h:
     C1() + chip(8, 30, 'silver') + nfc(23, 33) + at('left:8%;top:58%;font:300 5cqw \'Geist\';letter-spacing:.36em', 'VENTURE X', 't') + visa('Infinite', '#fff', 'font-size:7cqw') },
-  capital_one_venture: { bg: 'linear-gradient(160deg,#1e4479 0%,#13325f 55%,#0d2547 100%)', h:
+  capital_one_venture: { bg: 'radial-gradient(40% 50% at 10% 10%,#5d6c7e 0%,rgba(93,108,126,0) 70%),linear-gradient(160deg,#0a2b51 0%,#021c40 50%,#021130 100%)', h:
     at('left:-10%;top:-30%;width:62cqw;height:62cqw', S('0 0 100 100', '<g fill="none" stroke="#fff" stroke-opacity=".2"><circle cx="50" cy="50" r="46" stroke-width="1"/><circle cx="50" cy="50" r="36" stroke-width="5" stroke-dasharray="1 3"/><circle cx="50" cy="50" r="26" stroke-width=".8"/></g>'))
     + C1() + chip(8, 30, 'silver') + nfc(23, 33) + at('left:8%;top:58%;font:300 5cqw \'Geist\';letter-spacing:.36em', 'VENTURE', 't') + visa('Signature', '#fff', 'font-size:7cqw') },
-  capital_one_quicksilver: { bg: 'linear-gradient(170deg,#5f7187 0%,#8597ab 40%,#b6c2ce 75%,#d0d8e0 100%)', h:
+  capital_one_quicksilver: { bg: 'linear-gradient(170deg,#54616d 0%,#6a7681 35%,#838f9b 65%,#9eaab2 100%)', h:
     C1() + chip(8, 30, 'silver') + nfc(23, 33) + at('left:8%;top:58%;font:300 5cqw \'Geist\';letter-spacing:.36em', 'QUICKSILVER', 't') + mc('#fff') },
-  capital_one_savor: { bg: 'linear-gradient(170deg,#9c3a1d 0%,#b9492a 45%,#d26b3d 85%,#e3834a 100%)', h:
+  capital_one_savor: { bg: 'linear-gradient(170deg,#933423 0%,#9c4634 45%,#a65a4a 70%,#b35733 100%)', h:
     C1() + chip(8, 30, 'silver') + nfc(23, 33) + at('left:8%;top:58%;font:300 5cqw \'Geist\';letter-spacing:.36em', 'SAVOR', 't') + mc('#fff') },
-  capital_one_savorone: { bg: 'linear-gradient(170deg,#a6421f 0%,#c0532c 45%,#d77442 85%,#e78c50 100%)', h:
+  capital_one_savorone: { bg: 'linear-gradient(170deg,#9a3a27 0%,#a44c38 45%,#ae604e 70%,#b85d37 100%)', h:
     C1() + chip(8, 30, 'silver') + nfc(23, 33) + at('left:8%;top:56%;font:300 5cqw \'Geist\';letter-spacing:.36em', 'SAVOR<span style="display:block;font-size:2.6cqw;letter-spacing:.4em;margin-top:1cqw">ONE</span>', 't') + mc('#fff') },
 
   discover_it_cashback: { bg: 'repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 .3cqw,transparent .3cqw .9cqw),linear-gradient(160deg,#98d2f0 0%,#64b5e2 45%,#3f97cf 100%)', ink: '#1b1b1d', h:
@@ -203,25 +206,25 @@ const ART = {
     + at('left:50%;top:22%;width:22cqw;height:11cqw;transform:translateX(-50%)', BOFA_FLAG('#e8e9eb'))
     + at('left:50%;top:50%;transform:translateX(-50%);font:600 2.9cqw \'Geist\';letter-spacing:.22em', 'BANK OF AMERICA', 't')
     + chip(8, 33, 'silver') + nfc(8, 74) + visa('Signature') },
-  bofa_customized_cash: { bg: 'linear-gradient(160deg,#e4323f 0%,#c8102e 55%,#a30d24 100%)', h:
+  bofa_customized_cash: { bg: 'radial-gradient(40% 55% at 0% 0%,#6d4e77 0%,rgba(109,78,119,0) 70%),linear-gradient(160deg,#bf1c2a 0%,#b31926 55%,#a41521 100%)', h:
     lines('<path d="M40 101L120 -10"/><path d="M60 101L140 -10"/><path d="M80 101L160 -10"/>', '#fff', 9, .06)
     + at('left:50%;top:22%;width:22cqw;height:11cqw;transform:translateX(-50%)', BOFA_FLAG())
     + at('left:50%;top:50%;transform:translateX(-50%);font:600 2.9cqw \'Geist\';letter-spacing:.22em', 'BANK OF AMERICA', 't')
     + chip(8, 33, 'silver') + nfc(8, 74) + visa('Signature') },
-  bofa_travel_rewards: { bg: 'linear-gradient(160deg,#2077da 0%,#0e56b5 55%,#0a4290 100%)', h:
+  bofa_travel_rewards: { bg: 'radial-gradient(45% 55% at 30% 40%,#3d6a9d 0%,rgba(61,106,157,0) 70%),linear-gradient(160deg,#103a80 0%,#054389 55%,#024f95 100%)', h:
     lines('<path d="M40 101L120 -10"/><path d="M60 101L140 -10"/><path d="M80 101L160 -10"/>', '#fff', 9, .06)
     + at('left:50%;top:22%;width:22cqw;height:11cqw;transform:translateX(-50%)', BOFA_FLAG())
     + at('left:50%;top:50%;transform:translateX(-50%);font:600 2.9cqw \'Geist\';letter-spacing:.22em', 'BANK OF AMERICA', 't')
     + chip(8, 33, 'silver') + nfc(8, 74) + visa('Signature') },
 
-  wells_fargo_autograph: { bg: 'linear-gradient(180deg,#4b2d70 0%,#6c2662 42%,#9a1d40 74%,#b81d33 100%)', h:
+  wells_fargo_autograph: { bg: 'linear-gradient(100deg,#3d2967 0%,#532063 35%,#7b204d 62%,#9e203a 82%,#bc3f42 100%)', h:
     GOLD_STREAK(47) + WF() + at('right:6%;top:9%;font:400 4.2cqw \'Geist\';letter-spacing:.1em', 'AUTOGRAPH', 't')
     + chip(8, 38, 'silver') + nfc(22.5, 39.5) + visa('Signature') },
   wells_fargo_active_cash: { bg: 'linear-gradient(118deg,#e6e6e8 0%,#cfcfd2 36%,#b5212f 60%,#8e1424 100%)', h:
     lines('<path d="M70 101L120 0"/>', '#fff', .6, .5) + WF('#2a2a2c')
     + at('right:6%;top:8%;text-align:right;font:600 2.6cqw/1.15 \'Geist\';letter-spacing:.12em', 'ACTIVE<br>CASH', 't')
     + chip(8, 38, 'silver') + nfc(22.5, 39.5, '#555') + visa('Signature') },
-  wells_fargo_autograph_journey: { bg: 'linear-gradient(180deg,#26262a 0%,#161618 60%,#0d0d0f 100%)', h:
+  wells_fargo_autograph_journey: { bg: 'radial-gradient(45% 55% at 100% 0%,#c2303b 0%,#8c3a3f 35%,rgba(60,40,40,0) 75%),linear-gradient(160deg,#4a4848 0%,#2b2a2a 45%,#2d2d2d 100%)', h:
     GOLD_STREAK(47) + WF() + at('right:6%;top:8%;text-align:right;font:400 4.2cqw \'Geist\';letter-spacing:.1em', 'AUTOGRAPH<span style="display:block;font:400 6.4cqw/1 \'Allura\',cursive;letter-spacing:0;color:#e6cd92;margin-top:.4cqw">Journey</span>', 't')
     + chip(8, 38, 'silver') + nfc(22.5, 39.5) + visa('Signature') },
   bilt_blue: { bg: 'linear-gradient(160deg,#173159 0%,#112748 55%,#0c1c36 100%)', h:
@@ -252,7 +255,7 @@ const ART = {
   apple_card: { bg: 'linear-gradient(160deg,#fdfdfd 0%,#eeeeee 50%,#e2e2e3 100%)', ink: '#9a9a9c', h:
     at('left:7%;top:8%;width:9.5cqw;height:11.4cqw', S('0 0 100 120', '<path fill="#bdbdc0" d="M50 34C40 26 22 28 17 46C12 64 24 96 37 99C43 100 45 96 50 96C55 96 57 100 63 99C73 97 81 82 84 74C73 69 69 55 77 46C71 36 59 29 50 34Z"/><path fill="#bdbdc0" d="M51 29C51 17 60 9 69 8C69 19 61 28 51 29Z"/>'))
     + chip(8, 42, 'silver') + mc('#b5b5b8', '', '', false) },
-  robinhood_gold: { bg: 'linear-gradient(135deg,#ead08a 0%,#c9a24a 40%,#ecd492 60%,#b38a3a 100%)', ink: '#6b4f17', h:
+  robinhood_gold: { bg: 'linear-gradient(135deg,#c9a452 0%,#a48140 40%,#b89343 60%,#7d612a 100%)', ink: '#3d2c10', h:
     at('left:7.5%;top:9%;width:7cqw;height:9cqw', S('0 0 40 52', '<path fill="#7a5a1c" fill-opacity=".55" d="M34 2C20 6 8 20 5 38L4 50L9 46C12 30 20 18 34 2ZM22 26C26 22 31 19 36 18C30 24 25 31 22 38C20 34 20 30 22 26Z"/>'))
     + chip(8, 40) + visa('Signature', 'rgba(107,79,23,.7)') },
   alliant_cashback_visa: { bg: 'linear-gradient(160deg,#222225 0%,#121214 100%)', h:
