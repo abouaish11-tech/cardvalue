@@ -181,6 +181,21 @@ const DOWNGRADE_PATHS = {
 };
 
 // ---- ISSUER LOGO HELPER ----
+/** Cards the issuer has closed to new applicants: an optional
+ *  `discontinued: "YYYY-MM-DD"` in cards.json. Display only. The card stays in
+ *  the ranking and the wallet maths so a visitor who already holds it can still
+ *  see what it earns; Apply links are replaced by a "closed" badge. */
+function isDiscontinued(card) {
+  return !!(card && card.discontinued);
+}
+function discontinuedSince(card) {
+  const d = new Date(String(card.discontinued) + 'T00:00:00');
+  return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+function closedBadgeHTML(extraClass = '') {
+  return `<span class="closed-badge${extraClass ? ' ' + extraClass : ''}" title="The issuer no longer takes applications for this card">Closed to new applicants</span>`;
+}
+
 function issuerInitials(issuer) {
   return issuer.replace(/\(.*?\)/g, '').trim().split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
 }
@@ -693,6 +708,7 @@ function renderWalletBuilder() {
           <div class="wallet-card-id">
             <span class="wallet-card-name">${c.name}</span>
             <span class="wallet-card-issuer">${c.issuer}</span>
+            ${isDiscontinued(c) ? closedBadgeHTML('closed-badge-sm') : ''}
           </div>
           ${feeBadge}
         </div>
@@ -878,7 +894,7 @@ function renderCards() {
         </div>
       </td>
       ${orderedCols.map(c => cellMap[c.key]).join('')}
-      <td class="td-apply"><a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="table" onclick="event.stopPropagation()">Apply</a></td>
+      <td class="td-apply">${isDiscontinued(card) ? closedBadgeHTML() : `<a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="table" onclick="event.stopPropagation()">Apply</a>`}</td>
       <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" ${isCompared ? 'checked' : ''} /></td>
     `;
 
@@ -1002,7 +1018,7 @@ function renderStage(ranked, lockedIds) {
   const plain = Math.round(monthly * 12 * 0.01);
   document.getElementById('stageWho').innerHTML = locked
     ? `Your #${rank} of ${ranked.length} · unlock to see which card it is`
-    : `Your #${rank} of ${ranked.length} · <b>${escHTML(card.name)}</b>`;
+    : `Your #${rank} of ${ranked.length} · <b>${escHTML(card.name)}</b>${isDiscontinued(card) ? ' · <span class="closed-inline">closed to new applicants</span>' : ''}`;
   document.getElementById('stageBig').innerHTML = `${fmtNet(net)}<small>a year</small>`;
   document.getElementById('stageMath').textContent =
     `$${earned.toLocaleString()} in rewards · ${credits > 0 ? `about $${credits.toLocaleString()} in credits you'd use` : 'no statement credits'} · $${fee.toLocaleString()} annual fee · a basic 1% card would earn $${plain.toLocaleString()}`;
@@ -1012,7 +1028,8 @@ function renderStage(ranked, lockedIds) {
   const see = document.getElementById('stageSeeMath');
   const mine = document.getElementById('btnPersonalize');
   const unlock = document.getElementById('stageUnlock');
-  apply.hidden = see.hidden = locked;
+  see.hidden = locked;
+  apply.hidden = locked || isDiscontinued(card);   // no Apply for a card nobody can apply for
   if (!locked) {
     apply.href = card.applyUrl;
     apply.textContent = `Apply at ${issuerShort(card.issuer)}`;
@@ -1223,6 +1240,17 @@ function openDetail(card) {
       </div>
     </div>
   `;
+
+  // Closed to new applicants
+  if (isDiscontinued(card)) {
+    const since = discontinuedSince(card);
+    html += `
+      <div class="closed-note">
+        <strong>Closed to new applicants</strong>
+        ${escHTML(card.issuer)} stopped taking applications for this card${since ? ` on ${since}` : ''}. People who already hold it keep it. We still rank it so you can see what it earns next to cards you can get today.
+      </div>
+    `;
+  }
 
   // Membership note
   if (card.membershipRequired) {
@@ -1515,8 +1543,13 @@ function openDetail(card) {
     `;
   }
 
-  // Apply button
-  html += `
+  // Apply button (or the closed badge for a card nobody can apply for)
+  html += isDiscontinued(card) ? `
+    <div class="detail-section detail-closed">
+      ${closedBadgeHTML('closed-badge-lg')}
+      <p class="closed-sub">Already have it? Keep using it. Otherwise compare the cards above that are still open.</p>
+    </div>
+  ` : `
     <div class="detail-section">
       <a href="${card.applyUrl}" target="_blank" rel="noopener" class="btn-apply-card" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="detail-drawer">
         Apply for the ${card.name} →
@@ -1574,6 +1607,7 @@ function openCompareModal() {
 
   const rows = [
     { label: 'Annual Fee', fn: (c) => `$${(c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0)).toLocaleString()}` },
+    ...(cards.some(isDiscontinued) ? [{ label: 'Availability', fn: (c) => isDiscontinued(c) ? 'Closed to new applicants' : 'Open to apply' }] : []),
     { label: 'Rewards Earned', fn: (c) => `$${calcAnnualValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
     { label: 'Realistic Credits*', fn: (c) => { const tc = calcRealisticCredits(c); const face = calcTotalCredits(c); return tc > 0 ? `~$${tc.toLocaleString()} (of $${face.toLocaleString()})` : '—'; }, compare: true, better: 'max', valueKey: (c) => calcRealisticCredits(c) },
     { label: 'Net Annual Value', fn: (c) => `$${calcNetValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
