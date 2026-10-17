@@ -26,7 +26,7 @@
     "hyatt_points": 1.7,
     "ihg_points": 0.5
   },
-  "lastUpdated": "2026-09-20",
+  "lastUpdated": "2026-10-17",
   "defaultSpending": {
     "dining": 500,
     "groceries": 350,
@@ -99,7 +99,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
       "bestFor": "Travel & Dining",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "chase_sapphire_reserve",
@@ -177,7 +177,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
       "bestFor": "Premium Travel",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "chase_freedom_unlimited",
@@ -225,7 +225,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
       "bestFor": "No-Fee Everyday",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "chase_freedom_flex",
@@ -259,7 +259,7 @@
       },
       "note": "5% on rotating quarterly categories (up to $1,500/quarter, activation required); 5x travel via Chase Travel; 3x drugstores",
       "signupBonus": {
-        "points": 200,
+        "points": 250,
         "spendRequired": 500,
         "months": 3
       },
@@ -279,7 +279,7 @@
         "assumedFulfillment": 1.0,
         "note": "5% on rotating categories, $1,500/quarter cap (activation required). Assumes user maxes out the cap."
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "amex_platinum",
@@ -350,6 +350,30 @@
           "value": 300,
           "desc": "$25/month for Disney+, Hulu, ESPN+, Paramount+, YouTube Premium, etc.",
           "type": "drip"
+        },
+        {
+          "label": "CLEAR+",
+          "value": 219,
+          "desc": "Up to $219 per calendar year for a CLEAR+ membership",
+          "type": "coupon"
+        },
+        {
+          "label": "Walmart+",
+          "value": 155,
+          "desc": "Covers a monthly Walmart+ membership (about $12.95/month)",
+          "type": "coupon"
+        },
+        {
+          "label": "Oura Ring",
+          "value": 200,
+          "desc": "Up to $200 per year toward an Oura Ring",
+          "type": "coupon"
+        },
+        {
+          "label": "Equinox",
+          "value": 300,
+          "desc": "Up to $300 per year on Equinox memberships",
+          "type": "coupon"
         }
       ],
       "creditsCaveat": "You need to actually shop at Lululemon ($300), book luxury hotels through FHR ($600), and use Resy ($400). If you wouldn't naturally spend on those things, these credits are worth $0 to you.",
@@ -367,7 +391,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum",
       "bestFor": "Luxury Travel & Perks",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "amex_gold",
@@ -431,7 +455,7 @@
       "creditsCaveat": "These are all small monthly credits at specific merchants. If you eat out and use Uber regularly, these are realistic. The Dunkin' credit is very specific.",
       "signupBonus": {
         "points": 100000,
-        "spendRequired": 6000,
+        "spendRequired": 8000,
         "months": 6
       },
       "perks": [
@@ -447,7 +471,7 @@
         "dining": 50000,
         "groceries": 25000
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "amex_blue_cash_preferred",
@@ -483,7 +507,7 @@
       },
       "note": "6% at U.S. supermarkets up to $6,000/yr (then 1%); excludes Costco, Walmart, Target. 6% on select streaming.",
       "signupBonus": {
-        "points": 300,
+        "points": 250,
         "spendRequired": 3000,
         "months": 6
       },
@@ -499,7 +523,15 @@
       "rewardCaps": {
         "groceries": 6000
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17",
+      "credits": [
+        {
+          "label": "Disney Streaming",
+          "value": 120,
+          "desc": "Up to $10/month back on Disney+, Hulu or ESPN+ subscriptions",
+          "type": "drip"
+        }
+      ]
     },
     {
       "id": "amex_blue_cash_everyday",
@@ -535,7 +567,7 @@
       },
       "note": "3% at U.S. supermarkets, U.S. gas stations, and U.S. online retail (each up to $6,000/yr, then 1%)",
       "signupBonus": {
-        "points": 200,
+        "points": 150,
         "spendRequired": 2000,
         "months": 6
       },
@@ -553,7 +585,15 @@
         "gas": 6000,
         "online": 6000
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17",
+      "credits": [
+        {
+          "label": "Disney Streaming",
+          "value": 84,
+          "desc": "Up to $7/month back on Disney+, Hulu or ESPN+ subscriptions",
+          "type": "drip"
+        }
+      ]
     },
     {
       "id": "citi_double_cash",
@@ -601,7 +641,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-double-cash-credit-card",
       "bestFor": "Simple Flat-Rate Cashback",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "citi_strata_premier",
@@ -661,7 +701,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-strata-premier-credit-card",
       "bestFor": "Multi-Category Rewards",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "citi_custom_cash",
@@ -679,7 +719,7 @@
       ],
       "currency": "citi_ty",
       "rewards": {
-        "dining": 5,
+        "dining": 1,
         "groceries": 1,
         "travel": 1,
         "gas": 1,
@@ -724,7 +764,8 @@
         "capPerCycle": 500,
         "cyclesPerYear": 12,
         "note": "5% on highest-spending eligible category each billing cycle, $500 cap per cycle."
-      }
+      },
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "capital_one_venture_x",
@@ -745,7 +786,7 @@
       "rewards": {
         "dining": 2,
         "groceries": 2,
-        "travel": 5,
+        "travel": 2,
         "gas": 2,
         "other": 2,
         "streaming": 2,
@@ -789,7 +830,7 @@
       ],
       "applyUrl": "https://creditcards.capitalone.com/venture-x-credit-card",
       "bestFor": "Premium Travel Value",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "capital_one_venture",
@@ -808,7 +849,7 @@
       "rewards": {
         "dining": 2,
         "groceries": 2,
-        "travel": 5,
+        "travel": 2,
         "gas": 2,
         "other": 2,
         "streaming": 2,
@@ -836,7 +877,7 @@
       ],
       "applyUrl": "https://creditcards.capitalone.com/venture-rewards-credit-card",
       "bestFor": "Flexible Travel Miles",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "capital_one_quicksilver",
@@ -884,7 +925,7 @@
       ],
       "applyUrl": "https://creditcards.capitalone.com/quicksilver-credit-card",
       "bestFor": "Simple No-Fee Cashback",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "capital_one_savor",
@@ -933,7 +974,7 @@
       ],
       "applyUrl": "https://creditcards.capitalone.com/savor-credit-card",
       "bestFor": "No-Fee Dining & Groceries",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "capital_one_savorone",
@@ -976,7 +1017,7 @@
       ],
       "applyUrl": "https://creditcards.capitalone.com/savorone-credit-card",
       "bestFor": "Fair Credit Dining & Groceries",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "discover_it_cashback",
@@ -1028,7 +1069,7 @@
         "assumedFulfillment": 1.0,
         "note": "5% on rotating categories, $1,500/quarter cap (activation required). Assumes user maxes out the cap."
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "discover_it_miles",
@@ -1076,7 +1117,7 @@
       ],
       "applyUrl": "https://www.discover.com/credit-cards/travel/",
       "bestFor": "No-Fee Travel Miles",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "bofa_premium_rewards",
@@ -1160,7 +1201,7 @@
           }
         ]
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "bofa_customized_cash",
@@ -1178,10 +1219,10 @@
       ],
       "currency": "cashback",
       "rewards": {
-        "dining": 2,
+        "dining": 1,
         "groceries": 2,
         "travel": 1,
-        "gas": 3,
+        "gas": 1,
         "other": 1,
         "streaming": 1,
         "transit": 1,
@@ -1239,10 +1280,13 @@
         "rate": 3,
         "maxCategories": 1,
         "eligibleCategories": [
-          "dining",
           "gas",
-          "travel",
           "online",
+          "phone",
+          "streaming",
+          "utilities",
+          "dining",
+          "travel",
           "drugstores",
           "other"
         ],
@@ -1261,7 +1305,7 @@
         "alsoCoversShareCap": true,
         "note": "3% on chosen category + 2% on groceries (combined $2,500/quarter cap)."
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "bofa_travel_rewards",
@@ -1336,7 +1380,7 @@
           }
         ]
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "wells_fargo_autograph",
@@ -1386,7 +1430,7 @@
       ],
       "applyUrl": "https://creditcards.wellsfargo.com/autograph-visa-credit-card",
       "bestFor": "No-Fee Multi-Category",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "wells_fargo_active_cash",
@@ -1434,7 +1478,7 @@
       ],
       "applyUrl": "https://creditcards.wellsfargo.com/active-cash-credit-card",
       "bestFor": "Simple 2% Cashback",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "usbank_altitude_connect",
@@ -1456,7 +1500,7 @@
       "rewards": {
         "dining": 2,
         "groceries": 2,
-        "travel": 5,
+        "travel": 4,
         "gas": 4,
         "other": 1,
         "streaming": 2,
@@ -1483,7 +1527,7 @@
       ],
       "applyUrl": "https://www.usbank.com/credit-cards/altitude-connect-visa-signature-credit-card.html",
       "bestFor": "Gas & EV Charging",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "usbank_cash_plus",
@@ -1500,8 +1544,8 @@
       ],
       "currency": "cashback",
       "rewards": {
-        "dining": 2,
-        "groceries": 2,
+        "dining": 1,
+        "groceries": 1,
         "travel": 1,
         "gas": 1,
         "other": 1,
@@ -1532,21 +1576,18 @@
         "rate": 5,
         "maxCategories": 2,
         "eligibleCategories": [
-          "dining",
-          "gas",
-          "groceries",
-          "travel",
+          "phone",
+          "utilities",
           "streaming",
           "transit",
           "entertainment",
-          "other",
-          "utilities"
+          "other"
         ],
         "capPerCycle": 2000,
         "cyclesPerYear": 4,
         "note": "5% on two chosen categories, $2,000/quarter combined cap."
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "us_bank_smartly",
@@ -1624,7 +1665,7 @@
           }
         ]
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "bilt_blue",
@@ -1657,7 +1698,9 @@
         "rent": 1
       },
       "note": "1x on rent/mortgage (no transaction fee). 4% Bilt Cash option. Replaced original Bilt Mastercard (Feb 2026).",
-      "signupBonus": null,
+      "signupBonus": {
+        "description": "$100 of Bilt Cash"
+      },
       "perks": [
         "Earn points on rent/mortgage (no fee!)",
         "1x on all purchases",
@@ -1666,7 +1709,8 @@
         "No annual fee"
       ],
       "applyUrl": "https://bilt.com/card",
-      "bestFor": "Earning on Rent Payments"
+      "bestFor": "Earning on Rent Payments",
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "apple_card",
@@ -1698,12 +1742,8 @@
         "utilities": 2,
         "rent": 0
       },
-      "note": "2% on everything via Apple Pay (1% with physical card). 3% at Apple, Nike, Uber, T-Mobile, Walgreens, and other partners.",
-      "signupBonus": {
-        "points": 75,
-        "spendRequired": 75,
-        "months": 1
-      },
+      "note": "2% on everything via Apple Pay (1% with physical card). 3% at Apple, Nike, Uber, Walgreens, Exxon Mobil, Booking.com and other partners.",
+      "signupBonus": null,
       "perks": [
         "2% Daily Cash on Apple Pay purchases",
         "3% at Apple and select partners",
@@ -1713,7 +1753,7 @@
       ],
       "applyUrl": "https://www.apple.com/apple-card/",
       "bestFor": "Apple Ecosystem Users",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "amex_everyday_preferred",
@@ -1780,7 +1820,7 @@
         "dining": 2,
         "groceries": 1,
         "travel": 1,
-        "gas": 1,
+        "gas": 2,
         "other": 1,
         "streaming": 1,
         "transit": 1,
@@ -1794,7 +1834,7 @@
       },
       "note": "5% on office supplies, internet, cable, phone (up to $25k combined/yr). 2% at gas and restaurants (up to $25k combined/yr).",
       "signupBonus": {
-        "points": 75000,
+        "points": 750,
         "spendRequired": 6000,
         "months": 3
       },
@@ -1811,7 +1851,7 @@
         "dining": 25000,
         "phone": 25000
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "amex_blue_business_plus",
@@ -1847,8 +1887,8 @@
       },
       "note": "2x MR on everything up to $50,000/yr in purchases (then 1x)",
       "signupBonus": {
-        "points": 15000,
-        "spendRequired": 3000,
+        "points": 50000,
+        "spendRequired": 5000,
         "months": 3
       },
       "perks": [
@@ -1872,7 +1912,7 @@
         "entertainment": 50000
       },
       "rewardCapsCombined": 50000,
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "robinhood_gold",
@@ -1881,8 +1921,8 @@
       "annualFee": 0,
       "membershipRequired": {
         "name": "Robinhood Gold",
-        "cost": 60,
-        "description": "Robinhood Gold membership required ($5/mo = $60/yr)"
+        "cost": 50,
+        "description": "Robinhood Gold annual plan required ($50/yr)"
       },
       "categories": [
         "cashback"
@@ -1908,16 +1948,16 @@
         "utilities": 3,
         "rent": 0
       },
-      "note": "3% cashback on everything. Requires Robinhood Gold ($5/mo). No category restrictions.",
+      "note": "3% cash back on everything. Requires a Robinhood Gold annual plan ($50/yr). 3% foreign transaction fee.",
       "signupBonus": null,
       "perks": [
         "3% cashback on everything",
         "No category restrictions",
-        "No foreign transaction fees",
         "Cashback deposited to Robinhood account"
       ],
       "applyUrl": "https://robinhood.com/creditcard/",
-      "bestFor": "Best Flat-Rate in the US"
+      "bestFor": "Best Flat-Rate in the US",
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "alliant_cashback_visa",
@@ -2006,12 +2046,12 @@
         "No annual fee (Costco membership req'd)",
         "No foreign transaction fees"
       ],
-      "applyUrl": "https://www.citi.com/credit-cards/citi-costco-anywhere-visa-credit-card",
+      "applyUrl": "https://www.citi.com/credit-cards/costco-anywhere-visa-card",
       "bestFor": "Gas + Costco Shoppers",
       "rewardCaps": {
         "gas": 7000
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "fidelity_rewards_visa",
@@ -2045,20 +2085,16 @@
         "rent": 0
       },
       "note": "2% on everything when deposited into eligible Fidelity account",
-      "signupBonus": {
-        "points": 150,
-        "spendRequired": 1500,
-        "months": 3
-      },
+      "signupBonus": null,
       "perks": [
         "2% on everything",
         "No annual fee",
         "Rewards auto-deposit to Fidelity account",
         "No rewards cap"
       ],
-      "applyUrl": "https://www.fidelity.com/cash-management/visa-signature-card",
+      "applyUrl": "https://www.fidelity.com/spend-save/visa-signature-card",
       "bestFor": "No-Fee 2% + Investing",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "sofi_credit_card",
@@ -2118,30 +2154,31 @@
       "currency": "venmo_cashback",
       "rewards": {
         "dining": 3,
-        "groceries": 3,
-        "travel": 2,
-        "gas": 2,
+        "groceries": 1,
+        "travel": 1,
+        "gas": 1,
         "other": 1,
-        "streaming": 1,
+        "streaming": 3,
         "transit": 1,
         "online": 1,
         "drugstores": 1,
-        "entertainment": 1,
+        "entertainment": 3,
         "wholesale": 1,
-        "phone": 2,
-        "utilities": 2,
+        "phone": 1,
+        "utilities": 1,
         "rent": 0
       },
-      "note": "Auto-detects your top spend category for 3% each month (grocery, bills, dining, etc.); next category gets 2%; all else 1%",
+      "note": "3% on dining and entertainment (including streaming), 3% when paying with Venmo online, 1% on everything else.",
       "signupBonus": null,
       "perks": [
-        "Auto-optimizing cashback categories",
-        "3% on top category, 2% on second",
+        "3% on dining and entertainment",
+        "3% when you check out with Venmo",
         "No annual fee",
         "Cashback to Venmo balance"
       ],
       "applyUrl": "https://venmo.com/about/creditcard/",
-      "bestFor": "Auto-Optimizing for Venmo Users"
+      "bestFor": "Auto-Optimizing for Venmo Users",
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "pnc_cash_rewards",
@@ -2177,7 +2214,7 @@
         "rent": 0
       },
       "signupBonus": {
-        "points": 200,
+        "points": 250,
         "spendRequired": 1000,
         "months": 3
       },
@@ -2189,7 +2226,7 @@
       ],
       "applyUrl": "https://www.pnc.com/en/personal-banking/banking/credit-cards/pnc-cash-rewards-visa-credit-card.html",
       "bestFor": "Gas + Dining + Groceries Trifecta",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "amazon_prime_rewards",
@@ -2211,33 +2248,33 @@
       "currency": "amazon_cashback",
       "rewards": {
         "dining": 2,
-        "groceries": 5,
-        "travel": 2,
+        "groceries": 1,
+        "travel": 1,
         "gas": 2,
         "other": 1,
         "streaming": 1,
         "transit": 2,
         "online": 5,
-        "drugstores": 2,
+        "drugstores": 1,
         "entertainment": 1,
         "wholesale": 1,
         "phone": 1,
         "utilities": 1,
         "rent": 0
       },
-      "note": "5% at Amazon.com, Amazon Fresh, and Whole Foods. 2% at restaurants, gas, drugstores, transit. 5% via Chase Travel.",
+      "note": "5% at Amazon.com, Amazon Fresh and Whole Foods with Prime. 2% at restaurants, gas stations and local transit. 1% elsewhere. 5% via Chase Travel.",
       "signupBonus": {
         "description": "$150 Amazon Gift Card instantly upon approval (Prime members)"
       },
       "perks": [
         "5% at Amazon & Whole Foods",
         "No annual fee (Prime required)",
-        "2% at restaurants, gas, drugstores",
+        "2% at restaurants, gas, transit",
         "No foreign transaction fees"
       ],
       "applyUrl": "https://www.amazon.com/Amazon-Prime-Rewards-Visa-Signature-Card/dp/BT00LN946S",
       "bestFor": "Amazon & Whole Foods Shoppers",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "chase_ink_preferred",
@@ -2289,7 +2326,7 @@
         "travel": 150000,
         "phone": 150000
       },
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "usbank_altitude_go",
@@ -2310,7 +2347,7 @@
       "rewards": {
         "dining": 4,
         "groceries": 2,
-        "travel": 2,
+        "travel": 1,
         "gas": 2,
         "other": 1,
         "streaming": 2,
@@ -2336,7 +2373,15 @@
       ],
       "applyUrl": "https://www.usbank.com/credit-cards/altitude-go-visa-signature-credit-card.html",
       "bestFor": "No-Fee Dining King",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17",
+      "credits": [
+        {
+          "label": "Streaming Credit",
+          "value": 15,
+          "desc": "$15 a year after 11 consecutive months of streaming purchases",
+          "type": "automatic"
+        }
+      ]
     },
     {
       "id": "wells_fargo_autograph_journey",
@@ -2356,7 +2401,7 @@
       "rewards": {
         "dining": 3,
         "groceries": 1,
-        "travel": 5,
+        "travel": 4,
         "gas": 1,
         "other": 1,
         "streaming": 1,
@@ -2369,7 +2414,7 @@
         "utilities": 1,
         "rent": 0
       },
-      "note": "5x on hotels via Wells Fargo; 3x on dining, transit",
+      "note": "5x on hotels, 4x on airlines, 3x on restaurants and other travel, all booked direct; 1x elsewhere. $50 annual airline credit.",
       "signupBonus": {
         "points": 60000,
         "spendRequired": 4000,
@@ -2383,7 +2428,15 @@
       ],
       "applyUrl": "https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card",
       "bestFor": "Hotel Travel Rewards",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17",
+      "credits": [
+        {
+          "label": "Airline Credit",
+          "value": 50,
+          "desc": "$50 statement credit each year after a $50+ airline purchase",
+          "type": "flexible"
+        }
+      ]
     },
     {
       "id": "delta_skymiles_gold",
@@ -2431,12 +2484,18 @@
           "value": 100,
           "desc": "$100 back on prepaid hotel or vacation-rental bookings made through Delta Stays on delta.com",
           "type": "portal"
+        },
+        {
+          "label": "Rideshare",
+          "value": 120,
+          "desc": "Up to $10/month on U.S. rideshare after the first card renewal",
+          "type": "drip"
         }
       ],
       "creditsCaveat": "The $200 flight credit requires $10,000 of annual spend to unlock — most Gold cardholders never hit it. Delta Stays only works through Delta's booking portal.",
       "signupBonus": {
-        "points": 50000,
-        "spendRequired": 2000,
+        "points": 80000,
+        "spendRequired": 3000,
         "months": 6
       },
       "perks": [
@@ -2448,7 +2507,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
       "bestFor": "Delta Flyers",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "delta_skymiles_platinum",
@@ -2497,12 +2556,24 @@
           "value": 150,
           "desc": "$150 back on prepaid hotel or vacation-rental bookings through Delta Stays on delta.com",
           "type": "portal"
+        },
+        {
+          "label": "Rideshare",
+          "value": 120,
+          "desc": "Up to $10/month on U.S. rideshare",
+          "type": "drip"
+        },
+        {
+          "label": "Resy",
+          "value": 120,
+          "desc": "Up to $10/month at U.S. Resy restaurants",
+          "type": "drip"
         }
       ],
       "creditsCaveat": "The companion certificate is the whole case for this card — if you don't fly a Delta round-trip with a companion every year, the $350 fee is hard to justify.",
       "signupBonus": {
-        "points": 60000,
-        "spendRequired": 3000,
+        "points": 90000,
+        "spendRequired": 4000,
         "months": 6
       },
       "perks": [
@@ -2514,7 +2585,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
       "bestFor": "Delta Loyalists",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "united_explorer",
@@ -2571,7 +2642,7 @@
       ],
       "creditsCaveat": "The $100 travel credit needs $10,000 of annual spend. The two United Club passes now require the cardholder to be present.",
       "signupBonus": {
-        "points": 60000,
+        "points": 70000,
         "spendRequired": 3000,
         "months": 3
       },
@@ -2584,7 +2655,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
       "bestFor": "United Flyers",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "southwest_priority",
@@ -2629,7 +2700,9 @@
       ],
       "creditsCaveat": "After the 2025 changes this card no longer has a travel credit — the anniversary points are the only guaranteed money back against the $229 fee.",
       "signupBonus": {
-        "description": "Varies — recent public offers have ranged from 50,000 to 100,000 points"
+        "points": 60000,
+        "spendRequired": 2000,
+        "months": 3
       },
       "perks": [
         "7,500 anniversary points",
@@ -2638,9 +2711,9 @@
         "No foreign transaction fees",
         "Counts toward Companion Pass qualification"
       ],
-      "applyUrl": "https://creditcards.chase.com/southwest/priority-credit-card",
+      "applyUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
       "bestFor": "Southwest Flyers",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "citi_aadvantage_platinum_select",
@@ -2677,9 +2750,9 @@
       "note": "2x on American Airlines purchases, restaurants, and gas stations; 1x elsewhere. Travel rate applies to American Airlines only. $0 annual fee the first year, then $99.",
       "credits": [],
       "signupBonus": {
-        "points": 50000,
-        "spendRequired": 2500,
-        "months": 3
+        "points": 80000,
+        "spendRequired": 3500,
+        "months": 4
       },
       "perks": [
         "First checked bag free on domestic AA itineraries (you + 4 companions)",
@@ -2690,7 +2763,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard",
       "bestFor": "American Airlines Flyers",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "marriott_bonvoy_boundless",
@@ -2751,7 +2824,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
       "bestFor": "Marriott Stays",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "hilton_honors_surpass",
@@ -2810,7 +2883,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
       "bestFor": "Hilton Stays",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "world_of_hyatt",
@@ -2865,15 +2938,15 @@
         "5 qualifying night credits per year, plus 2 more per $5,000 spent",
         "No foreign transaction fees"
       ],
-      "applyUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt",
+      "applyUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
       "bestFor": "Hyatt Stays",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "ihg_one_rewards_premier",
       "name": "IHG One Rewards Premier",
       "issuer": "Chase",
-      "annualFee": 99,
+      "annualFee": 150,
       "membershipRequired": null,
       "categories": [
         "travel"
@@ -2887,7 +2960,7 @@
       "currency": "ihg_points",
       "rewards": {
         "dining": 5,
-        "groceries": 3,
+        "groceries": 5,
         "travel": 10,
         "gas": 5,
         "other": 3,
@@ -2918,7 +2991,7 @@
       ],
       "creditsCaveat": "The anniversary night is worth about $200 and covers most mid-range IHG properties. The $50 United credit is only useful if you fly United.",
       "signupBonus": {
-        "points": 140000,
+        "points": 180000,
         "spendRequired": 3000,
         "months": 3
       },
@@ -2931,7 +3004,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
       "bestFor": "IHG Stays",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-17"
     },
     {
       "id": "amex_green",
@@ -2993,7 +3066,9 @@
         "No foreign transaction fees"
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/green/",
-      "bestFor": "Travel & Transit"
+      "bestFor": "Travel & Transit",
+      "discontinued": "2026-10-17",
+      "lastVerified": "2026-10-17"
     }
   ]
 }
