@@ -667,6 +667,7 @@
       "id": "citi_custom_cash",
       "name": "Citi Custom Cash",
       "issuer": "Citi",
+      "discontinued": "2026-05-28",
       "annualFee": 0,
       "membershipRequired": null,
       "categories": [

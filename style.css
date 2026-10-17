@@ -470,6 +470,14 @@ button, input, select { font-family: inherit; }
 .perks-list li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); flex-shrink: 0; margin-top: 8px; }
 .membership-note { background: var(--amber-soft); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: var(--amber); margin-bottom: 16px; line-height: 1.5; }
 .membership-note strong { display: block; margin-bottom: 2px; }
+/* Closed to new applicants (optional `discontinued` date in cards.json) */
+.closed-badge { display: inline-block; padding: 7px 12px; border-radius: 9px; font-size: 12px; font-weight: 600; line-height: 1.2; white-space: nowrap; background: var(--amber-soft); color: var(--amber); }
+.closed-badge-sm { align-self: flex-start; margin-top: 4px; padding: 3px 8px; font-size: 11px; }
+.closed-badge-lg { display: block; text-align: center; padding: 12px 16px; font-size: 14px; border-radius: 10px; }
+.closed-sub { margin: 10px 0 0; font-size: 13px; color: var(--muted); text-align: center; line-height: 1.5; }
+.closed-inline { color: var(--amber); font-weight: 500; }
+.closed-note { background: var(--amber-soft); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: var(--amber); margin-bottom: 16px; line-height: 1.5; }
+.closed-note strong { display: block; margin-bottom: 2px; }
 .bonus-box { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
 .bonus-box strong { color: var(--ink); }
 <<<<<<< HEAD
