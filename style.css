@@ -471,6 +471,8 @@ button, input, select { font-family: inherit; }
 .membership-note { background: var(--amber-soft); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: var(--amber); margin-bottom: 16px; line-height: 1.5; }
 .membership-note strong { display: block; margin-bottom: 2px; }
 /* Closed to new applicants (optional `discontinued` date in cards.json) */
+.closed-section-row td { padding: 22px 16px 10px; font-size: 13px; line-height: 1.5; color: var(--muted); border-top: 1px solid var(--line-2); }
+.closed-section-row strong { display: block; color: var(--ink); font-size: 14px; margin-bottom: 2px; }
 .closed-badge { display: inline-block; padding: 7px 12px; border-radius: 9px; font-size: 12px; font-weight: 600; line-height: 1.2; white-space: nowrap; background: var(--amber-soft); color: var(--amber); }
 .closed-badge-sm { align-self: flex-start; margin-top: 4px; padding: 3px 8px; font-size: 11px; }
 .closed-badge-lg { display: block; text-align: center; padding: 12px 16px; font-size: 14px; border-radius: 10px; }

@@ -182,12 +182,15 @@ const DOWNGRADE_PATHS = {
 
 // ---- ISSUER LOGO HELPER ----
 /** Cards the issuer has closed to new applicants: an optional
- *  `discontinued: "YYYY-MM-DD"` in cards.json. Display only. The card stays in
- *  the ranking and the wallet maths so a visitor who already holds it can still
- *  see what it earns; Apply links are replaced by a "closed" badge. */
+ *  `discontinued: "YYYY-MM-DD"` in cards.json. They are left out of the
+ *  ranking, the free preview, the stage and the wallet builder, since nobody
+ *  can apply. They still appear, unranked, in a section at the bottom of the
+ *  table so an existing cardholder can see what theirs earns. */
 function isDiscontinued(card) {
   return !!(card && card.discontinued);
 }
+/** The cards that compete in the ranking: everything still open to apply. */
+function rankableCards() { return allCards.filter(c => !isDiscontinued(c)); }
 function discontinuedSince(card) {
   const d = new Date(String(card.discontinued) + 'T00:00:00');
   return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
@@ -682,8 +685,8 @@ function renderWalletBuilder() {
     return;
   }
 
-  const wallet = optimizeWallet(allCards, currentSpending, walletMode);
-  const single = optimizeWallet(allCards, currentSpending, 1);
+  const wallet = optimizeWallet(rankableCards(), currentSpending, walletMode);
+  const single = optimizeWallet(rankableCards(), currentSpending, 1);
   const marginalGain = wallet.netValue - single.netValue;
 
   // Build per-card "use for" list
@@ -786,7 +789,9 @@ function setWalletMode(mode) {
 function renderCards() {
   let results = filterCards(allCards, currentFilter);
   results = searchCards(results, currentSearch);
-  const ranked = sortCards(results, currentSort, currentSpending);
+  const sorted = sortCards(results, currentSort, currentSpending);
+  const ranked = sorted.filter(c => !isDiscontinued(c));
+  const closed = sorted.filter(isDiscontinued);
   const list = document.getElementById('cardList');
   const count = document.getElementById('resultsCount');
   count.textContent = `${ranked.length} card${ranked.length !== 1 ? 's' : ''}`;
@@ -796,15 +801,24 @@ function renderCards() {
 
   list.innerHTML = '';
 
-  if (ranked.length === 0) {
+  if (ranked.length === 0 && closed.length === 0) {
     list.innerHTML = `<tr><td colspan="9" class="loading-state"><p>No cards match your search.</p></td></tr>`;
     return;
   }
 
   const lockedIds = getLockedCardIds();
 
-  ranked.forEach((card, idx) => {
-    const rank = idx + 1;
+  [...ranked, ...closed].forEach((card, idx) => {
+    const isClosed = isDiscontinued(card);
+    const rank = isClosed ? '–' : idx + 1;
+
+    // Closed cards sit unranked below the ranking, under their own heading.
+    if (isClosed && idx === ranked.length) {
+      const head = document.createElement('tr');
+      head.className = 'closed-section-row';
+      head.innerHTML = `<td colspan="9"><strong>No longer open to new applicants</strong> These cards aren't ranked because you can't apply for them. If you already have one, tap it to see what it earns.</td>`;
+      list.appendChild(head);
+    }
 
     // Paid tier: the top cards keep their real dollar columns (the tease) but
     // identity, apply link, detail, and compare stay locked until licensed.
@@ -938,7 +952,7 @@ function escHTML(str) {
   return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
 function fmtNet(v) { return `${v >= 0 ? '+' : '-'}$${Math.abs(Math.round(v)).toLocaleString()}`; }
-function stageRanked() { return sortCards(allCards, 'net-value', currentSpending); }
+function stageRanked() { return sortCards(rankableCards(), 'net-value', currentSpending); }
 function issuerShort(issuer) { return STAGE_ISSUER_SHORT[issuer] || issuer.replace(/\s*\(.*\)\s*/, ''); }
 
 /** Called by renderCards() on every re-rank, unlock, and valuation change. */
@@ -2024,7 +2038,7 @@ function isLicensed() {
  *  Computed over ALL cards so no filter, search, or sort order can surface them. */
 function getLockedCardIds() {
   if (!PAYWALL.enabled || isLicensed() || !allCards.length) return new Set();
-  const ranked = [...allCards].sort((a, b) => calcNetValue(b, currentSpending) - calcNetValue(a, currentSpending));
+  const ranked = rankableCards().sort((a, b) => calcNetValue(b, currentSpending) - calcNetValue(a, currentSpending));
   const free = new Set(PAYWALL.freeRanks.map(r => ranked[r - 1] && ranked[r - 1].id).filter(Boolean));
   return new Set(ranked.filter(c => !free.has(c.id)).map(c => c.id));
 }
@@ -2211,7 +2225,7 @@ async function init() {
     const res = await fetch('data/cards.json?v=' + Date.now());
     const data = await res.json();
     allCards = data.cards;
-    document.querySelectorAll('[data-card-count]').forEach(el => { el.textContent = allCards.length; });
+    document.querySelectorAll('[data-card-count]').forEach(el => { el.textContent = rankableCards().length; });
     pointsValuations = data.pointsValuations;
     transferValuations = { ...data.pointsValuations };
     bindEvents();
