@@ -1261,7 +1261,7 @@ function openDetail(card) {
     html += `
       <div class="closed-note">
         <strong>Closed to new applicants</strong>
-        ${escHTML(card.issuer)} stopped taking applications for this card${since ? ` on ${since}` : ''}. People who already hold it keep it. We still rank it so you can see what it earns next to cards you can get today.
+        ${escHTML(card.issuer)} stopped taking applications for this card${since ? ` by ${since}` : ''}. People who already hold it keep it. We still rank it so you can see what it earns next to cards you can get today.
       </div>
     `;
   }

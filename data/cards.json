@@ -1800,7 +1800,8 @@
         "Earns Membership Rewards (transferable)"
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/amex-everyday-preferred",
-      "bestFor": "High-Volume MR Earner"
+      "bestFor": "High-Volume MR Earner",
+      "discontinued": "2024-09-25"
     },
     {
       "id": "chase_ink_cash",
@@ -1997,7 +1998,7 @@
         "No annual fee",
         "No foreign transaction fees"
       ],
-      "applyUrl": "https://www.alliantcreditunion.org/bank/visa-signature-card",
+      "applyUrl": "https://www.alliantcreditunion.org/credit-cards/visa-signature-card",
       "bestFor": "Top No-Fee Flat Rate",
       "lastVerified": "2026-09-20"
     },
@@ -3067,7 +3068,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/green/",
       "bestFor": "Travel & Transit",
-      "discontinued": "2026-10-17",
+      "discontinued": "2026-07-24",
       "lastVerified": "2026-10-17"
     }
   ]
