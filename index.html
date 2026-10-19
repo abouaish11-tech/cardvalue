@@ -69,7 +69,7 @@
        download when a card that uses them is on screen. -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Allura&family=Cormorant+Garamond:wght@300&family=Geist:wght@200..700&family=Geist+Mono:wght@500&family=Libre+Caslon+Text:wght@400;700&family=Montserrat:ital,wght@0,700;1,600;1,700&family=Yellowtail&display=swap" />
   <link rel="stylesheet" href="cardart.css?v=2" />
-  <link rel="stylesheet" href="style.css?v=27" />
+  <link rel="stylesheet" href="style.css?v=28" />
 
   <!-- Polar overlay checkout: any <a data-polar-checkout> opens as an in-page
        modal so the address bar never leaves cardvalue.org. -->
@@ -94,7 +94,7 @@
         <span class="logo-text">CardValue</span>
       </a>
       <div class="header-nav header-nav-r">
-        <a class="pillnav pill-count" href="#cardTable"><span><span data-card-count>52</span> cards</span></a>
+        <a class="pillnav pill-count" href="#cardTable"><span><span data-card-count>49</span> cards</span></a>
         <button type="button" class="pillnav pill-dark" id="navUnlock">Unlock · $19</button>
       </div>
     </div>
@@ -104,7 +104,7 @@
   <section class="hero">
     <div class="hero-inner">
       <p class="eyebrow default-profile-label"><span class="profile-dot default"></span> Ranked by average American spending</p>
-      <h1>Your credit card is costing you <em>$500+ a year.</em></h1>
+      <h1 id="heroTitle">Your credit card is costing you <em>$500+ a year.</em></h1>
       <div class="flow" id="flow" tabindex="0" aria-roledescription="carousel" aria-label="Top cards for your spending. Use the arrow keys to move between them.">
         <div class="shadow-floor" aria-hidden="true"></div>
         <div class="slot c-l1" aria-hidden="true"><div class="lk white"><span class="brand">CARDVALUE</span><span class="rank">#2</span><span class="emv"></span><span class="val">+$822<small>/YR</small></span><span class="nm">UNLOCK TO SEE</span><span class="lock"></span></div></div>
@@ -127,10 +127,18 @@
     </div>
   </section>
 
-  <!-- RAIL: the top six, then the full table -->
+  <!-- RAIL: the top six, each with how far it trails #1 -->
   <section class="rail-sec" aria-labelledby="railTitle">
     <div class="rail-inner">
-      <div class="rail-head"><h2 id="railTitle">All <span data-card-count>52</span>, ranked</h2><span>Best value first · tap any card to take a closer look</span></div>
+      <header class="sec-head">
+        <p class="sec-num">01</p>
+        <div class="sec-row">
+          <div class="sec-text">
+            <h2 class="sec-title" id="railTitle">Your top 6</h2>
+            <p class="sec-desc">What each pays you a year, and how far it trails your #1. Tap one to put it on the stage.</p>
+          </div>
+        </div>
+      </header>
       <div class="rail" id="rail"></div>
     </div>
   </section>
@@ -142,7 +150,7 @@
         <h3>Your monthly spending</h3>
         <button class="drawer-close" id="drawerClose" aria-label="Close spending panel">✕</button>
       </div>
-      <p class="drawer-sub">Rough numbers are fine. We re-rank all <span data-card-count>52</span> cards for you.</p>
+      <p class="drawer-sub">Rough numbers are fine. We re-rank all <span data-card-count>49</span> cards for you.</p>
       <div class="spending-inputs">
         <div class="spending-row">
           <label for="sp_dining">Dining & restaurants</label>
@@ -277,21 +285,38 @@
   <!-- WALLET BUILDER -->
   <section class="wallet-builder" id="walletBuilder" aria-label="Wallet builder, multi-card optimizer">
     <div class="wallet-builder-inner">
-      <div class="wallet-header">
-        <div class="wallet-title">
-          <h2>Wallet builder</h2>
-          <p class="wallet-sub">The best 1 to 3 card combo for your spending. Each purchase goes on whichever card earns the most.</p>
+      <header class="sec-head">
+        <p class="sec-num">02</p>
+        <div class="sec-row">
+          <div class="sec-text">
+            <h2 class="sec-title">Wallet builder</h2>
+            <p class="sec-desc">The best 1 to 3 card combo for your spending. Each purchase goes on whichever card earns the most.</p>
+          </div>
+          <div class="wallet-mode-toggle" role="group" aria-label="Wallet size">
+            <button data-n="1" class="wallet-mode-btn">1 card</button>
+            <button data-n="2" class="wallet-mode-btn active">2 cards</button>
+            <button data-n="3" class="wallet-mode-btn">3 cards</button>
+            <button data-n="max" class="wallet-mode-btn">Max</button>
+          </div>
         </div>
-        <div class="wallet-mode-toggle" role="group" aria-label="Wallet size">
-          <button data-n="1" class="wallet-mode-btn">1 card</button>
-          <button data-n="2" class="wallet-mode-btn active">2 cards</button>
-          <button data-n="3" class="wallet-mode-btn">3 cards</button>
-          <button data-n="max" class="wallet-mode-btn">Max</button>
-        </div>
-      </div>
+      </header>
       <div class="wallet-result" id="walletResult"></div>
     </div>
   </section>
+
+  <!-- THE FULL LIST: its own section, filter bar sticky inside it -->
+  <section class="list-sec" aria-labelledby="listTitle">
+  <div class="list-head">
+    <header class="sec-head">
+      <p class="sec-num">03</p>
+      <div class="sec-row">
+        <div class="sec-text">
+          <h2 class="sec-title" id="listTitle">All <span data-card-count>49</span>, ranked</h2>
+          <p class="sec-desc">Every card we track, by what it puts in your pocket in a year. Search, filter, or tap a row for the full math.</p>
+        </div>
+      </div>
+    </header>
+  </div>
 
   <!-- FILTER BAR -->
   <div class="filter-bar">
@@ -338,6 +363,23 @@
     </div>
   </div>
 
+  <!-- CARD LIST -->
+  <main class="main">
+    <div class="main-inner">
+      <div class="table-wrap">
+        <table class="card-table" id="cardTable">
+          <thead id="cardTableHead">
+            <!-- Dynamically rendered by JS -->
+          </thead>
+          <tbody id="cardList">
+            <tr><td colspan="8" class="loading-state"><div class="spinner"></div><p>Calculating best value...</p></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+  </section>
+
   <!-- COLUMN HELP POPOVER -->
   <div class="val-help-popover" id="colHelpPopover">
     <div class="val-help-content" style="max-width:380px;">
@@ -376,21 +418,6 @@
     </div>
   </div>
 
-  <!-- CARD LIST -->
-  <main class="main">
-    <div class="main-inner">
-      <div class="table-wrap">
-        <table class="card-table" id="cardTable">
-          <thead id="cardTableHead">
-            <!-- Dynamically rendered by JS -->
-          </thead>
-          <tbody id="cardList">
-            <tr><td colspan="8" class="loading-state"><div class="spinner"></div><p>Calculating best value...</p></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </main>
 
   <!-- DETAIL DRAWER (right panel) -->
   <div class="detail-overlay" id="detailOverlay"></div>
@@ -436,7 +463,7 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <p id="how"><strong>How it works.</strong> Tell us roughly what you spend each month in a few categories, like dining, groceries and gas. For every card, we add up the rewards you'd earn at that card's rates, add the statement credits you'd realistically use, and subtract the annual fee. The result is one number: what the card would put in your pocket over a year. Cards are ranked by that number, so the card at the top is the one that pays you the most for the way you already spend. Ranks 4 and 5 are free to see. The top 3, the full list and the wallet builder are a one-time $19 unlock. No signup, and no bank pays us for placement.</p>
+      <p id="how"><strong>How it works.</strong> Tell us roughly what you spend each month in a few categories, like dining, groceries and gas. For every card, we add up the rewards you'd earn at that card's rates, add the statement credits you'd realistically use, and subtract the annual fee. The result is one number: what the card would put in your pocket over a year. Cards are ranked by that number, so the card at the top is the one that pays you the most for the way you already spend. <span id="howAccess">Ranks 4 and 5 are free to see. The top 3, the full list and the wallet builder are a one-time $19 unlock.</span> No signup, and no bank pays us for placement.</p>
       <p id="methodology"><strong>How we turn points into dollars.</strong> Cash back counts at face value. Points and miles count at what they're typically worth when moved to airline and hotel partners: Chase, Amex, Citi and Bilt points at 1.5¢ each, Capital One miles at 1¢, and hotel points lower. Prefer the simple view? Switch to Cash Value above the list to count every point at 1¢. Real value depends on how you redeem, so treat these numbers as a well-informed estimate rather than a promise. <strong>Not financial advice.</strong></p>
       <p class="footer-note">Where a card can only be held with a paid membership, like Costco or Robinhood Gold, we count that cost against the card too.</p>
       <p class="footer-note"><strong>* Why our credit values look lower than the bank's.</strong> Issuers advertise statement credits at face value. Most people never use them in full: a $15 monthly Uber credit is worth nothing in a month you don't ride, and a hotel credit that only works through one booking site is worth less than cash. So we discount each credit by how easy it is to use: automatic 100%, flexible 90%, monthly expiring 60%, portal-only 50%, single-merchant 30%. We take no affiliate commission on any card listed here.</p>
@@ -471,7 +498,7 @@
 
       <div class="gate-step" id="gateStepPay" hidden>
         <h2 id="gatePayTitle">See your full ranking</h2>
-        <p class="gate-sub" id="gatePaySub">Unlock all <span data-card-count>52</span> cards ranked for your spending, including the top 3 that pay you the most, plus the wallet builder that tells you which card to use for each purchase. One payment, yours forever, no subscription. No bank pays us, so the ranking only answers to your numbers.</p>
+        <p class="gate-sub" id="gatePaySub">Unlock all <span data-card-count>49</span> cards ranked for your spending, including the top 3 that pay you the most, plus the wallet builder that tells you which card to use for each purchase. One payment, yours forever, no subscription. No bank pays us, so the ranking only answers to your numbers.</p>
         <div class="gate-buy-wrap" id="gateBuyWrap">
           <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> USD · one-time</span></div>
           <!-- href is the single source of truth for the Polar checkout link.
@@ -497,6 +524,6 @@
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
   <script src="cardart.js?v=5"></script>
-  <script src="script.js?v=36"></script>
+  <script src="script.js?v=37"></script>
 </body>
 </html>

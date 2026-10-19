@@ -697,8 +697,22 @@ function renderWalletBuilder() {
     if (cardCategoryMap[cardId]) cardCategoryMap[cardId].push(cat);
   }
 
+  // "Use for" lists where a card actually earns a bonus. Categories with no
+  // spending (every card ties at $0, so they fall to card 1) and 0x categories
+  // read like bugs; 1x categories are the same on any card in the wallet.
+  // A card with no bonus category still lists its 1x spending, so it never
+  // looks idle when it isn't.
+  let anyHidden = false;
+  const usesFor = c => {
+    const rate = cat => getEffectiveMultiplier(c, cat.key);
+    const spent = cardCategoryMap[c.id].filter(cat => (Number(currentSpending[cat.key]) || 0) > 0 && rate(cat) > 0);
+    const bonus = spent.filter(cat => rate(cat) > 1);
+    if (bonus.length && bonus.length < spent.length) anyHidden = true;
+    return bonus.length ? bonus : spent;
+  };
+
   const cardsHtml = wallet.cards.map((c, idx) => {
-    const cats = cardCategoryMap[c.id];
+    const cats = usesFor(c);
     const totalFee = c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0);
     const feeBadge = totalFee === 0 ? '<span class="wallet-card-fee no-fee">$0/yr</span>'
                                     : `<span class="wallet-card-fee">$${totalFee}/yr</span>`;
@@ -762,7 +776,10 @@ function renderWalletBuilder() {
     </div>
   `;
 
-  root.innerHTML = `<div class="wallet-cards-grid">${cardsHtml}</div>${summaryHtml}`;
+  const usesNote = anyHidden && wallet.cards.length > 1
+    ? '<p class="wallet-uses-note">Anything not listed earns 1x or less on these cards, so any of them will do.</p>'
+    : '';
+  root.innerHTML = `<div class="wallet-cards-grid">${cardsHtml}</div>${usesNote}${summaryHtml}`;
 
   // Wire clicks/keys to open detail drawer
   root.querySelectorAll('.wallet-card').forEach(el => {
@@ -834,7 +851,7 @@ function renderCards() {
       const cellMapL = {
         'effective-rate': `<td class="td-rate"><span class="rate-pct">${effectiveRateL}%</span></td>`,
         'annual-value': `<td class="td-earned">$${annualValueL.toLocaleString()}</td>`,
-        'credits': `<td class="td-credits">${realisticCreditsL > 0 ? `+~$${realisticCreditsL.toLocaleString()}` : '—'}</td>`,
+        'credits': `<td class="td-credits">${realisticCreditsL > 0 ? `~$${realisticCreditsL.toLocaleString()}` : '—'}</td>`,
         'fee': `<td class="td-fee">${totalFeeL === 0 ? '<span class="no-fee">$0</span>' : `−$${totalFeeL.toLocaleString()}`}</td>`,
         'net-value': `<td class="td-net ${netClassL}">${netDisplayL}</td>`,
       };
@@ -877,8 +894,9 @@ function renderCards() {
     const netDisplay = netValue >= 0 ? `+$${netValue.toLocaleString()}` : `-$${Math.abs(netValue).toLocaleString()}`;
     // Credits get their own column so the row reads as an equation:
     // Earned + Credits − Fee = Net Value.
+    // Reads top to bottom as "~$1,325 of $2,394 used".
     const creditsDisplay = faceCredits > 0
-      ? `<span class="credits-real" title="Advertised at $${faceCredits.toLocaleString()}/yr. We count ~$${realisticCredits.toLocaleString()}, discounted for monthly expiry, booking-portal requirements, and single-merchant restrictions.">+~$${realisticCredits.toLocaleString()}<span class="credits-face-inline">of $${faceCredits.toLocaleString()}</span></span>`
+      ? `<span class="credits-real" title="Advertised at $${faceCredits.toLocaleString()}/yr. We count ~$${realisticCredits.toLocaleString()}, discounted for monthly expiry, booking-portal requirements, and single-merchant restrictions.">${realisticCredits < faceCredits ? '~' : ''}$${realisticCredits.toLocaleString()}<span class="credits-face-inline">${realisticCredits < faceCredits ? `of $${faceCredits.toLocaleString()} used` : 'full value'}</span></span>`
       : '<span class="credits-none">—</span>';
 
     // Build cell HTML map
@@ -965,6 +983,26 @@ function updateHeroArt() {
   renderStage(ranked, lockedIds);
   renderRail(ranked, lockedIds);
   renderHeaderUnlock();
+  renderPaidCopy(ranked.length);
+}
+
+/** Copy that sells the unlock reads wrong to someone who has paid. */
+function renderPaidCopy(count) {
+  const licensed = !PAYWALL.enabled || isLicensed();
+  const title = document.getElementById('heroTitle');
+  if (title) {
+    title.innerHTML = !licensed
+      ? 'Your credit card is costing you <em>$500+ a year.</em>'
+      : isPersonalized
+        ? `All ${count}, ranked for <em>your spending.</em>`
+        : 'Unlocked. Now rank them for <em>your spending.</em>';
+  }
+  const access = document.getElementById('howAccess');
+  if (access) {
+    access.textContent = licensed
+      ? 'Your unlock covers the top 3, the full list and the wallet builder. To unlock another browser, paste the license key from your receipt email.'
+      : `Ranks 4 and 5 are free to see. The top 3, the full list and the wallet builder are a one-time ${PAYWALL.price} unlock.`;
+  }
 }
 
 function setStage(i) {
@@ -1052,10 +1090,13 @@ function renderStage(ranked, lockedIds) {
     apply.dataset.cardIssuer = card.issuer;
   }
   mine.hidden = !locked && !licensed;   // a free card before paying: Apply, See the math, Unlock
+  mine.textContent = isPersonalized ? 'Change my spending' : 'Rank for my spending';
   unlock.hidden = licensed;
   unlock.textContent = `Unlock all ${ranked.length} · ${PAYWALL.price}`;
+  // The solid button is the next step. Paid but still on average spending,
+  // that's entering their own: their own number is what the unlock is for.
   [apply, mine].forEach(b => b.classList.remove('dark'));
-  (locked ? mine : apply).classList.add('dark');
+  (locked || (licensed && !isPersonalized) ? mine : apply).classList.add('dark');
 
   document.getElementById('flowPrev').disabled = stageIndex === 0;
   document.getElementById('flowNext').disabled = stageIndex >= ranked.length - 1;
@@ -1064,15 +1105,22 @@ function renderStage(ranked, lockedIds) {
 function renderRail(ranked, lockedIds) {
   const rail = document.getElementById('rail');
   if (!rail) return;
+  // The stage shows one card at a time; the rail's job is the gaps between them.
+  const topNet = ranked.length ? calcNetValue(ranked[0], currentSpending) : 0;
   rail.innerHTML = ranked.slice(0, 6).map((c, i) => {
     const rank = i + 1;
     const locked = lockedIds.has(c.id);
     const net = calcNetValue(c, currentSpending);
     const name = c.name.replace('American Express', 'Amex');
+    const gap = Math.round(topNet - net);
+    const vs = rank === 1 ? (locked ? 'top value' : 'your #1') : gap > 0 ? `−$${gap.toLocaleString()} vs #1` : 'ties #1';
     return `<button type="button" class="tile${i === stageIndex ? ' sel' : ''}" data-rank="${rank}"
         aria-label="${locked ? `Rank ${rank}, ${fmtNet(net)} a year, locked` : `Rank ${rank}, ${escHTML(c.name)}, ${fmtNet(net)} a year`}">
       ${locked ? lockedCardHTML(rank, net) : cardFaceHTML(c.id, 0, c.name)}
-      <span class="meta"><span>${locked ? `#${rank}` : escHTML(name)}</span><b>${locked ? '' : fmtNet(net)}</b></span>
+      <span class="meta">
+        <span class="nm">${locked ? `#${rank} · locked` : escHTML(name)}</span>
+        <span class="vs">${locked ? '' : `<b>${fmtNet(net)}</b> · `}${vs}</span>
+      </span>
     </button>`;
   }).join('') + `<a class="tile more" href="#cardTable">View all ${ranked.length}</a>`;
 }

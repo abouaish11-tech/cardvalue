@@ -183,16 +183,23 @@ button, input, select { font-family: inherit; }
   background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); transition: background 0.15s ease, box-shadow 0.15s ease;
 }
 .ctas .btn-sr:hover { background: var(--surface); box-shadow: inset 0 0 0 1px var(--ink); }
-.ctas .btn-sr.dark { background: var(--ink); color: var(--white); box-shadow: none; }
+.ctas .btn-sr.dark { background: var(--ink); color: var(--white); box-shadow: none; order: -1; }   /* the next step leads */
 .ctas .btn-sr.dark:hover { background: #2d2925; }
 .ctas .btn-sr[hidden] { display: none; }
 
+/* ---- SECTIONS ----
+   Each section below the stage gets its own full-width ground (paper, ink,
+   white), one 1200px column, and the same numbered header. */
+.sec-head { margin-bottom: 24px; }
+.sec-num { font-family: 'Geist Mono', ui-monospace, monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px; font-variant-numeric: tabular-nums; }
+.sec-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 32px; flex-wrap: wrap; }
+.sec-text { flex: 1 1 420px; min-width: 0; }
+.sec-title { font-family: var(--font-display); font-weight: 400; font-size: 36px; line-height: 1.08; letter-spacing: -0.035em; color: var(--ink); text-wrap: balance; }
+.sec-desc { font-size: 15px; line-height: 1.5; color: var(--muted); max-width: 560px; margin-top: 8px; text-wrap: pretty; }
+
 /* Rail: the top six, tap one to put it on stage */
-.rail-sec { padding: 44px 24px 34px; }
+.rail-sec { padding: 64px 24px 80px; }
 .rail-inner { max-width: 1200px; margin: 0 auto; }
-.rail-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; margin-bottom: 14px; }
-.rail-head h2 { font-family: var(--font-display); font-weight: 500; font-size: 17px; letter-spacing: -0.02em; }
-.rail-head > span { font-size: 13.5px; color: var(--muted); }
 .rail { display: flex; gap: 14px; overflow-x: auto; scrollbar-width: none; padding: 3px; scroll-snap-type: x proximity; }
 .rail::-webkit-scrollbar { display: none; }
 .tile {
@@ -202,10 +209,13 @@ button, input, select { font-family: inherit; }
 .tile:hover { background: var(--surface); }
 .tile.sel { background: var(--surface); box-shadow: 0 0 0 1.5px var(--ink); }
 .tile > .lk, .tile > .cc { --w: 140px; box-shadow: 0 1px 2px rgba(0,0,0,.18), 0 10px 16px -10px rgba(0,0,0,.35); }
-.tile .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; width: 140px; font-size: 13px; }
-.tile .meta span { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.tile .meta b { font-weight: 500; color: var(--green); white-space: nowrap; font-variant-numeric: tabular-nums; }
-.tile.more { justify-content: center; align-items: center; width: 160px; min-height: 124px; color: var(--ink-2); font-size: 14px; font-weight: 500; border: 1.5px dashed var(--line-2); text-decoration: none; }
+/* Name gets two lines (the part people scan for is often at the end), then
+   the card's value and how far it trails #1. */
+.tile .meta { display: flex; flex-direction: column; gap: 3px; width: 140px; font-size: 13px; line-height: 1.3; }
+.tile .meta .nm { color: var(--ink-2); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.6em; }
+.tile .meta .vs { color: var(--muted); font-size: 12.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tile .meta b { font-weight: 500; color: var(--green); }
+.tile.more { justify-content: center; align-items: center; width: 160px; min-height: 124px; align-self: stretch; color: var(--ink-2); font-size: 14px; font-weight: 500; border: 1.5px dashed var(--line-2); text-decoration: none; }
 .tile.more:hover { border-color: var(--ink); color: var(--ink); background: none; }
 
 @media (max-width: 1100px) {
@@ -225,8 +235,9 @@ button, input, select { font-family: inherit; }
   border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
   max-height: 0; overflow: hidden; transition: max-height 0.35s ease;
 }
+.personalize-drawer:not(.open) { border-width: 0; }   /* closed, it drew a 2px strip between sections */
 .personalize-drawer.open { max-height: 700px; }
-.personalize-drawer-inner { max-width: 1100px; margin: 0 auto; padding: 28px 24px 30px; }
+.personalize-drawer-inner { max-width: 1200px; margin: 0 auto; padding: 28px 24px 30px; }
 .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
 .drawer-header h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
 .drawer-close, .detail-close, .modal-close, .val-help-close {
@@ -249,13 +260,19 @@ button, input, select { font-family: inherit; }
 .btn-reset { padding: 11px 18px; border-radius: 12px; font-size: 14px; }
 .btn-apply { padding: 11px 22px; border-radius: 12px; font-size: 14px; }
 
+/* ---- THE FULL LIST: a white band ---- */
+.list-sec { background: var(--surface); }
+.list-head { padding: 80px 24px 0; }
+.list-head .sec-head { max-width: 1200px; margin: 0 auto 16px; }
+
 /* ---- FILTER BAR ---- */
 .filter-bar {
-  background: var(--bg);
+  background: var(--surface);
   border-bottom: 1px solid var(--line);
   position: sticky; top: 0; z-index: 50;
+  padding: 0 24px;
 }
-.filter-bar-inner { max-width: 1100px; margin: 0 auto; padding: 10px 24px; display: flex; flex-direction: column; gap: 8px; }
+.filter-bar-inner { max-width: 1200px; margin: 0 auto; padding: 12px 0; display: flex; flex-direction: column; gap: 8px; }
 .filter-row-top { display: flex; align-items: center; gap: 12px; }
 .search-wrap {
   display: flex; align-items: center; gap: 8px;
@@ -322,8 +339,8 @@ button, input, select { font-family: inherit; }
 .val-help-note { font-size: 12px; color: var(--muted); }
 
 /* ---- MAIN / TABLE ---- */
-.main { padding: 8px 24px 120px; }
-.main-inner { max-width: 1100px; margin: 0 auto; }
+.main { padding: 8px 24px 96px; }
+.main-inner { max-width: 1200px; margin: 0 auto; }
 .table-wrap { overflow-x: auto; }
 .loading-state { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 80px; color: var(--muted); }
 .spinner { width: 28px; height: 28px; border: 3px solid var(--line); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.7s linear infinite; }
@@ -331,7 +348,7 @@ button, input, select { font-family: inherit; }
 
 .card-table { width: 100%; border-collapse: separate; border-spacing: 0; }
 .card-table thead th {
-  background: var(--bg);
+  background: var(--surface);
   font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
   color: var(--muted); padding: 12px 10px; border-bottom: 1px solid var(--line-2);
   text-align: left; white-space: nowrap;
@@ -344,8 +361,8 @@ button, input, select { font-family: inherit; }
 .col-help { width: 14px; height: 14px; font-size: 9px; margin-left: 3px; vertical-align: middle; }
 
 .card-row { cursor: pointer; transition: background 0.12s ease; }
-.card-row:hover { background: var(--surface); }
-.card-row.selected { background: var(--surface); }
+.card-row:hover { background: var(--bg); }
+.card-row.selected { background: var(--bg); }
 .card-row td { padding: 14px 10px; border-bottom: 1px solid var(--line); font-size: 14px; color: var(--ink-2); vertical-align: middle; }
 
 /* Rank: a plain number, set in the display face */
@@ -390,7 +407,7 @@ button, input, select { font-family: inherit; }
 .td-earned { text-align: right; font-weight: 500; color: var(--ink); }
 .td-credits { text-align: right; }
 .credits-real { display: inline-block; font-weight: 500; color: var(--ink); cursor: help; }
-.credits-face-inline { display: block; font-size: 11px; color: var(--dim); text-decoration: line-through; margin-top: 1px; }
+.credits-face-inline { display: block; font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 1px; white-space: nowrap; }
 .credits-none { color: var(--dim); }
 .td-fee { text-align: right; color: var(--ink-2); }
 .no-fee { color: var(--green); font-weight: 600; }
@@ -399,6 +416,10 @@ button, input, select { font-family: inherit; }
 .td-net.negative { color: var(--red); }
 .td-apply { text-align: center; }
 .apply-link { display: inline-block; padding: 7px 14px; border-radius: 9px; font-size: 12.5px; white-space: nowrap; }
+/* One solid Apply on the page, on the stage. In the list every row would
+   shout equally, so the row links are outlines. */
+.td-apply a.apply-link { background: transparent; color: var(--ink); border-color: var(--line-2); }
+.td-apply a.apply-link:hover { background: transparent; border-color: var(--ink); }
 .credits-tag { display: block; font-size: 10px; color: var(--muted); margin-top: 2px; white-space: nowrap; }
 .td-compare { text-align: center; }
 .compare-check { width: 18px; height: 18px; accent-color: var(--ink); cursor: pointer; }
@@ -537,8 +558,8 @@ button, input, select { font-family: inherit; }
 .compare-winner { color: var(--green); font-weight: 600; }
 
 /* ---- FOOTER ---- */
-.footer { color: var(--muted); padding: 40px 24px 48px; border-top: 1px solid var(--line); }
-.footer-inner { max-width: 1100px; margin: 0 auto; font-size: 13px; line-height: 1.7; }
+.footer { color: var(--muted); padding: 40px 24px 48px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; font-size: 13px; line-height: 1.7; }
 .footer-inner strong { color: var(--ink-2); }
 .footer-inner a { color: var(--ink-2); text-decoration: underline; text-underline-offset: 2px; }
 .footer-inner a:hover { color: var(--ink); }
@@ -610,22 +631,31 @@ button, input, select { font-family: inherit; }
 .tier-warning { margin-top: 10px; }
 .wallet-warning { flex-basis: 100%; }
 
-/* ---- WALLET BUILDER ---- */
-.wallet-builder { padding: 26px 24px 22px; border-bottom: 1px solid var(--line); }
-.wallet-builder-inner { max-width: 1100px; margin: 0 auto; }
-.wallet-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
-.wallet-title h2 { font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 2px; }
-.wallet-sub { color: var(--muted); font-size: 13px; max-width: 540px; }
-.wallet-mode-toggle { display: flex; flex-shrink: 0; background: var(--surface-2); border-radius: var(--pill); padding: 3px; gap: 2px; }
+/* ---- WALLET BUILDER: an ink band ---- */
+.wallet-builder { background: var(--ink); padding: 80px 24px 88px; }
+.wallet-builder-inner { max-width: 1200px; margin: 0 auto; }
+.wallet-builder .sec-num { color: rgba(255,255,255,0.45); }
+.wallet-builder .sec-title { color: var(--white); }
+.wallet-builder .sec-desc { color: rgba(255,255,255,0.62); }
+.wallet-mode-toggle { display: flex; flex-shrink: 0; background: rgba(255,255,255,0.1); border-radius: var(--pill); padding: 3px; gap: 2px; }
 .wallet-mode-btn { padding: 6px 14px; }
+.wallet-mode-toggle .wallet-mode-btn { color: rgba(255,255,255,0.62); }
+.wallet-mode-toggle .wallet-mode-btn:hover { color: var(--white); }
+.wallet-mode-toggle .wallet-mode-btn.active { background: var(--white); color: var(--ink); box-shadow: none; }
+.wallet-builder .wallet-locked { border-color: rgba(255,255,255,0.22); }
+.wallet-builder .wallet-locked-icon, .wallet-builder .wallet-locked-title { color: var(--white); }
+.wallet-builder .wallet-locked-sub { color: rgba(255,255,255,0.55); }
+.wallet-builder .wallet-locked-btn { background: var(--white); color: var(--ink); border-color: var(--white); }
+.wallet-builder .wallet-locked-btn:hover { background: var(--surface-2); border-color: var(--surface-2); }
+.wallet-uses-note { font-size: 13px; color: rgba(255,255,255,0.55); }
 .wallet-result { display: flex; flex-direction: column; gap: 12px; }
 .wallet-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
 .wallet-card {
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--surface); border: 1.5px solid transparent; border-radius: var(--radius);
   padding: 14px 16px; cursor: pointer; transition: border-color 0.15s; display: flex; flex-direction: column; gap: 12px;
   min-width: 0;   /* let the grid track, not the card face, set the width on phones */
 }
-.wallet-card:hover { border-color: var(--ink); }
+.wallet-card:hover { border-color: var(--mark); }
 .wallet-card-header { display: flex; align-items: center; gap: 10px; }
 .wallet-card-num { font-family: var(--font-display); font-size: 15px; font-weight: 600; color: var(--muted); flex-shrink: 0; width: 18px; }
 .wallet-card-logo { width: 30px; height: 30px; border-radius: 8px; }
@@ -640,7 +670,7 @@ button, input, select { font-family: inherit; }
 .wallet-use-chip { background: var(--surface-2); color: var(--ink); padding: 4px 9px; border-radius: var(--pill); font-size: 12px; white-space: nowrap; }
 .wallet-use-chip em { font-style: normal; font-weight: 600; }
 .wallet-use-chip em.boosted { color: var(--green); }
-.wallet-summary { background: var(--ink); color: var(--white); border-radius: var(--radius); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.wallet-summary { background: transparent; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2); color: var(--white); border-radius: var(--radius); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .wallet-net-row, .wallet-true-net-row { display: flex; align-items: baseline; gap: 10px; }
 .wallet-net-label { font-size: 11px; text-transform: uppercase; font-weight: 600; letter-spacing: 0.06em; color: rgba(255,255,255,0.6); }
 .wallet-net-value { font-family: var(--font-display); font-size: 26px; font-weight: 600; color: var(--mark); letter-spacing: -0.03em; }
@@ -721,7 +751,7 @@ body.gate-open { overflow: hidden; }
 .row-locked .card-issuer { color: var(--ink-2); font-weight: 500; }
 .locked-logo { background: var(--surface-2); border-color: transparent; color: var(--ink-2); }
 .locked-logo svg { width: 15px; height: 15px; }
-.row-locked:not(:nth-child(1)):hover td { background: var(--surface); }
+.row-locked:not(:nth-child(1)):hover td { background: var(--bg); }
 .locked-cta { padding: 7px 14px; border-radius: 9px; font-size: 12.5px; }
 .wallet-locked { text-align: center; padding: 36px 20px; border: 1.5px dashed var(--line-2); border-radius: var(--radius); }
 .wallet-locked-icon { display: block; margin: 0 auto 12px; width: 26px; height: 26px; color: var(--ink); }
@@ -754,9 +784,11 @@ body.gate-open { overflow: hidden; }
   .math { font-size: 13px; padding: 0 8px; }
   .ctas { flex-direction: column; }
   .ctas .btn-sr { width: 100%; }
-  .rail-sec { padding: 30px 16px 24px; }
+  .sec-head { margin-bottom: 18px; }
+  .sec-title { font-size: 28px; }
+  .sec-desc { font-size: 14px; }
+  .rail-sec { padding: 44px 16px 52px; }
   .rail { margin: 0 -16px; padding: 3px 16px; scroll-padding: 0 16px; }
-  .rail-head > span { display: none; }
 
   .personalize-drawer.open { max-height: 2400px; }
   .personalize-drawer-inner { padding: 20px 16px; }
@@ -764,16 +796,16 @@ body.gate-open { overflow: hidden; }
   .drawer-footer { flex-direction: column; }
   .btn-reset, .btn-apply { width: 100%; text-align: center; }
 
-  .wallet-builder { padding: 20px 16px 16px; }
-  .wallet-header { align-items: stretch; gap: 10px; margin-bottom: 12px; }
-  .wallet-title h2 { font-size: 20px; }
+  .wallet-builder { padding: 52px 16px 56px; }
   .wallet-mode-toggle { width: 100%; }
   .wallet-mode-btn { flex: 1; padding: 7px 8px; font-size: 12px; }
   .wallet-cards-grid { grid-template-columns: 1fr; }
   .wallet-summary { padding: 14px 16px; flex-direction: column; align-items: flex-start; gap: 6px; }
   .wallet-net-value { font-size: 24px; }
 
-  .filter-bar-inner { padding: 8px 12px; gap: 8px; }
+  .list-head { padding: 52px 16px 0; }
+  .filter-bar { padding: 0 12px; }
+  .filter-bar-inner { padding: 8px 0; gap: 8px; }
   .filter-row-top { gap: 8px; flex-wrap: wrap; }
   .search-wrap { max-width: 100%; order: 1; flex-basis: 100%; padding: 8px 14px; }
   .search-wrap input { font-size: 15px; }
@@ -791,13 +823,15 @@ body.gate-open { overflow: hidden; }
   .card-table, .card-table tbody { display: block; }
   .card-row {
     display: grid; grid-template-columns: 1fr 1fr; gap: 8px; position: relative;
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--bg); border: 1px solid transparent; border-radius: var(--radius);   /* paper cards on the white band */
     padding: 58px 14px 14px; margin-bottom: 10px;
   }
-  .card-row:hover { background: var(--surface); }
+  .card-row:hover { background: var(--bg); }
   .card-row.selected { border-color: var(--ink); }
   .card-row:nth-child(1) { background: var(--mark-soft); border-color: var(--mark); }
   .card-row:nth-child(1) td, .card-row:nth-child(1):hover td { background: transparent; }
+  /* ...but the net value keeps its ink box, or the yellow figure vanishes into the yellow row */
+  .card-row:not(.row-locked):nth-child(1) .td-net { background: var(--ink); }
   .card-row:nth-child(1) td:first-child, .card-row:nth-child(1) td:last-child { border-radius: 0; }
   .card-row td { display: block; padding: 0; border: none; font-size: 14px; min-width: 0; }
 
@@ -812,7 +846,7 @@ body.gate-open { overflow: hidden; }
 
   .card-row .td-rate, .card-row .td-earned, .card-row .td-credits, .card-row .td-fee, .card-row .td-net {
     display: flex; flex-direction: column; justify-content: center; text-align: left;
-    padding: 10px 12px; background: var(--surface-2); border-radius: 10px; min-width: 0; overflow: hidden;
+    padding: 10px 12px; background: var(--surface); border-radius: 10px; min-width: 0; overflow: hidden;
   }
   .card-row:nth-child(1) .td-rate, .card-row:nth-child(1) .td-earned,
   .card-row:nth-child(1) .td-credits, .card-row:nth-child(1) .td-fee { background: rgba(255,255,255,0.6); }
@@ -834,7 +868,7 @@ body.gate-open { overflow: hidden; }
   .card-row .credits-tag { font-size: 10px; white-space: normal; line-height: 1.3; margin-top: 3px; }
   .card-row .no-fee { font-size: 17px; }
   .card-row .apply-link, .card-row .locked-cta { display: block; width: 100%; padding: 12px 16px; font-size: 14px; border-radius: 10px; min-height: 44px; }
-  .row-locked .td-net { background: var(--surface-2); }
+  .row-locked .td-net { background: var(--surface); }
   .row-locked .td-net.positive { color: var(--green); }
   .row-locked .td-net::before { color: var(--muted); }
 
