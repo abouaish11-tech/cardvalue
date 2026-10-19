@@ -281,6 +281,208 @@ const ART = {
     + at('right:6%;top:8%;display:flex;align-items:center;gap:1cqw;font:600 3.6cqw \'Geist\';letter-spacing:.02em', `<span style="width:3.6cqw;height:3.6cqw;display:inline-block">${S('0 0 20 20', '<path d="M2 2L18 10L2 18Z" fill="#ef7622"/><path d="M2 2L10 10L2 18Z" fill="#fbb040"/>')}</span>PNC BANK`, 't')
     + at('left:30%;top:42%;font:400 4.4cqw \'Libre Caslon Text\',serif;letter-spacing:.06em;color:#e3ebe4', 'PNC CASH REWARDS', 't')
     + chip(8, 39, 'silver') + visa() },
+  /* ---------- added 2026-10-19: faces generated from each issuer's card art ---------- */
+  // Delta SkyMiles Blue (sampled from American Express card art)
+  delta_skymiles_blue: { bg: 'linear-gradient(140deg,#1f81bc 0%,#2c79b6 52%,#0b5d9d 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'DELTA SKYMILES BLUE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Delta SkyMiles Reserve (sampled from American Express card art)
+  delta_skymiles_reserve: { bg: 'linear-gradient(140deg,#56646f 0%,#42525d 52%,#313f48 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'DELTA SKYMILES RESERVE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Hilton Honors (sampled from American Express card art)
+  hilton_honors: { bg: 'linear-gradient(140deg,#f4f5f5 0%,#fbfbfb 52%,#bfd8ef 100%)', ink: '#1b1c1f', h:
+    AMEX_LINE('#1b1c1f', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'HILTON HONORS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Hilton Honors Aspire (sampled from American Express card art)
+  hilton_honors_aspire: { bg: 'linear-gradient(140deg,#2e4868 0%,#15355b 52%,#244266 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'HILTON HONORS ASPIRE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Marriott Bonvoy Brilliant (sampled from American Express card art)
+  marriott_bonvoy_brilliant: { bg: 'linear-gradient(140deg,#363738 0%,#2a2a2a 52%,#131313 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'MARRIOTT BONVOY BRILLIANT', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Marriott Bonvoy Bevy (sampled from American Express card art)
+  marriott_bonvoy_bevy: { bg: 'linear-gradient(140deg,#77706d 0%,#6b6460 52%,#4a5e6f 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'MARRIOTT BONVOY BEVY', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Amex Business Gold (sampled from American Express card art)
+  amex_business_gold: { bg: 'linear-gradient(140deg,#b5a564 0%,#a09156 52%,#b6a563 100%)', ink: '#1b1c1f', h:
+    AMEX_LINE('#1b1c1f', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'BUSINESS GOLD', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Amex Business Platinum (sampled from American Express card art)
+  amex_business_platinum: { bg: 'linear-gradient(140deg,#a4a7aa 0%,#afb0b1 52%,#b2b4b7 100%)', ink: '#1b1c1f', h:
+    AMEX_LINE('#1b1c1f', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'BUSINESS PLATINUM', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Amex Blue Business Cash (sampled from American Express card art)
+  amex_blue_business_cash: { bg: 'linear-gradient(140deg,#435d81 0%,#587ba1 52%,#336398 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'BLUE BUSINESS CASH', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Delta SkyMiles Gold Business (sampled from American Express card art)
+  delta_skymiles_gold_business: { bg: 'linear-gradient(140deg,#ceb888 0%,#c4aa73 52%,#9c7e46 100%)', ink: '#1b1c1f', h:
+    AMEX_LINE('#1b1c1f', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'DELTA SKYMILES GOLD BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Delta SkyMiles Platinum Business (sampled from American Express card art)
+  delta_skymiles_platinum_business: { bg: 'linear-gradient(140deg,#bcc0c2 0%,#b5b9ba 52%,#959c9e 100%)', ink: '#1b1c1f', h:
+    AMEX_LINE('#1b1c1f', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 2.7cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'DELTA SKYMILES PLATINUM BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Delta SkyMiles Reserve Business (sampled from American Express card art)
+  delta_skymiles_reserve_business: { bg: 'linear-gradient(140deg,#5c6b76 0%,#485762 52%,#2f3c45 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 2.7cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'DELTA SKYMILES RESERVE BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Hilton Honors Business (sampled from American Express card art)
+  hilton_honors_business: { bg: 'linear-gradient(140deg,#26599a 0%,#0f4994 52%,#20569b 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'HILTON HONORS BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Marriott Bonvoy Business (sampled from American Express card art)
+  marriott_bonvoy_business: { bg: 'linear-gradient(140deg,#a1a6b3 0%,#98a2b1 52%,#6f91b3 100%)', ink: '#1b1c1f', h:
+    AMEX_LINE('#1b1c1f', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'MARRIOTT BONVOY BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // Amex Graphite Business Cash Unlimited (sampled from American Express card art)
+  amex_graphite_business_cash_unlimited: { bg: 'linear-gradient(140deg,#5f6c76 0%,#677a87 52%,#4b5a65 100%)', h:
+    AMEX_LINE('#fff', 4.2, 'left:6.5%;top:8.5%') + at('left:7%;top:21%;max-width:86%;font:500 2.7cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'GRAPHITE BUSINESS CASH UNLIMITED', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + at('right:6%;bottom:7%;width:10.5cqw;height:10.5cqw;background:#2671b9;display:flex;align-items:center;justify-content:center;text-align:center;font:800 1.6cqw/1.05 \'Archivo\';color:#fff', 'AMERICAN<br>EXPRESS') },
+  // BofA Unlimited Cash Rewards (sampled from Bank of America card art)
+  bofa_unlimited_cash: { bg: 'linear-gradient(140deg,#83899d 0%,#8d8e90 52%,#9e9fa1 100%)', h:
+    at('left:6.5%;top:8%;width:15cqw;height:7.5cqw', BOFA_FLAG('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'UNLIMITED CASH REWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Atmos Rewards Ascent (sampled from Bank of America (Alaska/Hawaiian) card art)
+  atmos_rewards_ascent: { bg: 'linear-gradient(140deg,#24385b 0%,#304064 52%,#27385c 100%)', h:
+    at('left:6.5%;top:8%;width:15cqw;height:7.5cqw', BOFA_FLAG('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'ATMOS REWARDS ASCENT', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Atmos Rewards Summit (sampled from Bank of America (Alaska/Hawaiian) card art)
+  atmos_rewards_summit: { bg: 'linear-gradient(140deg,#3c3e42 0%,#1e1d1c 52%,#323437 100%)', h:
+    at('left:6.5%;top:8%;width:15cqw;height:7.5cqw', BOFA_FLAG('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'ATMOS REWARDS SUMMIT', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // BofA Business Advantage Unlimited Cash Rewards (sampled from Bank of America card art)
+  bofa_business_unlimited_cash: { bg: 'linear-gradient(140deg,#9b9c9f 0%,#818285 52%,#917066 100%)', h:
+    at('left:6.5%;top:8%;width:15cqw;height:7.5cqw', BOFA_FLAG('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 2.7cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'BUSINESS ADVANTAGE UNLIMITED CASH REWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // BofA Business Advantage Customized Cash Rewards (sampled from Bank of America card art)
+  bofa_business_customized_cash: { bg: 'linear-gradient(140deg,#b54153 0%,#b63449 52%,#bc2428 100%)', h:
+    at('left:6.5%;top:8%;width:15cqw;height:7.5cqw', BOFA_FLAG('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 2.7cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'BUSINESS ADVANTAGE CUSTOMIZED CASH REWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // BofA Business Advantage Travel Rewards (sampled from Bank of America card art)
+  bofa_business_travel_rewards: { bg: 'linear-gradient(140deg,#3e588e 0%,#2e548d 52%,#4b446a 100%)', h:
+    at('left:6.5%;top:8%;width:15cqw;height:7.5cqw', BOFA_FLAG('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 2.7cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'BUSINESS ADVANTAGE TRAVEL REWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Wells Fargo Signify Business Cash (sampled from Wells Fargo card art)
+  wells_fargo_signify_business_cash: { bg: 'linear-gradient(140deg,#2d2d31 0%,#4b494c 52%,#252428 100%)', h:
+    WF('#fff') + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'SIGNIFY BUSINESS CASH', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // One Key Card (sampled from Wells Fargo (Expedia) card art)
+  wells_fargo_one_key: { bg: 'linear-gradient(140deg,#30355e 0%,#2c315b 52%,#393e60 100%)', h:
+    WF('#fff') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'ONE KEY', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // One Key+ Card (sampled from Wells Fargo (Expedia) card art)
+  wells_fargo_one_key_plus: { bg: 'linear-gradient(140deg,#383838 0%,#313131 52%,#3c3c3d 100%)', h:
+    WF('#fff') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'ONE KEY+', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Prime Business Card (sampled from US Bank (Amazon) card art)
+  usbank_prime_business: { bg: 'linear-gradient(140deg,#3a3f45 0%,#151a1f 52%,#2d3135 100%)', h:
+    USB('#fff', 6, 'left:6.5%;top:8%') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'PRIME BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // US Bank Business Triple Cash Rewards (sampled from US Bank card art)
+  usbank_business_triple_cash: { bg: 'linear-gradient(140deg,#b4bac6 0%,#b2b9c6 52%,#aeb5c2 100%)', ink: '#1b1c1f', h:
+    USB('#1b1c1f', 6, 'left:6.5%;top:8%') + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'BUSINESS TRIPLE CASH REWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + visa('', '#1b1c1f') },
+  // JetBlue Plus Card (sampled from Barclays (JetBlue) card art)
+  jetblue_plus: { bg: 'linear-gradient(140deg,#1e2744 0%,#1b3765 52%,#4c6080 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'JETBLUE', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'PLUS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // JetBlue Premier Card (sampled from Barclays (JetBlue) card art)
+  jetblue_premier: { bg: 'linear-gradient(140deg,#9e9e9e 0%,#c2c2c2 52%,#afb1b3 100%)', ink: '#1b1c1f', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#1b1c1f', 'JETBLUE', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'PREMIER', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + mc('#1b1c1f') },
+  // Chase Freedom Rise (sampled from Chase card art)
+  chase_freedom_rise: { bg: 'linear-gradient(140deg,#33a1c5 0%,#1e3c6b 52%,#1c3354 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'FREEDOM RISE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // United Gateway (sampled from Chase card art)
+  united_gateway: { bg: 'linear-gradient(140deg,#96a4aa 0%,#8eaba4 52%,#839e99 100%)', ink: '#1b1c1f', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#1b1c1f')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'UNITED GATEWAY', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + visa('', '#1b1c1f') },
+  // United Quest (sampled from Chase card art)
+  united_quest: { bg: 'linear-gradient(140deg,#563262 0%,#53265b 52%,#4b2b53 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'UNITED QUEST', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // United Club (sampled from Chase card art)
+  united_club: { bg: 'linear-gradient(140deg,#464647 0%,#353637 52%,#333434 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'UNITED CLUB', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Southwest Rapid Rewards Plus (sampled from Chase card art)
+  southwest_plus: { bg: 'linear-gradient(140deg,#969aa0 0%,#868e95 52%,#8d949a 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'SOUTHWEST RAPID REWARDS PLUS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Southwest Rapid Rewards Premier (sampled from Chase card art)
+  southwest_premier: { bg: 'linear-gradient(140deg,#4e5582 0%,#273980 52%,#384885 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 2.7cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'SOUTHWEST RAPID REWARDS PREMIER', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Marriott Bonvoy Bold (sampled from Chase card art)
+  marriott_bonvoy_bold: { bg: 'linear-gradient(140deg,#8f8284 0%,#7c8ba1 52%,#7b8ea4 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'MARRIOTT BONVOY BOLD', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // IHG One Rewards (sampled from Chase card art)
+  ihg_one_rewards: { bg: 'linear-gradient(140deg,#dce0e3 0%,#e7e9eb 52%,#cdd1d4 100%)', ink: '#1b1c1f', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#1b1c1f')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'IHG ONE REWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + mc('#1b1c1f') },
+  // Chase Ink Business Unlimited (sampled from Chase card art)
+  chase_ink_unlimited: { bg: 'linear-gradient(140deg,#474d53 0%,#52575d 52%,#5f6469 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'INK BUSINESS UNLIMITED', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Chase Ink Business Premier (sampled from Chase card art)
+  chase_ink_premier: { bg: 'linear-gradient(140deg,#1e222f 0%,#121d34 52%,#212737 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'INK BUSINESS PREMIER', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Chase Sapphire Reserve for Business (sampled from Chase card art)
+  chase_sapphire_reserve_business: { bg: 'linear-gradient(140deg,#32364a 0%,#14203f 52%,#5e6675 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'SAPPHIRE RESERVE FOR BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // United Business (sampled from Chase card art)
+  united_business: { bg: 'linear-gradient(140deg,#245477 0%,#114a72 52%,#224a6e 100%)', h:
+    at('left:6.5%;top:8%;width:6.4cqw;height:6.4cqw', CHASE('#fff')) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'UNITED BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Citi Strata (sampled from Citi card art)
+  citi_strata: { bg: 'linear-gradient(140deg,#c4c9cf 0%,#ced2d8 52%,#bfc3c7 100%)', ink: '#1b1c1f', h:
+    CITI('#1b1c1f', 8) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'STRATA', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + mc('#1b1c1f') },
+  // Citi Strata Elite (sampled from Citi card art)
+  citi_strata_elite: { bg: 'linear-gradient(140deg,#1d1f1f 0%,#131514 52%,#3d3d3d 100%)', h:
+    CITI('#fff', 8) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'STRATA ELITE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // AAdvantage MileUp (sampled from Citi card art)
+  citi_aadvantage_mileup: { bg: 'linear-gradient(140deg,#2e828b 0%,#158593 52%,#2e8690 100%)', h:
+    CITI('#fff', 8) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'AADVANTAGE MILEUP', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Citi AAdvantage Executive (sampled from Citi card art)
+  citi_aadvantage_executive: { bg: 'linear-gradient(140deg,#616363 0%,#585a5a 52%,#525354 100%)', h:
+    CITI('#fff', 8) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'AADVANTAGE EXECUTIVE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Citi AAdvantage Globe (sampled from Citi card art)
+  citi_aadvantage_globe: { bg: 'linear-gradient(140deg,#475a5f 0%,#32464b 52%,#3e474d 100%)', h:
+    CITI('#fff', 8) + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'AADVANTAGE GLOBE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Capital One QuicksilverOne (sampled from Capital One card art)
+  capital_one_quicksilverone: { bg: 'linear-gradient(140deg,#637b91 0%,#718ba2 52%,#89a1b4 100%)', h:
+    C1('#fff') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'QUICKSILVERONE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Capital One Spark Cash Plus (sampled from Capital One card art)
+  capital_one_spark_cash_plus: { bg: 'linear-gradient(140deg,#63691a 0%,#061c06 52%,#031b03 100%)', h:
+    C1('#fff') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'SPARK CASH PLUS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Capital One Venture X Business (sampled from Capital One card art)
+  capital_one_venture_x_business: { bg: 'linear-gradient(140deg,#202f45 0%,#092847 52%,#043253 100%)', h:
+    C1('#fff') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'VENTURE X BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Capital One Venture Business (sampled from Capital One card art)
+  capital_one_venture_business: { bg: 'linear-gradient(140deg,#133154 0%,#042145 52%,#02193b 100%)', h:
+    C1('#fff') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'VENTURE BUSINESS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Capital One Spark 1.5% Cash Select (sampled from Capital One card art)
+  capital_one_spark_cash_select: { bg: 'linear-gradient(140deg,#145135 0%,#00663b 52%,#053e23 100%)', h:
+    C1('#fff') + at('left:7%;top:21%;max-width:86%;font:500 3.2cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'SPARK 1.5% CASH SELECT', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Discover it Student Cash Back (sampled from Discover card art)
+  discover_it_student_cash_back: { bg: 'linear-gradient(140deg,#94d1e3 0%,#b8b6ce 52%,#897bb2 100%)', ink: '#1b1c1f', h:
+    at('right:6%;top:8%;font:800 5.4cqw \'Archivo\';letter-spacing:-.01em;color:#1b1c1f', 'DISCOVER', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'IT STUDENT CASH BACK', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + visa('', '#1b1c1f') },
+  // Discover it Secured (from notes from Discover card art)
+  discover_it_secured: { bg: 'linear-gradient(140deg,#c9ced4 0%,#b4b8be 52%,#8c8f94 100%)', ink: '#1b1c1f', h:
+    at('right:6%;top:8%;font:800 5.4cqw \'Archivo\';letter-spacing:-.01em;color:#1b1c1f', 'DISCOVER', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'IT SECURED', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + visa('', '#1b1c1f') },
+  // Discover it Chrome (sampled from Discover card art)
+  discover_it_chrome: { bg: 'linear-gradient(140deg,#b4b4b4 0%,#ada7a2 52%,#9d9d9d 100%)', ink: '#1b1c1f', h:
+    at('right:6%;top:8%;font:800 5.4cqw \'Archivo\';letter-spacing:-.01em;color:#1b1c1f', 'DISCOVER', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#1b1c1f;opacity:.92', 'IT CHROME', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + visa('', '#1b1c1f') },
+  // OnePay CashRewards Mastercard (from notes from Synchrony (Walmart OnePay) card art)
+  walmart_onepay_cashrewards: { bg: 'linear-gradient(140deg,#424048 0%,#282c34 52%,#181a1e 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'WALMART ONEPAY', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'CASHREWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Target Circle Card (Credit) (sampled from TD Bank (Target) card art)
+  target_circle_credit_card: { bg: 'linear-gradient(140deg,#cb0000 0%,#cb0000 52%,#cb0000 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'TARGET', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'CIRCLE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Target Mastercard (from notes from TD Bank (Target) card art)
+  target_mastercard: { bg: 'linear-gradient(140deg,#d42132 0%,#be1e2d 52%,#941723 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'TARGET', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'TARGET', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Sam's Club Mastercard (from notes from Synchrony (Sam's Club) card art)
+  sams_club_mastercard: { bg: 'linear-gradient(140deg,#2159b3 0%,#1e50a0 52%,#173e7c 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'SAM\'S CLUB', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'SAM\'S CLUB', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Navy Federal cashRewards (sampled from Navy Federal Credit Union card art)
+  navy_federal_cashrewards: { bg: 'linear-gradient(140deg,#547744 0%,#567642 52%,#5e7c47 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'NAVY FEDERAL CREDIT UNION', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'CASHREWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Navy Federal cashRewards Plus (sampled from Navy Federal Credit Union card art)
+  navy_federal_cashrewards_plus: { bg: 'linear-gradient(140deg,#547744 0%,#567642 52%,#5e7c47 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'NAVY FEDERAL CREDIT UNION', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'CASHREWARDS PLUS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Navy Federal More Rewards American Express (sampled from Navy Federal Credit Union card art)
+  navy_federal_more_rewards: { bg: 'linear-gradient(140deg,#21567b 0%,#0d4f77 52%,#0f6097 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'NAVY FEDERAL CREDIT UNION', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'MORE REWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // PenFed Power Cash Rewards Visa Signature (from notes from PenFed Credit Union card art)
+  penfed_power_cash_rewards: { bg: 'linear-gradient(140deg,#4d4048 0%,#282c34 52%,#181a1e 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'PENFED CREDIT UNION', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'POWER CASH REWARDS', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Bilt Obsidian Card (sampled from Cardless (Bilt) card art)
+  bilt_obsidian: { bg: 'linear-gradient(140deg,#121415 0%,#141415 52%,#0d0f10 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'BILT', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'OBSIDIAN', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Bilt Palladium Card (sampled from Cardless (Bilt) card art)
+  bilt_palladium: { bg: 'linear-gradient(140deg,#181512 0%,#615d57 52%,#100f0d 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'BILT', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'PALLADIUM', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // PayPal Cashback Mastercard (from notes from Synchrony (PayPal) card art)
+  paypal_cashback_mastercard: { bg: 'linear-gradient(140deg,#404048 0%,#282c34 52%,#181a1e 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'PAYPAL', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'CASHBACK', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + mc('#fff') },
+  // Gemini Credit Card (from notes from WebBank (Gemini) card art)
+  gemini_credit_card: { bg: 'linear-gradient(140deg,#e1bc64 0%,#c9a85a 52%,#9c8346 100%)', ink: '#1b1c1f', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#1b1c1f', 'GEMINI', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#1b1c1f') + mc('#1b1c1f') },
+  // Coinbase One Card (from notes from First Electronic Bank (Coinbase / Cardless) card art)
+  coinbase_one_card: { bg: 'linear-gradient(140deg,#654048 0%,#282c34 52%,#181a1e 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'COINBASE / CARDLESS', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'ONE', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
+  // Rakuten American Express Card (from notes from First Electronic Bank (Rakuten / Imprint) card art)
+  rakuten_amex: { bg: 'linear-gradient(140deg,#744048 0%,#282c34 52%,#181a1e 100%)', h:
+    at('left:6.5%;top:8.5%;font:700 4.2cqw \'Geist\';letter-spacing:.06em;color:#fff', 'RAKUTEN / IMPRINT', 't') + at('left:7%;top:21%;max-width:86%;font:500 3.9cqw/1.15 \'Geist\';letter-spacing:.14em;color:#fff;opacity:.92', 'RAKUTEN', 't') + chip(7.5, 44, 'silver') + nfc(22, 45.5, '#fff') + visa('', '#fff') },
 };
 
 let uid = 0;

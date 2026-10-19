@@ -103,12 +103,17 @@ const CURRENCY_NAMES = {
   'hilton_points': 'Hilton',
   'hyatt_points': 'Hyatt',
   'ihg_points': 'IHG',
+  'atmos_points': 'Atmos',
+  'jetblue_points': 'TrueBlue',
+  'onekey_cash': 'OneKeyCash',
+  'crypto_cashback': 'Crypto back',
 };
 const MILE_CURRENCIES = new Set(['capital_one_miles', 'delta_miles', 'united_miles', 'aa_miles']);
 // Co-brand airline/hotel points can't be cashed out, so the Cash Value toggle leaves them alone.
 const NON_CASHABLE_CURRENCIES = new Set([
   'delta_miles', 'united_miles', 'southwest_points', 'aa_miles',
   'marriott_points', 'hilton_points', 'hyatt_points', 'ihg_points',
+  'atmos_points', 'jetblue_points',
 ]);
 
 const CURRENCY_FULL_NAMES = {
@@ -128,6 +133,10 @@ const CURRENCY_FULL_NAMES = {
   'usbank_pts': 'US Bank Rewards points',
   'bofa_pts': 'Bank of America Rewards points',
   'capital_one_miles': 'Capital One Miles — transferable to airline and hotel partners',
+  'atmos_points': 'Atmos Rewards points — Alaska Airlines and Hawaiian Airlines, plus oneworld partners',
+  'jetblue_points': 'JetBlue TrueBlue points — fixed-value points on JetBlue flights',
+  'onekey_cash': 'OneKeyCash — spendable like cash on Expedia, Hotels.com and Vrbo',
+  'crypto_cashback': 'Rewards paid in cryptocurrency; counted at face value, but the value moves with the coin price',
 };
 
 function getCurrencyLabel(currency) {
@@ -960,6 +969,11 @@ const STAGE_ISSUER_SHORT = {
   'American Express': 'Amex', 'Chase (Amazon)': 'Amazon', 'Wells Fargo (Bilt)': 'Bilt', 'Goldman Sachs (Apple)': 'Apple',
   'Robinhood (Coastal Community Bank)': 'Robinhood', 'SoFi (The Bank of Missouri)': 'SoFi', 'Synchrony (Venmo)': 'Venmo',
   'Elan Financial (Fidelity)': 'Fidelity', 'Alliant Credit Union': 'Alliant',
+  'Bank of America (Alaska/Hawaiian)': 'Bank of America', 'Barclays (JetBlue)': 'Barclays', 'Cardless (Bilt)': 'Bilt',
+  'First Electronic Bank (Coinbase / Cardless)': 'Coinbase', 'First Electronic Bank (Rakuten / Imprint)': 'Rakuten',
+  'Navy Federal Credit Union': 'Navy Federal', 'PenFed Credit Union': 'PenFed', 'Synchrony (PayPal)': 'PayPal',
+  "Synchrony (Sam's Club)": "Sam's Club", 'Synchrony (Walmart OnePay)': 'OnePay', 'TD Bank (Target)': 'Target',
+  'US Bank (Amazon)': 'U.S. Bank', 'WebBank (Gemini)': 'Gemini', 'Wells Fargo (Expedia)': 'Wells Fargo',
 };
 let stageIndex = 0;          // 0-based rank of the card in front
 let stageTopId = null;       // a new #1 means a new ranking: start over at #1
