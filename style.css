@@ -927,3 +927,20 @@ body.gate-open { overflow: hidden; }
 .more-categories { margin-top: 16px; }
 .spending-inputs-more { margin-bottom: 0; }
 .more-categories .banking-explainer { margin-top: 12px; }
+
+/* Launch offer bar (top of page, like a store-wide promo strip) */
+.offer-bar { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 9px 44px 9px 16px; background: var(--mark); color: var(--ink); font-size: 13.5px; line-height: 1.35; position: relative; text-align: center; flex-wrap: wrap; }
+.offer-bar[hidden] { display: none; }
+.offer-text { margin: 0; }
+.offer-text strong { font-weight: 700; }
+.offer-text s { opacity: .6; margin-left: 2px; }
+.offer-days { font-weight: 500; }
+.offer-cta { border: 0; border-radius: 999px; background: var(--ink); color: var(--white); font: 600 12.5px var(--font-body, inherit); padding: 6px 14px; cursor: pointer; }
+.offer-cta:hover { background: #2d2925; }
+.offer-close { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border: 0; background: transparent; color: var(--ink); font-size: 20px; line-height: 1; cursor: pointer; border-radius: 50%; }
+.offer-close:hover { background: rgba(0,0,0,.06); }
+.offer-cta:focus-visible, .offer-close:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.gate-was { color: var(--muted); font-weight: 500; margin-left: 4px; }
+.gate-was[hidden], .gate-offer[hidden] { display: none; }
+.gate-offer { margin: 6px 0 0; font-size: 12.5px; font-weight: 600; color: var(--ink); background: var(--mark-soft); display: inline-block; padding: 4px 10px; border-radius: 999px; }
+@media (max-width: 560px) { .offer-bar { font-size: 12.5px; padding: 8px 40px 8px 12px; cursor: pointer; } .offer-cta { display: none; } .offer-text { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }

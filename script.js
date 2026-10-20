@@ -689,7 +689,7 @@ function renderWalletBuilder() {
         <span class="wallet-locked-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
         <p class="wallet-locked-title">The wallet builder picks the best 1 to 3 cards to carry together, and tells you which one to use for each purchase.</p>
         <p class="wallet-locked-sub">The card names are part of the unlock.</p>
-        <button type="button" class="wallet-locked-btn" onclick="showGate('pay')">Unlock for ${PAYWALL.price}</button>
+        <button type="button" class="wallet-locked-btn" onclick="showGate('pay')">Unlock for ${currentPrice()}</button>
       </div>`;
     return;
   }
@@ -1015,7 +1015,7 @@ function renderPaidCopy(count) {
   if (access) {
     access.textContent = licensed
       ? 'Your unlock covers the top 3, the full list and the wallet builder. To unlock another browser, paste the license key from your receipt email.'
-      : `Ranks 4 and 5 are free to see. The top 3, the full list and the wallet builder are a one-time ${PAYWALL.price} unlock.`;
+      : `Ranks 4 and 5 are free to see. The top 3, the full list and the wallet builder are a one-time ${currentPrice()} unlock.`;
   }
 }
 
@@ -1106,7 +1106,7 @@ function renderStage(ranked, lockedIds) {
   mine.hidden = !locked && !licensed;   // a free card before paying: Apply, See the math, Unlock
   mine.textContent = isPersonalized ? 'Change my spending' : 'Rank for my spending';
   unlock.hidden = licensed;
-  unlock.textContent = `Unlock all ${ranked.length} · ${PAYWALL.price}`;
+  unlock.textContent = `Unlock all ${ranked.length} · ${currentPrice()}`;
   // The solid button is the next step. Paid but still on average spending,
   // that's entering their own: their own number is what the unlock is for.
   [apply, mine].forEach(b => b.classList.remove('dark'));
@@ -1143,7 +1143,7 @@ function renderHeaderUnlock() {
   const pill = document.getElementById('navUnlock');
   if (!pill) return;
   const licensed = !PAYWALL.enabled || isLicensed();
-  pill.textContent = licensed ? 'Unlocked' : `Unlock · ${PAYWALL.price}`;
+  pill.textContent = licensed ? 'Unlocked' : `Unlock · ${currentPrice()}`;
   pill.classList.toggle('pill-dark', !licensed);
   pill.classList.toggle('pill-ok', licensed);
   pill.disabled = licensed;
@@ -2054,9 +2054,59 @@ const PAYWALL = {
   benefitId: '669eea83-dcc3-4480-86cf-b701c61dbcaa',
   // Customer portal where buyers can re-read their key.
   portalUrl: 'https://polar.sh/card-value/portal',
-  price: '$19',
+  price: '$9',            // launch price; must match the Polar product price
+  regularPrice: '$19',     // shown crossed out during the launch offer
+  // Launch offer ends at the end of Nov 30 US Eastern time. After this, the bar
+  // hides and the site shows the regular price again (set Polar back to $19 too).
+  offerEnds: '2026-12-01T05:00:00Z',
   freeRanks: [4, 5],      // only these net-value ranks stay visible unlicensed
 };
+/** Days left in the launch offer (1 on the last day), or 0 once it has ended. */
+function offerDaysLeft() {
+  const end = Date.parse(PAYWALL.offerEnds);
+  if (!end) return 0;
+  const ms = end - Date.now();
+  return ms > 0 ? Math.ceil(ms / 86400000) : 0;
+}
+function offerActive() { return offerDaysLeft() > 0; }
+/** The price to show and charge: the launch price while the offer runs, then the regular one. */
+function currentPrice() { return offerActive() ? PAYWALL.price : PAYWALL.regularPrice; }
+
+function renderOffer() {
+  const active = offerActive();
+  const days = offerDaysLeft();
+  const licensed = !PAYWALL.enabled || isLicensed();
+  let dismissed = false;
+  try { dismissed = localStorage.getItem('cv_offer_dismissed') === PAYWALL.offerEnds; } catch (e) {}
+  const bar = document.getElementById('offerBar');
+  if (bar) {
+    bar.hidden = !active || licensed || dismissed;
+    document.body.classList.toggle('has-offer', !bar.hidden);
+    const d = document.getElementById('offerDays');
+    if (d) d.textContent = days === 1 ? ' · last day' : ` · ${days} days left`;
+  }
+  const amt = document.getElementById('gatePriceAmt');
+  if (amt) amt.textContent = currentPrice();
+  const was = document.getElementById('gateWas');
+  if (was) was.hidden = !active;
+  const line = document.getElementById('gateOffer');
+  if (line) {
+    line.hidden = !active;
+    line.textContent = days === 1 ? 'Launch offer · last day at this price' : `Launch offer · ${days} days left at this price`;
+  }
+}
+function initOffer() {
+  // The whole bar opens the unlock (on phones the button is hidden to keep it one or two lines).
+  const bar = document.getElementById('offerBar');
+  if (bar) bar.addEventListener('click', e => { if (!e.target.closest('#offerClose')) showGate('pay'); });
+  const x = document.getElementById('offerClose');
+  if (x) x.addEventListener('click', () => {
+    try { localStorage.setItem('cv_offer_dismissed', PAYWALL.offerEnds); } catch (e) {}
+    renderOffer();
+  });
+  renderOffer();
+}
+
 function polarCheckoutUrl() {
   const a = document.getElementById('gateBuy');
   const href = a ? (a.getAttribute('href') || '') : '';
@@ -2147,6 +2197,7 @@ function unlockWith(key) {
   showToast('Unlocked. Welcome to CardValue.', 'success');
   hideGate();
   renderCards();
+  renderOffer();
 }
 
 async function activateLicense() {
@@ -2237,7 +2288,7 @@ function restoreSavedSpending() {
 
 function initGate() {
   // Bind the pay step unconditionally: locked rows can open it at any time.
-  document.getElementById('gatePriceAmt').textContent = PAYWALL.price;
+  initOffer();
   const buy = document.getElementById('gateBuy');
   if (!polarCheckoutUrl()) {
     // No checkout link yet: don't send anyone to a dead button.

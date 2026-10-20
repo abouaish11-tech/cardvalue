@@ -69,7 +69,7 @@
        download when a card that uses them is on screen. -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Allura&family=Cormorant+Garamond:wght@300&family=Geist:wght@200..700&family=Geist+Mono:wght@500&family=Libre+Caslon+Text:wght@400;700&family=Montserrat:ital,wght@0,700;1,600;1,700&family=Yellowtail&display=swap" />
   <link rel="stylesheet" href="cardart.css?v=2" />
-  <link rel="stylesheet" href="style.css?v=28" />
+  <link rel="stylesheet" href="style.css?v=29" />
 
   <!-- Polar overlay checkout: any <a data-polar-checkout> opens as an in-page
        modal so the address bar never leaves cardvalue.org. -->
@@ -77,6 +77,13 @@
 </head>
 <body>
   <a href="#cardList" class="skip-link">Skip to card list</a>
+
+  <!-- LAUNCH OFFER BAR: shown until the offer ends, hidden for people who already unlocked -->
+  <div class="offer-bar" id="offerBar" hidden>
+    <p class="offer-text">Launch offer: unlock CardValue for life for <strong>$9</strong> only <s>$19</s><span class="offer-days" id="offerDays"></span></p>
+    <button type="button" class="offer-cta" id="offerCta">Unlock</button>
+    <button type="button" class="offer-close" id="offerClose" aria-label="Hide the launch offer">×</button>
+  </div>
 
   <!-- HEADER -->
   <header class="header">
@@ -95,7 +102,7 @@
       </a>
       <div class="header-nav header-nav-r">
         <a class="pillnav pill-count" href="#cardTable"><span><span data-card-count>49</span> cards</span></a>
-        <button type="button" class="pillnav pill-dark" id="navUnlock">Unlock · $19</button>
+        <button type="button" class="pillnav pill-dark" id="navUnlock">Unlock · $9</button>
       </div>
     </div>
   </header>
@@ -501,7 +508,8 @@
         <h2 id="gatePayTitle">See your full ranking</h2>
         <p class="gate-sub" id="gatePaySub">Unlock all <span data-card-count>49</span> cards ranked for your spending, including the top 3 that pay you the most, plus the wallet builder that tells you which card to use for each purchase. One payment, yours forever, no subscription. No bank pays us, so the ranking only answers to your numbers.</p>
         <div class="gate-buy-wrap" id="gateBuyWrap">
-          <div class="gate-price"><strong id="gatePriceAmt">$19</strong><span> USD · one-time</span></div>
+          <div class="gate-price"><strong id="gatePriceAmt">$9</strong> <s class="gate-was" id="gateWas">$19</s><span> USD · one-time, yours for life</span></div>
+          <p class="gate-offer" id="gateOffer">Launch offer</p>
           <!-- href is the single source of truth for the Polar checkout link.
                A sandbox.polar.sh link switches license validation to the sandbox API.
                Hosted checkout for now (same tab, so the success redirect still
@@ -525,6 +533,6 @@
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
   <script src="cardart.js?v=6"></script>
-  <script src="script.js?v=38"></script>
+  <script src="script.js?v=39"></script>
 </body>
 </html>
