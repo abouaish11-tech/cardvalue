@@ -591,7 +591,7 @@ function renderTableHead(sortBy) {
 // ---- RENDER CARD LIST ----
 /* ========== WALLET BUILDER (Phase 2) ========== */
 
-let walletMode = 2; // 1, 2, 3, or 'max'
+let walletMode = 2; // 1, 2, 3, 4, or 'max'
 
 /** Compute per-category dollar value for a card given a spending profile.
  *  Delegates to calcCardValuePerCategoryFull which handles tier boosts, caps,
@@ -687,7 +687,7 @@ function renderWalletBuilder() {
     root.innerHTML = `
       <div class="wallet-locked">
         <span class="wallet-locked-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
-        <p class="wallet-locked-title">The wallet builder picks the best 1 to 3 cards to carry together, and tells you which one to use for each purchase.</p>
+        <p class="wallet-locked-title">The wallet builder picks the best 1 to 4 cards to carry together, and tells you which one to use for each purchase.</p>
         <p class="wallet-locked-sub">The card names are part of the unlock.</p>
         <button type="button" class="wallet-locked-btn" onclick="showGate('pay')">Unlock for ${currentPrice()}</button>
       </div>`;
@@ -780,7 +780,7 @@ function renderWalletBuilder() {
             ? `<span class="wallet-gain">+$${marginalGain.toLocaleString()}</span> better than the best single card`
             : `Same value as the best single card. Try fewer cards.`}
         </div>` : `
-        <div class="wallet-comparison">Single-card mode. Try 2 or 3 cards to see if you can do better.</div>
+        <div class="wallet-comparison">Single-card mode. Try 2, 3 or 4 cards to see if you can do better.</div>
       `}
     </div>
   `;
@@ -788,7 +788,7 @@ function renderWalletBuilder() {
   const usesNote = anyHidden && wallet.cards.length > 1
     ? '<p class="wallet-uses-note">Anything not listed earns 1x or less on these cards, so any of them will do.</p>'
     : '';
-  root.innerHTML = `<div class="wallet-cards-grid">${cardsHtml}</div>${usesNote}${summaryHtml}`;
+  root.innerHTML = `<div class="wallet-cards-grid${wallet.cards.length === 4 ? ' four' : ''}">${cardsHtml}</div>${usesNote}${summaryHtml}`;
 
   // Wire clicks/keys to open detail drawer
   root.querySelectorAll('.wallet-card').forEach(el => {
