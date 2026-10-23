@@ -264,7 +264,7 @@
 | **Gas** | 1% (unless rotating quarter) |
 | **Rotating 5% Category** | 5% on up to $1,500/quarter (activation required) |
 | **Other** | 1% |
-| **Sign-Up Bonus** | Cashback Match: Discover matches ALL cash back earned in the first year (effectively doubles everything) |
+| **Sign-Up Bonus** | $200 after $500 spend in 3 months, plus Cashback Match: Discover matches ALL cash back earned in the first year (effectively doubles everything) |
 | **Top Perks** | First-year Cashback Match (doubles all rewards); No annual fee; 0% intro APR for 15 months; Free FICO score; No foreign transaction fees |
 
 ---
