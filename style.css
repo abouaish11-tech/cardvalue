@@ -841,6 +841,7 @@ body.gate-open { overflow: hidden; }
   .card-row:nth-child(1) .td-rank span { font-size: 18px; }
   .card-row .td-card { grid-column: 1 / -1; padding-left: 30px; padding-right: 36px; min-height: 36px; display: flex; align-items: center; }
   .card-row .card-identity { gap: 10px; width: 100%; }
+  .card-row .card-identity > div { min-width: 0; flex: 1; }   /* lets long names ellipsize instead of widening the page */
   .card-row .card-name { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
   .card-row .td-compare { position: absolute; top: 14px; right: 14px; }
   .card-row .compare-check { width: 22px; height: 22px; }
