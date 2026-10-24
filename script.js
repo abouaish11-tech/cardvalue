@@ -435,6 +435,48 @@ function creditRealisticValue(credit) {
   return Math.round(credit.value * rate);
 }
 
+/** One line on the effort behind a card's credits: how many need you to do
+ *  something (monthly clock, portal booking, specific merchant) versus how much
+ *  of the advertised total arrives on its own. Display only; the realistic
+ *  weights above are untouched. */
+function creditEffortSummary(credits) {
+  if (!credits || !credits.length) return null;
+  const n = credits.length;
+  const by = {};
+  let face = 0, easyValue = 0;
+  for (const c of credits) {
+    by[c.type] = (by[c.type] || 0) + 1;
+    face += c.value;
+    if (c.type === 'automatic' || c.type === 'flexible') easyValue += c.value;
+  }
+  const act = (by.drip || 0) + (by.portal || 0) + (by.coupon || 0);
+  const fmt = v => `$${Math.round(v).toLocaleString()}`;
+  if (act === 0) {
+    const flex = by.flexible || 0;
+    return {
+      act, n, face, easyValue,
+      short: 'nothing to track',
+      html: `<strong>Nothing to track.</strong> ${n === 1 ? 'This credit' : `All ${n} credits`} ${flex ? 'count toward any travel purchase' : `post${n === 1 ? 's' : ''} on ${n === 1 ? 'its' : 'their'} own`}.`,
+    };
+  }
+  const tail = easyValue > 0
+    ? `${fmt(easyValue)} of the ${fmt(face)} advertised arrives without tracking.`
+    : `None of the ${fmt(face)} advertised arrives without tracking.`;
+  if (n === 1) {
+    const why = by.drip ? 'it runs on a monthly or quarterly clock' : by.portal ? 'it only works through the issuer\'s travel portal' : 'it only works at a specific merchant';
+    return { act, n, face, easyValue, short: 'needs action', html: `<strong>This credit needs you to do something</strong>: ${why}. ${tail}` };
+  }
+  const parts = [];
+  if (by.drip) parts.push(`${by.drip} on a monthly or quarterly clock`);
+  if (by.portal) parts.push(`${by.portal} only through the issuer's travel portal`);
+  if (by.coupon) parts.push(`${by.coupon} at a specific merchant`);
+  return {
+    act, n, face, easyValue,
+    short: `${act} of ${n} need action`,
+    html: `<strong>${act} of ${n} credits need you to do something</strong>: ${parts.join(', ')}. ${tail}`,
+  };
+}
+
 /** Face value of all credits — what the issuer advertises. */
 function calcTotalCredits(card) {
   if (!card.credits || !Array.isArray(card.credits)) return 0;
@@ -1459,6 +1501,7 @@ function openDetail(card) {
     html += `
       <div class="detail-section">
         <div class="detail-section-title">Statement credits, and what they're really worth</div>
+        ${(e => e ? `<p class="credits-effort${e.act ? '' : ' credits-effort-easy'}">${e.html}</p>` : '')(creditEffortSummary(card.credits))}
         <div class="credits-list">
     `;
     for (const credit of card.credits) {
@@ -1685,7 +1728,7 @@ function openCompareModal() {
     { label: 'Annual Fee', fn: (c) => `$${(c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0)).toLocaleString()}` },
     ...(cards.some(isDiscontinued) ? [{ label: 'Availability', fn: (c) => isDiscontinued(c) ? 'Closed to new applicants' : 'Open to apply' }] : []),
     { label: 'Rewards Earned', fn: (c) => `$${calcAnnualValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
-    { label: 'Realistic Credits*', fn: (c) => { const tc = calcRealisticCredits(c); const face = calcTotalCredits(c); return tc > 0 ? `~$${tc.toLocaleString()} (of $${face.toLocaleString()})` : '—'; }, compare: true, better: 'max', valueKey: (c) => calcRealisticCredits(c) },
+    { label: 'Realistic Credits*', fn: (c) => { const tc = calcRealisticCredits(c); const face = calcTotalCredits(c); const e = creditEffortSummary(c.credits); return tc > 0 ? `~$${tc.toLocaleString()} (of $${face.toLocaleString()})${e ? `<span class="compare-sub">${e.short}</span>` : ''}` : '—'; }, compare: true, better: 'max', valueKey: (c) => calcRealisticCredits(c) },
     { label: 'Net Annual Value', fn: (c) => `$${calcNetValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
     { label: 'Effective Rate', fn: (c) => `${calcEffectiveRate(c, currentSpending)}%`, compare: true, better: 'max' },
     ...CATEGORIES.map(cat => ({
