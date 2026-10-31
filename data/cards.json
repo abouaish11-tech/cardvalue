@@ -395,7 +395,8 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum",
       "bestFor": "Luxury Travel & Perks",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-23",
+      "upcoming": {"date": "2027-01-01", "text": "The $300 twice-a-year hotel credit will need a stay of at least two nights at Fine Hotels + Resorts; one-night bookings stop qualifying. Prepaid Airbnb Luxe stays start to count.", "source": "https://www.doctorofcredit.com/american-express-fine-hotels-resorts-credit-to-require-two-night-stay-will-include-airbnb-luxe-properties/"}
     },
     {
       "id": "amex_gold",
@@ -1714,7 +1715,8 @@
       ],
       "applyUrl": "https://bilt.com/card",
       "bestFor": "Earning on Rent Payments",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-23",
+      "upcoming": {"date": "2027-01-01", "text": "Cards opened from this date can't choose the 4% Bilt Cash option on rent; Bilt Cash will expire 12 months after it's earned and hotel redemptions will be capped at twice a year. Apply and accept the card by December 31, 2026 to keep the current structure.", "source": "https://www.doctorofcredit.com/bilt-revamps-credit-card-rewards-in-2027-discontinuing-4-bilt-cash-for-new-applicants-more/"}
     },
     {
       "id": "apple_card",
@@ -2777,7 +2779,8 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard",
       "bestFor": "American Airlines Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-23",
+      "upcoming": {"date": "2027-01-24", "text": "The annual fee rises to $150 (from $99). Citi adds a $100-a-year in-flight statement credit in place of the 25% in-flight discount, a Global Entry or TSA PreCheck credit, and a Walmart+ membership.", "source": "https://www.cnbc.com/2026/10/27/american-airlines-citi-aadvantage-card-fee.html"}
     },
     {
       "id": "marriott_bonvoy_boundless",
@@ -3625,7 +3628,8 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-platinum-credit-card-amex/",
       "bestFor": "Business Travelers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-23",
+      "upcoming": {"date": "2027-01-01", "text": "The $300 twice-a-year hotel credit will need a stay of at least two nights at Fine Hotels + Resorts; one-night bookings stop qualifying. Prepaid Airbnb Luxe stays start to count.", "source": "https://www.doctorofcredit.com/american-express-fine-hotels-resorts-credit-to-require-two-night-stay-will-include-airbnb-luxe-properties/"}
     },
     {
       "id": "amex_blue_business_cash",
@@ -6813,7 +6817,8 @@
       ],
       "applyUrl": "https://www.bilt.com/card/obsidian",
       "bestFor": "Renters Who Dine Out",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-23",
+      "upcoming": {"date": "2027-01-01", "text": "Cards opened from this date can't choose the 4% Bilt Cash option on rent, the $100 hotel credit becomes $100 of Bilt Cash a year, Bilt Cash will expire 12 months after it's earned and hotel redemptions will be capped at twice a year. Apply and accept the card by December 31, 2026 to keep the current structure.", "source": "https://www.doctorofcredit.com/bilt-revamps-credit-card-rewards-in-2027-discontinuing-4-bilt-cash-for-new-applicants-more/"}
     },
     {
       "id": "bilt_palladium",
@@ -6872,7 +6877,8 @@
       ],
       "applyUrl": "https://www.bilt.com/card/palladium",
       "bestFor": "Premium Renters",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-23",
+      "upcoming": {"date": "2027-01-01", "text": "Cards opened from this date can't choose the 4% Bilt Cash option on rent, the hotel credits become $600 of Bilt Cash a year ($200 + $400), Bilt Cash will expire 12 months after it's earned and hotel redemptions will be capped at twice a year. Apply and accept the card by December 31, 2026 to keep the current structure.", "source": "https://www.doctorofcredit.com/bilt-revamps-credit-card-rewards-in-2027-discontinuing-4-bilt-cash-for-new-applicants-more/"}
     },
     {
       "id": "paypal_cashback_mastercard",

@@ -204,6 +204,52 @@ function discontinuedSince(card) {
   const d = new Date(String(card.discontinued) + 'T00:00:00');
   return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
+/** Announced changes that have not taken effect yet (a fee rise, a credit
+ *  rule, a program overhaul). Optional per-card field `upcoming`, one object
+ *  or a list of { date: "YYYY-MM-DD", text, source }. Display only: every
+ *  number on the site still describes the card as it is today. */
+function upcomingChanges(card) {
+  const raw = card && card.upcoming;
+  if (!raw) return [];
+  const list = Array.isArray(raw) ? raw : [raw];
+  return list.filter(u => u && u.text).slice().sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+}
+function fmtShortDate(iso) {
+  const d = new Date(String(iso) + 'T00:00:00');
+  return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+function fmtLongDate(iso) {
+  const d = new Date(String(iso) + 'T00:00:00');
+  return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+/** "changes Jan 24, 2027" for the earliest announced change, or '' if none. */
+function upcomingShort(card) {
+  const u = upcomingChanges(card)[0];
+  if (!u) return '';
+  const when = fmtShortDate(u.date);
+  return when ? `changes ${when}` : 'changes announced';
+}
+function upcomingBadgeHTML(card, extraClass = '') {
+  const short = upcomingShort(card);
+  if (!short) return '';
+  const u = upcomingChanges(card)[0];
+  return `<span class="change-badge${extraClass ? ' ' + extraClass : ''}" title="${escHTML(u.text)}">${escHTML(short[0].toUpperCase() + short.slice(1))}</span>`;
+}
+function upcomingNoteHTML(card) {
+  const list = upcomingChanges(card);
+  if (!list.length) return '';
+  return list.map(u => {
+    const when = fmtLongDate(u.date);
+    const src = u.source && /^https?:\/\//.test(u.source) ? ` <a href="${escHTML(u.source)}" target="_blank" rel="noopener">Source</a>` : '';
+    return `
+      <div class="change-note">
+        <strong>Announced change${when ? `, effective ${when}` : ''}</strong>
+        ${escHTML(u.text)} Every number on this page describes the card as it is today.${src}
+      </div>
+    `;
+  }).join('');
+}
+
 function closedBadgeHTML(extraClass = '') {
   return `<span class="closed-badge${extraClass ? ' ' + extraClass : ''}" title="The issuer no longer takes applications for this card">Closed to new applicants</span>`;
 }
@@ -735,6 +781,7 @@ function renderWalletBuilder() {
             <span class="wallet-card-name">${c.name}</span>
             <span class="wallet-card-issuer">${c.issuer}</span>
             ${isDiscontinued(c) ? closedBadgeHTML('closed-badge-sm') : ''}
+            ${upcomingBadgeHTML(c, 'closed-badge-sm')}
           </div>
           ${feeBadge}
         </div>
@@ -930,7 +977,7 @@ function renderCards() {
           <span class="card-thumb">${cardFaceHTML(card.id, 0, card.name)}</span>
           <div>
             <span class="card-name">${card.name}</span>
-            <span class="card-issuer">${card.issuer}</span>
+            <span class="card-issuer">${card.issuer}${upcomingShort(card) ? ` · <span class="change-inline">${upcomingShort(card)}</span>` : ''}</span>
           </div>
         </div>
       </td>
@@ -1084,7 +1131,7 @@ function renderStage(ranked, lockedIds) {
   const plain = Math.round(monthly * 12 * 0.01);
   document.getElementById('stageWho').innerHTML = locked
     ? `Your #${rank} of ${ranked.length} · unlock to see which card it is`
-    : `Your #${rank} of ${ranked.length} · <b>${escHTML(card.name)}</b>${isDiscontinued(card) ? ' · <span class="closed-inline">closed to new applicants</span>' : ''}`;
+    : `Your #${rank} of ${ranked.length} · <b>${escHTML(card.name)}</b>${isDiscontinued(card) ? ' · <span class="closed-inline">closed to new applicants</span>' : ''}${upcomingShort(card) ? ` · <span class="change-inline">${upcomingShort(card)}</span>` : ''}`;
   document.getElementById('stageBig').innerHTML = `${fmtNet(net)}<small>a year</small>`;
   document.getElementById('stageMath').textContent =
     `$${earned.toLocaleString()} in rewards · ${credits > 0 ? `about $${credits.toLocaleString()} in credits you'd use` : 'no statement credits'} · $${fee.toLocaleString()} annual fee · a basic 1% card would earn $${plain.toLocaleString()}`;
@@ -1327,6 +1374,9 @@ function openDetail(card) {
       </div>
     `;
   }
+
+  // Announced change that has not taken effect yet
+  html += upcomingNoteHTML(card);
 
   // Membership note
   if (card.membershipRequired) {
@@ -1684,6 +1734,7 @@ function openCompareModal() {
   const rows = [
     { label: 'Annual Fee', fn: (c) => `$${(c.annualFee + (c.membershipRequired ? c.membershipRequired.cost : 0)).toLocaleString()}` },
     ...(cards.some(isDiscontinued) ? [{ label: 'Availability', fn: (c) => isDiscontinued(c) ? 'Closed to new applicants' : 'Open to apply' }] : []),
+    ...(cards.some(c => upcomingChanges(c).length) ? [{ label: 'Announced changes', fn: (c) => { const u = upcomingChanges(c); return u.length ? u.map(x => `${fmtShortDate(x.date) ? fmtShortDate(x.date) + ': ' : ''}${escHTML(x.text)}`).join('<br>') : 'None announced'; } }] : []),
     { label: 'Rewards Earned', fn: (c) => `$${calcAnnualValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
     { label: 'Realistic Credits*', fn: (c) => { const tc = calcRealisticCredits(c); const face = calcTotalCredits(c); return tc > 0 ? `~$${tc.toLocaleString()} (of $${face.toLocaleString()})` : '—'; }, compare: true, better: 'max', valueKey: (c) => calcRealisticCredits(c) },
     { label: 'Net Annual Value', fn: (c) => `$${calcNetValue(c, currentSpending).toLocaleString()}`, compare: true, better: 'max' },
