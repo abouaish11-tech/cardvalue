@@ -501,6 +501,12 @@ button, input, select { font-family: inherit; }
 .closed-inline { color: var(--amber); font-weight: 500; }
 .closed-note { background: var(--amber-soft); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: var(--amber); margin-bottom: 16px; line-height: 1.5; }
 .closed-note strong { display: block; margin-bottom: 2px; }
+/* Announced change that has not taken effect yet (same amber family as the closed state) */
+.change-inline { color: var(--amber); font-weight: 500; }
+.change-badge { display: inline-block; padding: 7px 12px; border-radius: 9px; font-size: 12px; font-weight: 600; line-height: 1.2; white-space: nowrap; background: var(--amber-soft); color: var(--amber); }
+.change-note { background: var(--amber-soft); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: var(--amber); margin-bottom: 16px; line-height: 1.5; }
+.change-note strong { display: block; margin-bottom: 2px; }
+.change-note a { color: inherit; text-decoration: underline; }
 .bonus-box { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
 .bonus-box strong { color: var(--ink); }
 <<<<<<< HEAD
