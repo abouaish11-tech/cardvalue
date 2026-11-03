@@ -160,10 +160,11 @@
 
 ---
 
-## 11. Citi Custom Cash
+## 11. Citi Custom Cash (Closed to new applicants May 28, 2026)
 
 | Category | Details |
 |----------|---------|
+| **Status** | Citi stopped taking applications on May 28, 2026; existing cardmembers keep the card |
 | **Annual Fee** | $0 |
 | **Top Spend Category** | 5% on your highest spend category each billing cycle (up to $500/cycle, then 1%) |
 | **Eligible Categories** | Restaurants, gas, grocery, travel, transit, streaming, drugstores, home improvement, fitness, entertainment |

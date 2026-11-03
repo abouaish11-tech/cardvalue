@@ -30,7 +30,7 @@
     "onekey_cash": 1.0,
     "crypto_cashback": 1.0
   },
-  "lastUpdated": "2026-10-23",
+  "lastUpdated": "2026-10-31",
   "defaultSpending": {
     "dining": 500,
     "groceries": 350,
@@ -103,7 +103,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred",
       "bestFor": "Travel & Dining",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "chase_sapphire_reserve",
@@ -181,7 +181,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve",
       "bestFor": "Premium Travel",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "chase_freedom_unlimited",
@@ -229,7 +229,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited",
       "bestFor": "No-Fee Everyday",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "chase_freedom_flex",
@@ -283,7 +283,7 @@
         "assumedFulfillment": 1.0,
         "note": "5% on rotating categories, $1,500/quarter cap (activation required). Assumes user maxes out the cap."
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_platinum",
@@ -395,7 +395,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/platinum",
       "bestFor": "Luxury Travel & Perks",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_gold",
@@ -475,7 +475,7 @@
         "dining": 50000,
         "groceries": 25000
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_blue_cash_preferred",
@@ -527,7 +527,7 @@
       "rewardCaps": {
         "groceries": 6000
       },
-      "lastVerified": "2026-10-23",
+      "lastVerified": "2026-10-31",
       "credits": [
         {
           "label": "Disney Streaming",
@@ -589,7 +589,7 @@
         "gas": 6000,
         "online": 6000
       },
-      "lastVerified": "2026-10-23",
+      "lastVerified": "2026-10-31",
       "credits": [
         {
           "label": "Disney Streaming",
@@ -645,7 +645,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-double-cash-credit-card",
       "bestFor": "Simple Flat-Rate Cashback",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "citi_strata_premier",
@@ -705,7 +705,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-strata-premier-credit-card",
       "bestFor": "Multi-Category Rewards",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "citi_custom_cash",
@@ -769,7 +769,7 @@
         "cyclesPerYear": 12,
         "note": "5% on highest-spending eligible category each billing cycle, $500 cap per cycle."
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_venture_x",
@@ -834,7 +834,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/credit-cards/venture-x/",
       "bestFor": "Premium Travel Value",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_venture",
@@ -881,7 +881,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/credit-cards/venture/",
       "bestFor": "Flexible Travel Miles",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_quicksilver",
@@ -929,7 +929,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/credit-cards/quicksilver/",
       "bestFor": "Simple No-Fee Cashback",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_savor",
@@ -978,7 +978,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/credit-cards/savor/",
       "bestFor": "No-Fee Dining & Groceries",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_savorone",
@@ -1021,7 +1021,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/credit-cards/savorone/",
       "bestFor": "Fair Credit Dining & Groceries",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "discover_it_cashback",
@@ -1077,7 +1077,7 @@
         "assumedFulfillment": 1.0,
         "note": "5% on rotating categories, $1,500/quarter cap (activation required). Assumes user maxes out the cap."
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "discover_it_miles",
@@ -1125,7 +1125,7 @@
       ],
       "applyUrl": "https://www.discover.com/credit-cards/travel/",
       "bestFor": "No-Fee Travel Miles",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bofa_premium_rewards",
@@ -1209,7 +1209,7 @@
           }
         ]
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bofa_customized_cash",
@@ -1313,7 +1313,7 @@
         "alsoCoversShareCap": true,
         "note": "3% on chosen category + 2% on groceries (combined $2,500/quarter cap)."
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bofa_travel_rewards",
@@ -1388,7 +1388,7 @@
           }
         ]
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "wells_fargo_autograph",
@@ -1438,7 +1438,7 @@
       ],
       "applyUrl": "https://creditcards.wellsfargo.com/autograph-visa-credit-card",
       "bestFor": "No-Fee Multi-Category",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "wells_fargo_active_cash",
@@ -1486,7 +1486,7 @@
       ],
       "applyUrl": "https://creditcards.wellsfargo.com/active-cash-credit-card",
       "bestFor": "Simple 2% Cashback",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "usbank_altitude_connect",
@@ -1535,7 +1535,7 @@
       ],
       "applyUrl": "https://www.usbank.com/credit-cards/altitude-connect-visa-signature-credit-card.html",
       "bestFor": "Gas & EV Charging",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "usbank_cash_plus",
@@ -1595,7 +1595,7 @@
         "cyclesPerYear": 4,
         "note": "5% on two chosen categories, $2,000/quarter combined cap."
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "us_bank_smartly",
@@ -1669,7 +1669,7 @@
           }
         ]
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bilt_blue",
@@ -1714,7 +1714,7 @@
       ],
       "applyUrl": "https://bilt.com/card",
       "bestFor": "Earning on Rent Payments",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "apple_card",
@@ -1757,7 +1757,7 @@
       ],
       "applyUrl": "https://www.apple.com/apple-card/",
       "bestFor": "Apple Ecosystem Users",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_everyday_preferred",
@@ -1857,7 +1857,7 @@
         "dining": 25000,
         "phone": 25000
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_blue_business_plus",
@@ -1919,7 +1919,7 @@
         "entertainment": 50000
       },
       "rewardCapsCombined": 50000,
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "robinhood_gold",
@@ -1964,7 +1964,7 @@
       ],
       "applyUrl": "https://robinhood.com/creditcard/",
       "bestFor": "Best Flat-Rate in the US",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "alliant_cashback_visa",
@@ -2006,7 +2006,7 @@
       ],
       "applyUrl": "https://www.alliantcreditunion.org/credit-cards/visa-signature-card",
       "bestFor": "Top No-Fee Flat Rate",
-      "lastVerified": "2026-09-20"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "costco_anywhere_visa",
@@ -2058,7 +2058,7 @@
       "rewardCaps": {
         "gas": 7000
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "fidelity_rewards_visa",
@@ -2101,7 +2101,7 @@
       ],
       "applyUrl": "https://www.fidelity.com/spend-save/visa-signature-card",
       "bestFor": "No-Fee 2% + Investing",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "sofi_credit_card",
@@ -2143,7 +2143,8 @@
         "Lower APR for autopay"
       ],
       "applyUrl": "https://www.sofi.com/credit-card/",
-      "bestFor": "No-Fee 2% Flat Rate"
+      "bestFor": "No-Fee 2% Flat Rate",
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "venmo_credit_card",
@@ -2185,7 +2186,7 @@
       ],
       "applyUrl": "https://venmo.com/about/creditcard/",
       "bestFor": "Auto-Optimizing for Venmo Users",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "pnc_cash_rewards",
@@ -2233,7 +2234,7 @@
       ],
       "applyUrl": "https://www.pnc.com/en/personal-banking/banking/credit-cards/pnc-cash-rewards-visa-credit-card.html",
       "bestFor": "Gas + Dining + Groceries Trifecta",
-      "lastVerified": "2026-10-23",
+      "lastVerified": "2026-10-31",
       "rewardCaps": {
         "gas": 8000,
         "dining": 8000,
@@ -2287,7 +2288,7 @@
       ],
       "applyUrl": "https://www.amazon.com/Amazon-Prime-Rewards-Visa-Signature-Card/dp/BT00LN946S",
       "bestFor": "Amazon & Whole Foods Shoppers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "chase_ink_preferred",
@@ -2340,7 +2341,7 @@
         "travel": 150000,
         "phone": 150000
       },
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "usbank_altitude_go",
@@ -2387,7 +2388,7 @@
       ],
       "applyUrl": "https://www.usbank.com/credit-cards/altitude-go-visa-signature-credit-card.html",
       "bestFor": "No-Fee Dining King",
-      "lastVerified": "2026-10-23",
+      "lastVerified": "2026-10-31",
       "credits": [
         {
           "label": "Streaming Credit",
@@ -2442,7 +2443,7 @@
       ],
       "applyUrl": "https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card",
       "bestFor": "Hotel Travel Rewards",
-      "lastVerified": "2026-10-23",
+      "lastVerified": "2026-10-31",
       "credits": [
         {
           "label": "Airline Credit",
@@ -2521,7 +2522,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-american-express-card/",
       "bestFor": "Delta Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "delta_skymiles_platinum",
@@ -2599,7 +2600,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-platinum-american-express-card/",
       "bestFor": "Delta Loyalists",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "united_explorer",
@@ -2652,6 +2653,24 @@
           "value": 100,
           "desc": "$100 United travel credit — only after $10,000 in purchases in a calendar year",
           "type": "coupon"
+        },
+        {
+          "label": "Rideshare",
+          "value": 60,
+          "desc": "Up to $5/month on rideshare. Enrollment required each year",
+          "type": "drip"
+        },
+        {
+          "label": "Avis/Budget Credit",
+          "value": 50,
+          "desc": "$25 TravelBank cash on each of your first two eligible Avis or Budget rentals each year",
+          "type": "portal"
+        },
+        {
+          "label": "JSX Credit",
+          "value": 100,
+          "desc": "Up to $100 back each year on JSX flights booked direct",
+          "type": "coupon"
         }
       ],
       "creditsCaveat": "The $100 travel credit needs $10,000 of annual spend. The two United Club passes now require the cardholder to be present.",
@@ -2669,7 +2688,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-explorer",
       "bestFor": "United Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "southwest_priority",
@@ -2710,6 +2729,12 @@
           "value": 105,
           "desc": "7,500 Rapid Rewards points every cardmember anniversary, worth about $105. Automatic",
           "type": "automatic"
+        },
+        {
+          "label": "Instacart",
+          "value": 120,
+          "desc": "$10 monthly Instacart credit; requires an active Instacart+ membership after the free 3 months. Ends 12/31/2027",
+          "type": "drip"
         }
       ],
       "creditsCaveat": "After the 2025 changes this card no longer has a travel credit — the anniversary points are the only guaranteed money back against the $229 fee.",
@@ -2727,7 +2752,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/priority",
       "bestFor": "Southwest Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "citi_aadvantage_platinum_select",
@@ -2777,7 +2802,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-aadvantage-platinum-select-world-elite-mastercard",
       "bestFor": "American Airlines Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "marriott_bonvoy_boundless",
@@ -2838,7 +2863,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless",
       "bestFor": "Marriott Stays",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "hilton_honors_surpass",
@@ -2897,7 +2922,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/",
       "bestFor": "Hilton Stays",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "world_of_hyatt",
@@ -2954,7 +2979,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/world-of-hyatt-credit-card",
       "bestFor": "Hyatt Stays",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "ihg_one_rewards_premier",
@@ -2993,7 +3018,7 @@
         {
           "label": "Anniversary Free Night",
           "value": 200,
-          "desc": "One free night every anniversary at IHG hotels up to 40,000 points. Automatic — and you can top it up with points for pricier hotels",
+          "desc": "One free night every anniversary at IHG hotels up to 50,000 points. Automatic — and you can top it up with points for pricier hotels",
           "type": "automatic"
         },
         {
@@ -3001,6 +3026,18 @@
           "value": 50,
           "desc": "$50 in United TravelBank cash each year, usable only on United flights",
           "type": "coupon"
+        },
+        {
+          "label": "Instacart",
+          "value": 120,
+          "desc": "$10 monthly Instacart credit; requires an active Instacart+ membership after the free 3 months. Ends 12/31/2027",
+          "type": "drip"
+        },
+        {
+          "label": "IHG Food and Beverage",
+          "value": 100,
+          "desc": "$25 Food and Beverage voucher each quarter at IHG hotels; expires at the end of the quarter",
+          "type": "drip"
         }
       ],
       "creditsCaveat": "The anniversary night is worth about $200 and covers most mid-range IHG properties. The $50 United credit is only useful if you fly United.",
@@ -3010,7 +3047,7 @@
         "months": 3
       },
       "perks": [
-        "Anniversary free night (up to 40,000 points)",
+        "Anniversary free night (up to 50,000 points)",
         "Automatic Platinum Elite status",
         "Fourth night free on award stays",
         "Global Entry / TSA PreCheck credit every 4 years",
@@ -3018,7 +3055,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/premier",
       "bestFor": "IHG Stays",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_green",
@@ -3132,7 +3169,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-blue-american-express-card/",
       "bestFor": "Occasional Delta Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "delta_skymiles_reserve",
@@ -3201,7 +3238,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve-american-express-card/",
       "bestFor": "Delta Elite Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "hilton_honors",
@@ -3253,7 +3290,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors/",
       "bestFor": "No-Fee Hilton Stays",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "hilton_honors_aspire",
@@ -3322,7 +3359,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/",
       "bestFor": "Hilton Loyalists",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "marriott_bonvoy_brilliant",
@@ -3380,7 +3417,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/",
       "bestFor": "Marriott Elite Status",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "marriott_bonvoy_bevy",
@@ -3435,7 +3472,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-bevy/",
       "bestFor": "Marriott Mid-Tier",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_business_gold",
@@ -3521,7 +3558,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-gold-card-amex/",
       "bestFor": "Business Spend Categories",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_business_platinum",
@@ -3578,8 +3615,8 @@
         },
         {
           "label": "CLEAR Plus Credit",
-          "value": 209,
-          "desc": "Up to $209 a year toward CLEAR Plus",
+          "value": 219,
+          "desc": "Up to $219 a year toward CLEAR Plus",
           "type": "coupon"
         },
         {
@@ -3625,7 +3662,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/american-express-business-platinum-credit-card-amex/",
       "bestFor": "Business Travelers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_blue_business_cash",
@@ -3689,7 +3726,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/en-us/business/credit-cards/blue-business-cash/",
       "bestFor": "No-Fee Business Cash",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "delta_skymiles_gold_business",
@@ -3760,7 +3797,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-gold/",
       "bestFor": "Delta Business Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "delta_skymiles_platinum_business",
@@ -3831,7 +3868,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-platinum/",
       "bestFor": "Delta Business Status",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "delta_skymiles_reserve_business",
@@ -3901,7 +3938,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/en-us/business/credit-cards/delta-skymiles-reserve/",
       "bestFor": "Delta Business Elites",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "hilton_honors_business",
@@ -3971,7 +4008,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/hilton-honors/",
       "bestFor": "Hilton Business Stays",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "marriott_bonvoy_business",
@@ -4023,7 +4060,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/amex-marriott-bonvoy-business-credit-card/",
       "bestFor": "Marriott Business Stays",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "amex_graphite_business_cash_unlimited",
@@ -4073,7 +4110,7 @@
       ],
       "applyUrl": "https://www.americanexpress.com/us/credit-cards/business/business-credit-cards/graphite-business-cash-unlimited-card/",
       "bestFor": "High-Spend Businesses",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bofa_unlimited_cash",
@@ -4122,7 +4159,7 @@
       ],
       "applyUrl": "https://www.bankofamerica.com/credit-cards/products/unlimited-cash-back-credit-card/",
       "bestFor": "Flat Cash Back",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "atmos_rewards_ascent",
@@ -4171,7 +4208,7 @@
       ],
       "applyUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-credit-card/",
       "bestFor": "Alaska & Hawaiian Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "atmos_rewards_summit",
@@ -4223,7 +4260,7 @@
       ],
       "applyUrl": "https://www.bankofamerica.com/credit-cards/products/alaska-airlines-infinite-credit-card/",
       "bestFor": "Alaska Premium Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bofa_business_unlimited_cash",
@@ -4273,7 +4310,7 @@
       ],
       "applyUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-unlimited-cash-rewards",
       "bestFor": "Flat Business Cash Back",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bofa_business_customized_cash",
@@ -4346,7 +4383,7 @@
       ],
       "applyUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-customized-cash-rewards",
       "bestFor": "Business Category Picker",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bofa_business_travel_rewards",
@@ -4398,7 +4435,7 @@
       ],
       "applyUrl": "https://business.bankofamerica.com/en/credit-cards/business-advantage-travel-rewards",
       "bestFor": "No-Fee Business Travel",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "wells_fargo_signify_business_cash",
@@ -4449,7 +4486,7 @@
       ],
       "applyUrl": "https://creditcards.wellsfargo.com/business-credit-cards/signify-business-cash-credit-card/",
       "bestFor": "Flat 2% Business",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "wells_fargo_one_key",
@@ -4501,7 +4538,7 @@
       ],
       "applyUrl": "https://creditcards.wellsfargo.com/one-key-credit-card/",
       "bestFor": "Expedia Bookers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "wells_fargo_one_key_plus",
@@ -4629,7 +4666,7 @@
       ],
       "applyUrl": "https://www.usbank.com/business-banking/business-credit-cards/amazon-business-credit-cards.html",
       "bestFor": "Amazon Business Buyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "usbank_business_triple_cash",
@@ -4688,7 +4725,7 @@
       ],
       "applyUrl": "https://www.usbank.com/business-banking/business-credit-cards/business-triple-cash-back-credit-card.html",
       "bestFor": "Business Gas & Dining",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "jetblue_plus",
@@ -4745,7 +4782,7 @@
       ],
       "applyUrl": "https://cards.barclaycardus.com/banking/cards/jetblue-plus-card/",
       "bestFor": "JetBlue Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "jetblue_premier",
@@ -4802,7 +4839,7 @@
       ],
       "applyUrl": "https://cards.barclaycardus.com/banking/cards/jetblue-premier-card/",
       "bestFor": "JetBlue Premium Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "chase_freedom_rise",
@@ -4851,7 +4888,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/cash-back-credit-cards/freedom/rise",
       "bestFor": "New to Credit",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "united_gateway",
@@ -4901,7 +4938,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-gateway",
       "bestFor": "Casual United Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "united_quest",
@@ -4987,7 +5024,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/united/united-quest",
       "bestFor": "Frequent United Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "united_club",
@@ -5069,7 +5106,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/united/club-infinite",
       "bestFor": "United Lounge Access",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "southwest_plus",
@@ -5114,6 +5151,12 @@
           "value": 42,
           "desc": "3,000 Rapid Rewards points every cardmember anniversary, worth about $42. Automatic",
           "type": "automatic"
+        },
+        {
+          "label": "Instacart",
+          "value": 120,
+          "desc": "$10 monthly Instacart credit; requires an active Instacart+ membership after the free 3 months. Ends 12/31/2027",
+          "type": "drip"
         }
       ],
       "signupBonus": {
@@ -5130,7 +5173,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/plus",
       "bestFor": "Southwest Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "southwest_premier",
@@ -5175,6 +5218,12 @@
           "value": 84,
           "desc": "6,000 Rapid Rewards points every cardmember anniversary, worth about $84. Automatic",
           "type": "automatic"
+        },
+        {
+          "label": "Instacart",
+          "value": 120,
+          "desc": "$10 monthly Instacart credit; requires an active Instacart+ membership after the free 3 months. Ends 12/31/2027",
+          "type": "drip"
         }
       ],
       "signupBonus": {
@@ -5191,7 +5240,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/southwest/premier",
       "bestFor": "Southwest Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "marriott_bonvoy_bold",
@@ -5240,7 +5289,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/bold",
       "bestFor": "Marriott on a Budget",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "ihg_one_rewards",
@@ -5300,7 +5349,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/travel-credit-cards/ihg-rewards-club/one-rewards",
       "bestFor": "IHG Hotel Stays",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "chase_ink_unlimited",
@@ -5350,7 +5399,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/business-credit-cards/ink/unlimited",
       "bestFor": "Simple Business Spend",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "chase_ink_premier",
@@ -5399,7 +5448,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/business-credit-cards/ink/premier",
       "bestFor": "Big Business Purchases",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "chase_sapphire_reserve_business",
@@ -5493,7 +5542,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/business-credit-cards/sapphire/reserve",
       "bestFor": "Premium Business Travel",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "united_business",
@@ -5588,7 +5637,7 @@
       ],
       "applyUrl": "https://creditcards.chase.com/business-credit-cards/united/united-business-card",
       "bestFor": "United Business Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "citi_strata",
@@ -5649,7 +5698,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-strata-credit-card",
       "bestFor": "No-Fee Groceries & Gas",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "citi_strata_elite",
@@ -5720,7 +5769,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-strata-elite-credit-card",
       "bestFor": "Premium Travel Perks",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "citi_aadvantage_mileup",
@@ -5771,7 +5820,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/aadvantage-mile-up-credit-card",
       "bestFor": "No-Fee AA Miles",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "citi_aadvantage_executive",
@@ -5830,6 +5879,12 @@
           "value": 100,
           "desc": "Up to $100 per calendar year on inflight and eligible Admirals Club purchases",
           "type": "coupon"
+        },
+        {
+          "label": "Dining Credit",
+          "value": 200,
+          "desc": "$100 Jan-Jun and $100 Jul-Dec at restaurants in the inKind network, paid through the inKind app",
+          "type": "portal"
         }
       ],
       "signupBonus": {
@@ -5846,7 +5901,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-aadvantage-executive-world-legend-mastercard",
       "bestFor": "AA Lounge Access",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "citi_aadvantage_globe",
@@ -5916,7 +5971,7 @@
       ],
       "applyUrl": "https://www.citi.com/credit-cards/citi-aadvantage-globe-mastercard",
       "bestFor": "Mid-Tier AA Flyers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_quicksilverone",
@@ -5960,7 +6015,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/credit-cards/quicksilverone/",
       "bestFor": "Fair Credit Cashback",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_spark_cash_plus",
@@ -6010,7 +6065,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/small-business/credit-cards/spark-cash-plus/",
       "bestFor": "High-Spend Businesses",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_venture_x_business",
@@ -6074,7 +6129,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/small-business/credit-cards/venture-x-business/",
       "bestFor": "Premium Business Travel",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_venture_business",
@@ -6135,7 +6190,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/small-business/credit-cards/venture-business/",
       "bestFor": "Business Travel Miles",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "capital_one_spark_cash_select",
@@ -6186,7 +6241,7 @@
       ],
       "applyUrl": "https://www.capitalone.com/small-business/credit-cards/spark-cash-select/",
       "bestFor": "No-Fee Business Cashback",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "discover_it_student_cash_back",
@@ -6239,7 +6294,7 @@
       ],
       "applyUrl": "https://www.discover.com/credit-cards/student-credit-card/it-card/",
       "bestFor": "Students",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "discover_it_secured",
@@ -6292,7 +6347,7 @@
       ],
       "applyUrl": "https://www.discover.com/credit-cards/secured-credit-card/",
       "bestFor": "Building Credit",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "discover_it_chrome",
@@ -6344,7 +6399,7 @@
       ],
       "applyUrl": "https://www.discover.com/credit-cards/cash-back/chrome/",
       "bestFor": "No-Fee Gas & Dining",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "walmart_onepay_cashrewards",
@@ -6392,7 +6447,7 @@
       ],
       "applyUrl": "https://www.onepay.com/credit-card",
       "bestFor": "Walmart Shoppers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "target_circle_credit_card",
@@ -6440,7 +6495,7 @@
       ],
       "applyUrl": "https://www.target.com/circlecard",
       "bestFor": "Target Shoppers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "target_mastercard",
@@ -6491,7 +6546,7 @@
       ],
       "applyUrl": "https://www.target.com/circlecard",
       "bestFor": "Target Shoppers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "sams_club_mastercard",
@@ -6544,7 +6599,7 @@
       ],
       "applyUrl": "https://www.synchrony.com/partner/sams-club",
       "bestFor": "Gas + Sam's Members",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "navy_federal_cashrewards",
@@ -6594,7 +6649,7 @@
       ],
       "applyUrl": "https://www.navyfederal.org/loans-cards/credit-cards/cash-rewards.html",
       "bestFor": "Military Members",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "navy_federal_cashrewards_plus",
@@ -6644,7 +6699,7 @@
       ],
       "applyUrl": "https://www.navyfederal.org/loans-cards/credit-cards/cash-rewards.html",
       "bestFor": "Military Members",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "navy_federal_more_rewards",
@@ -6696,7 +6751,7 @@
       ],
       "applyUrl": "https://www.navyfederal.org/loans-cards/credit-cards/more-rewards.html",
       "bestFor": "Military Everyday Spend",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "penfed_power_cash_rewards",
@@ -6746,7 +6801,7 @@
       ],
       "applyUrl": "https://www.penfed.org/credit-cards/power-cash-rewards-visa",
       "bestFor": "Flat-Rate Cash Back",
-      "lastVerified": "2026-10-19"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bilt_obsidian",
@@ -6813,7 +6868,7 @@
       ],
       "applyUrl": "https://www.bilt.com/card/obsidian",
       "bestFor": "Renters Who Dine Out",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "bilt_palladium",
@@ -6872,7 +6927,7 @@
       ],
       "applyUrl": "https://www.bilt.com/card/palladium",
       "bestFor": "Premium Renters",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "paypal_cashback_mastercard",
@@ -6918,7 +6973,7 @@
       ],
       "applyUrl": "https://www.paypal.com/us/digital-wallet/manage-money/paypal-cashback-mastercard",
       "bestFor": "PayPal Shoppers",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "gemini_credit_card",
@@ -6969,7 +7024,7 @@
       ],
       "applyUrl": "https://www.gemini.com/credit-card",
       "bestFor": "Crypto Rewards",
-      "lastVerified": "2026-10-23"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "coinbase_one_card",
@@ -7018,7 +7073,7 @@
       ],
       "applyUrl": "https://www.coinbase.com/creditcard",
       "bestFor": "Bitcoin Holders",
-      "lastVerified": "2026-10-19"
+      "lastVerified": "2026-10-31"
     },
     {
       "id": "rakuten_amex",
