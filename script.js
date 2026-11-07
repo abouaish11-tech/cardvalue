@@ -204,6 +204,54 @@ function discontinuedSince(card) {
   const d = new Date(String(card.discontinued) + 'T00:00:00');
   return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
+/** Announced changes the issuer has not applied yet (an `upcoming` list on the
+ *  card: effective date, text, source). Pure display: the ranking keeps using
+ *  today's published values until the Friday verifier changes them. An entry
+ *  disappears on its own once its effective date has passed, so stale copy
+ *  can never outlive the change it describes. */
+function activeUpcoming(card) {
+  if (!card || !Array.isArray(card.upcoming)) return [];
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return card.upcoming.filter(u => {
+    if (!u || !u.text) return false;
+    if (!u.effective) return true;
+    const eff = new Date(String(u.effective) + 'T00:00:00');
+    return isNaN(eff) || eff > today;
+  });
+}
+function fmtLongDate(iso) {
+  const dt = new Date(String(iso) + 'T00:00:00');
+  return isNaN(dt) ? '' : dt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+function fmtMonthYear(iso) {
+  const dt = new Date(String(iso) + 'T00:00:00');
+  return isNaN(dt) ? '' : dt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+/** Drawer box listing each announced change with its effective date and source. */
+function upcomingChangesHTML(card) {
+  const items = activeUpcoming(card);
+  if (!items.length) return '';
+  return `
+    <div class="change-note">
+      <strong>Change announced, not in the numbers yet</strong>
+      ${items.map(u => `<p class="change-item">${escHTML(u.text)}${u.effective ? ` <span class="change-when">Takes effect ${fmtLongDate(u.effective)}.</span>` : ''}${u.source ? ` <a class="change-source" href="${escHTML(u.source)}" target="_blank" rel="noopener">${escHTML(u.sourceName || 'Source')}</a>` : ''}</p>`).join('')}
+      <span class="change-sub">We rank on what the card pays today. The verifier updates the values when the change takes effect.</span>
+    </div>
+  `;
+}
+/** Short inline marker for the ranking table's issuer line. */
+function upcomingInlineHTML(card) {
+  const items = activeUpcoming(card);
+  if (!items.length) return '';
+  const soonest = items.map(u => u.effective).filter(Boolean).sort()[0];
+  return `<span class="change-inline" title="A change has been announced for this card. Open it for details.">· change ${soonest ? 'from ' + fmtMonthYear(soonest) : 'announced'}</span>`;
+}
+/** "Checked against the issuer's page on …" line from the card's lastVerified stamp. */
+function verifiedStampHTML(card) {
+  const when = card && card.lastVerified ? fmtLongDate(card.lastVerified) : '';
+  if (!when) return '';
+  return `<p class="verified-stamp">Fees, earn rates and credits last checked against the issuer's own page on ${when}.</p>`;
+}
 function closedBadgeHTML(extraClass = '') {
   return `<span class="closed-badge${extraClass ? ' ' + extraClass : ''}" title="The issuer no longer takes applications for this card">Closed to new applicants</span>`;
 }
@@ -930,7 +978,7 @@ function renderCards() {
           <span class="card-thumb">${cardFaceHTML(card.id, 0, card.name)}</span>
           <div>
             <span class="card-name">${card.name}</span>
-            <span class="card-issuer">${card.issuer}</span>
+            <span class="card-issuer">${card.issuer} ${upcomingInlineHTML(card)}</span>
           </div>
         </div>
       </td>
@@ -1339,6 +1387,9 @@ function openDetail(card) {
     `;
   }
 
+  // Announced changes (display only; see activeUpcoming)
+  html += upcomingChangesHTML(card);
+
   // Category breakdown
   html += `
     <div class="detail-section">
@@ -1618,6 +1669,9 @@ function openDetail(card) {
       </div>
     `;
   }
+
+  // When the data was last checked
+  html += verifiedStampHTML(card);
 
   // Apply button (or the closed badge for a card nobody can apply for)
   html += isDiscontinued(card) ? `
