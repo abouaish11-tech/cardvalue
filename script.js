@@ -33,6 +33,14 @@ let bankRelationships = {
 // Comparison APY — what the user could earn elsewhere (e.g., HYSA). Used to compute opportunity cost.
 let comparisonApy = 4.5;
 
+// Carried balance (display only). Interest on a revolving balance is shown
+// next to what the #1 card earns, because rewards only pay off when the
+// statement is paid in full. It never feeds the ranking or the wallet.
+const AVG_CARD_APR = 22.4;   // Fed G.19, accounts assessed interest, Q3 2026
+const BALANCE_KEY = 'cv_balance';
+let carriedBalance = 0;
+let balanceApr = AVG_CARD_APR;
+
 // ---- ISSUER LOGOS ----
 const ISSUER_LOGOS = {
   'Chase': 'https://www.google.com/s2/favicons?domain=chase.com&sz=128',
@@ -936,7 +944,7 @@ function renderCards() {
       </td>
       ${orderedCols.map(c => cellMap[c.key]).join('')}
       <td class="td-apply">${isDiscontinued(card) ? closedBadgeHTML() : `<a href="${card.applyUrl}" target="_blank" rel="noopener" class="apply-link" data-card-id="${card.id}" data-card-name="${card.name}" data-card-issuer="${card.issuer}" data-apply-location="table" onclick="event.stopPropagation()">Apply</a>`}</td>
-      <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" ${isCompared ? 'checked' : ''} /></td>
+      <td class="td-compare"><input type="checkbox" class="compare-check" title="Add to compare" aria-label="Compare ${escHTML(card.name)}" ${isCompared ? 'checked' : ''} /></td>
     `;
 
     el.addEventListener('click', (e) => {
@@ -1088,6 +1096,7 @@ function renderStage(ranked, lockedIds) {
   document.getElementById('stageBig').innerHTML = `${fmtNet(net)}<small>a year</small>`;
   document.getElementById('stageMath').textContent =
     `$${earned.toLocaleString()} in rewards · ${credits > 0 ? `about $${credits.toLocaleString()} in credits you'd use` : 'no statement credits'} · $${fee.toLocaleString()} annual fee · a basic 1% card would earn $${plain.toLocaleString()}`;
+  renderInterestNote(net);
 
   const licensed = !PAYWALL.enabled || isLicensed();
   const apply = document.getElementById('stageApply');
@@ -1724,6 +1733,53 @@ function openCompareModal() {
 }
 
 // ---- PERSONALIZE ----
+/** Carried balance and APR from the drawer; both clamped to sane ranges. */
+function getBalanceFromInputs() {
+  const b = document.getElementById('carriedBalance');
+  const a = document.getElementById('balanceApr');
+  const balance = Math.max(0, parseFloat(b && b.value) || 0);
+  const aprRaw = a ? parseFloat(a.value) : NaN;
+  const apr = Number.isFinite(aprRaw) && aprRaw >= 0 ? Math.min(aprRaw, 99) : AVG_CARD_APR;
+  return { balance, apr };
+}
+function setBalanceInputs(balance, apr) {
+  const b = document.getElementById('carriedBalance');
+  const a = document.getElementById('balanceApr');
+  if (b) b.value = balance;
+  if (a) a.value = apr;
+}
+/** Approximate yearly interest on the carried balance (simple interest on the average balance). */
+function interestCostPerYear() {
+  return Math.round(carriedBalance * balanceApr / 100);
+}
+/** The amber line under the stage readout. Hidden when no balance is carried. */
+function renderInterestNote(net) {
+  const el = document.getElementById('stageInterest');
+  if (!el) return;
+  const cost = interestCostPerYear();
+  if (carriedBalance <= 0 || cost <= 0) { el.hidden = true; el.textContent = ''; return; }
+  const money = n => `$${Math.abs(Math.round(n)).toLocaleString()}`;
+  const aprTxt = `${balanceApr.toLocaleString(undefined, { maximumFractionDigits: 1 })}%`;
+  const lead = `Carrying <b>${money(carriedBalance)}</b> at ${aprTxt} costs about <b>${money(cost)} a year</b> in interest`;
+  let tail;
+  if (net <= 0) tail = `, on top of the ${fmtNet(net)} this card already nets you. Paying the balance down beats any card here.`;
+  else if (cost >= net) tail = `, more than the ${fmtNet(net)} this card earns you. Paying the balance down beats any card here.`;
+  else tail = `, which takes this card's ${fmtNet(net)} down to ${fmtNet(net - cost)}. Paying it down is worth more than most card switches.`;
+  el.innerHTML = lead + tail;
+  el.hidden = false;
+}
+function restoreSavedBalance() {
+  try {
+    const raw = localStorage.getItem(BALANCE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    if (!saved || typeof saved !== 'object') return;
+    if (typeof saved.balance === 'number' && saved.balance >= 0) carriedBalance = saved.balance;
+    if (typeof saved.apr === 'number' && saved.apr >= 0 && saved.apr <= 99) balanceApr = saved.apr;
+    setBalanceInputs(carriedBalance, balanceApr);
+  } catch (e) {}
+}
+
 function getSpendingFromInputs() {
   const out = {};
   for (const k of CATEGORY_KEYS) {
@@ -1780,6 +1836,10 @@ function applyPersonalization() {
   const bankInputs = getBankRelationshipsFromInputs();
   bankRelationships = bankInputs.relationships;
   comparisonApy = bankInputs.comparisonApy;
+  const bal = getBalanceFromInputs();
+  carriedBalance = bal.balance;
+  balanceApr = bal.apr;
+  try { localStorage.setItem(BALANCE_KEY, JSON.stringify({ balance: carriedBalance, apr: balanceApr })); } catch (e) {}
   isPersonalized = true;
   try { localStorage.setItem(GATE_KEYS.spending, JSON.stringify(currentSpending)); } catch (e) {}
   completeGateChoice('mine');
@@ -1862,6 +1922,10 @@ function resetPersonalization() {
     "US Bank Smartly":         { tierIndex: 0, deposits: 0 }
   };
   comparisonApy = 4.5;
+  carriedBalance = 0;
+  balanceApr = AVG_CARD_APR;
+  setBalanceInputs(0, AVG_CARD_APR);
+  try { localStorage.removeItem(BALANCE_KEY); } catch (e) {}
   const radio0 = document.querySelector('input[name="bofa_tier"][value="0"]');
   if (radio0) radio0.checked = true;
   const radio0u = document.querySelector('input[name="usb_tier"][value="0"]');
@@ -2344,6 +2408,7 @@ async function init() {
     bindEvents();
     bindApplyTracking();
     restoreSavedSpending();
+    restoreSavedBalance();
     renderCards();
     await autoUnlockFromUrl();   // post-checkout redirect unlocks before the gate shows
     initGate();
