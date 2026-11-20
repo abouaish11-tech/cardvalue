@@ -28,7 +28,7 @@
 | **Gas** | 1x |
 | **Other** | 1x |
 | **Sign-Up Bonus** | 100,000 points after $6,000 spend in 3 months |
-| **Top Perks** | $300 annual travel credit; Up to $500/yr credit for The Edit (Chase luxury hotels); Up to $300/yr Exclusive Tables dining credit; Up to $300/yr StubHub credit; Up to $250/yr Apple TV+/Music credit; $300/yr DoorDash credits + DashPass; Up to $120/yr Peloton credit; Chase Sapphire Lounge + Priority Pass access; IHG Platinum Elite status |
+| **Top Perks** | $300 annual travel credit; Up to $500/yr credit for The Edit (Chase luxury hotels); Up to $300/yr Exclusive Tables dining credit; Up to $300/yr StubHub credit; Up to $250/yr Apple TV+/Music credit; $420/yr DoorDash promos + DashPass; Up to $120/yr Peloton credit; Chase Sapphire Lounge + Priority Pass access; IHG Platinum Elite status |
 
 ---
 
@@ -108,7 +108,7 @@
 | **Gas** | 3% at U.S. gas stations |
 | **Streaming** | 6% on select U.S. streaming |
 | **Other** | 1% |
-| **Sign-Up Bonus** | $300 after $3,000 spend in 6 months |
+| **Sign-Up Bonus** | $250 after $3,000 spend in 6 months |
 | **Top Perks** | 6% grocery rate (best in class); Up to $10/mo Disney+/Hulu/ESPN+ credit; 0% intro APR for 12 months; Excludes Costco, Walmart, Target |
 
 ---
@@ -124,7 +124,7 @@
 | **Gas** | 3% at U.S. gas stations (up to $6,000/yr, then 1%) |
 | **Online Retail** | 3% U.S. online retail (up to $6,000/yr, then 1%) |
 | **Other** | 1% |
-| **Sign-Up Bonus** | $200 after $2,000 spend in 6 months |
+| **Sign-Up Bonus** | $150 after $2,000 spend in 6 months |
 | **Top Perks** | No annual fee with decent grocery/gas rates; 0% intro APR for 15 months; Streaming statement credit |
 
 ---
@@ -160,10 +160,11 @@
 
 ---
 
-## 11. Citi Custom Cash
+## 11. Citi Custom Cash (Closed to new applicants May 28, 2026)
 
 | Category | Details |
 |----------|---------|
+| **Status** | Citi stopped taking applications on May 28, 2026; existing cardmembers keep the card |
 | **Annual Fee** | $0 |
 | **Top Spend Category** | 5% on your highest spend category each billing cycle (up to $500/cycle, then 1%) |
 | **Eligible Categories** | Restaurants, gas, grocery, travel, transit, streaming, drugstores, home improvement, fitness, entertainment |
