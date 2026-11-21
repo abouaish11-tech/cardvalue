@@ -1285,6 +1285,67 @@ function renderBonusCheck(bonus) {
   return `<div class="bonus-check bonus-check-${cls}">${body} <span class="bonus-check-note">Annual fees, refunds, and balance transfers don't count toward the spend.</span></div>`;
 }
 
+// ---- BONUS DEADLINE PLANNER ----
+// The spend window starts on the approval date, not when the card arrives, and
+// the last purchases need a few days to post. Display only: nothing here feeds
+// the ranking, the wallet or the paywall.
+const BONUS_POSTING_BUFFER_DAYS = 10;
+let bonusApprovedOn = null;   // the date the visitor picked; kept while they browse cards
+
+function isoDate(d) {
+  const p = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+function parseIsoDate(s) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || '');
+  if (!m) return null;
+  const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  return isNaN(d.getTime()) ? null : d;
+}
+function addMonths(d, months) {
+  const out = new Date(d.getFullYear(), d.getMonth() + months, d.getDate());
+  // Jan 31 + 1 month lands in March; pull it back to the last day of February.
+  if (out.getDate() !== d.getDate()) out.setDate(0);
+  return out;
+}
+function addDays(d, days) {
+  const out = new Date(d.getTime());
+  out.setDate(out.getDate() + days);
+  return out;
+}
+function fmtLongDate(d) {
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+function bonusDeadlineText(bonus, approved) {
+  const windowEnds = addMonths(approved, bonus.months);
+  const aimFor = addDays(windowEnds, -BONUS_POSTING_BUFFER_DAYS);
+  const spend = `$${Math.round(bonus.spendRequired).toLocaleString()}`;
+  return `the ${bonus.months}-month window closes around <b>${fmtLongDate(windowEnds)}</b>. `
+    + `Aim to have the ${spend} spent by <b>${fmtLongDate(aimFor)}</b>, so the last purchases post before the deadline.`;
+}
+function renderBonusPlanner(bonus) {
+  if (!bonus || !bonus.spendRequired || !bonus.months) return '';
+  const approved = bonusApprovedOn || new Date();
+  return `
+    <div class="bonus-when">
+      <label class="bonus-when-label" for="bonusApprovedOn">If you're approved on</label>
+      <input type="date" id="bonusApprovedOn" class="bonus-when-input" value="${isoDate(approved)}" />
+      <p class="bonus-when-text" id="bonusWhenText" aria-live="polite">${bonusDeadlineText(bonus, approved)}</p>
+      <p class="bonus-when-note">The clock starts on the approval date, not the day the card arrives. Issuers count from account opening and a few use 90 days rather than 3 months, so the exact date is in your approval letter.</p>
+    </div>`;
+}
+function bindBonusPlanner(bonus) {
+  const input = document.getElementById('bonusApprovedOn');
+  const text = document.getElementById('bonusWhenText');
+  if (!input || !text || !bonus) return;
+  input.addEventListener('change', () => {
+    const d = parseIsoDate(input.value);
+    if (!d) { bonusApprovedOn = null; input.value = isoDate(new Date()); text.innerHTML = bonusDeadlineText(bonus, new Date()); return; }
+    bonusApprovedOn = d;
+    text.innerHTML = bonusDeadlineText(bonus, d);
+  });
+}
+
 function openDetail(card) {
   if (isCardLocked(card.id)) { showGate('pay'); return; }
   const annualValue = calcAnnualValue(card, currentSpending);
@@ -1603,6 +1664,7 @@ function openDetail(card) {
         <div class="detail-section-title">Sign-up bonus</div>
         <div class="bonus-box">${bonusText}</div>
         ${renderBonusCheck(bonus)}
+        ${renderBonusPlanner(bonus)}
       </div>
     `;
   }
@@ -1634,6 +1696,7 @@ function openDetail(card) {
   `;
 
   document.getElementById('detailBody').innerHTML = html;
+  bindBonusPlanner(card.signupBonus);
   document.getElementById('detailDrawer').classList.add('open');
   document.getElementById('detailOverlay').classList.add('open');
 }

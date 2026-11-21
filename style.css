@@ -508,6 +508,13 @@ button, input, select { font-family: inherit; }
 .bonus-check-warn { background: var(--amber-soft); color: var(--amber); }
 .bonus-check strong { color: inherit; }
 .bonus-check-note { display: block; margin-top: 4px; font-size: 12px; opacity: 0.85; }
+/* Bonus deadline planner (drawer): approval date -> spend-by date */
+.bonus-when { margin-top: 10px; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--surface-2); font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+.bonus-when-label { font-weight: 500; color: var(--ink); margin-right: 8px; }
+.bonus-when-input { font: inherit; font-size: 13px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; }
+.bonus-when-text { margin: 8px 0 0; }
+.bonus-when-text b { color: var(--ink); font-weight: 600; }
+.bonus-when-note { margin: 6px 0 0; font-size: 12px; color: var(--muted); line-height: 1.5; }
 
 /* Keep, downgrade, or cancel? (drawer, annual-fee cards) */
 .keep-box { border-radius: var(--radius-sm); padding: 14px 16px; border: 1px solid var(--line); background: var(--surface-2); }
