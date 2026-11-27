@@ -426,6 +426,11 @@ button, input, select { font-family: inherit; }
 
 /* Credits list (detail drawer) */
 .credits-list { display: flex; flex-direction: column; gap: 6px; }
+.credits-effort { font-size: 13px; line-height: 1.5; color: var(--ink-2); background: var(--amber-soft); border-radius: var(--radius-sm); padding: 10px 14px; margin: 0 0 10px; }
+.credits-effort strong { color: var(--amber); }
+.credits-effort-easy { background: var(--green-soft); }
+.credits-effort-easy strong { color: var(--green); }
+.compare-sub { display: block; font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 2px; }
 .credit-item { background: var(--surface-2); border-radius: var(--radius-sm); padding: 12px 14px; }
 .credit-header { display: flex; justify-content: space-between; align-items: center; }
 .credit-label { font-size: 14px; font-weight: 500; color: var(--ink); }
@@ -841,6 +846,7 @@ body.gate-open { overflow: hidden; }
   .card-row:nth-child(1) .td-rank span { font-size: 18px; }
   .card-row .td-card { grid-column: 1 / -1; padding-left: 30px; padding-right: 36px; min-height: 36px; display: flex; align-items: center; }
   .card-row .card-identity { gap: 10px; width: 100%; }
+  .card-row .card-identity > div { min-width: 0; flex: 1; }   /* lets long names ellipsize instead of widening the page */
   .card-row .card-name { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
   .card-row .td-compare { position: absolute; top: 14px; right: 14px; }
   .card-row .compare-check { width: 22px; height: 22px; }
