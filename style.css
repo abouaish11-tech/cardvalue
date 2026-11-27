@@ -503,13 +503,18 @@ button, input, select { font-family: inherit; }
 .closed-note strong { display: block; margin-bottom: 2px; }
 .bonus-box { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
 .bonus-box strong { color: var(--ink); }
-<<<<<<< HEAD
 .bonus-check { margin-top: 10px; border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13px; line-height: 1.55; }
 .bonus-check-ok { background: var(--green-soft); color: var(--green); }
 .bonus-check-warn { background: var(--amber-soft); color: var(--amber); }
 .bonus-check strong { color: inherit; }
 .bonus-check-note { display: block; margin-top: 4px; font-size: 12px; opacity: 0.85; }
-=======
+/* Bonus deadline planner (drawer): approval date -> spend-by date */
+.bonus-when { margin-top: 10px; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--line); background: var(--surface-2); font-size: 13px; line-height: 1.55; color: var(--ink-2); }
+.bonus-when-label { font-weight: 500; color: var(--ink); margin-right: 8px; }
+.bonus-when-input { font: inherit; font-size: 13px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; }
+.bonus-when-text { margin: 8px 0 0; }
+.bonus-when-text b { color: var(--ink); font-weight: 600; }
+.bonus-when-note { margin: 6px 0 0; font-size: 12px; color: var(--muted); line-height: 1.5; }
 
 /* Keep, downgrade, or cancel? (drawer, annual-fee cards) */
 .keep-box { border-radius: var(--radius-sm); padding: 14px 16px; border: 1px solid var(--line); background: var(--surface-2); }
@@ -523,7 +528,6 @@ button, input, select { font-family: inherit; }
 .keep-detail { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
 .keep-detail strong { color: var(--ink); }
 .keep-note { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 10px; }
->>>>>>> f6cec24 (Add "Keep, downgrade, or cancel?" verdict to the drawer for annual-fee cards)
 .btn-apply-card { display: block; width: 100%; text-align: center; padding: 15px; border-radius: 12px; font-size: 15px; margin-top: 8px; }
 
 /* ---- COMPARE BAR ---- */
@@ -841,6 +845,7 @@ body.gate-open { overflow: hidden; }
   .card-row:nth-child(1) .td-rank span { font-size: 18px; }
   .card-row .td-card { grid-column: 1 / -1; padding-left: 30px; padding-right: 36px; min-height: 36px; display: flex; align-items: center; }
   .card-row .card-identity { gap: 10px; width: 100%; }
+  .card-row .card-identity > div { min-width: 0; }   /* lets long names ellipsize instead of widening the page */
   .card-row .card-name { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
   .card-row .td-compare { position: absolute; top: 14px; right: 14px; }
   .card-row .compare-check { width: 22px; height: 22px; }
