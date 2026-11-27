@@ -108,7 +108,7 @@
 | **Gas** | 3% at U.S. gas stations |
 | **Streaming** | 6% on select U.S. streaming |
 | **Other** | 1% |
-| **Sign-Up Bonus** | $300 after $3,000 spend in 6 months |
+| **Sign-Up Bonus** | $250 after $3,000 spend in 6 months |
 | **Top Perks** | 6% grocery rate (best in class); Up to $10/mo Disney+/Hulu/ESPN+ credit; 0% intro APR for 12 months; Excludes Costco, Walmart, Target |
 
 ---
@@ -124,7 +124,7 @@
 | **Gas** | 3% at U.S. gas stations (up to $6,000/yr, then 1%) |
 | **Online Retail** | 3% U.S. online retail (up to $6,000/yr, then 1%) |
 | **Other** | 1% |
-| **Sign-Up Bonus** | $200 after $2,000 spend in 6 months |
+| **Sign-Up Bonus** | $150 after $2,000 spend in 6 months |
 | **Top Perks** | No annual fee with decent grocery/gas rates; 0% intro APR for 15 months; Streaming statement credit |
 
 ---
