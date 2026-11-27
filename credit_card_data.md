@@ -437,3 +437,13 @@ All Bilt 2.0 cards: 10% intro APR for 12 months; cell phone protection; Masterca
 | Bilt Mastercard (original) | $0 (discontinued) |
 | Apple Card | $0 |
 | Amazon Prime Visa | $0 |
+
+## Announced changes (not yet in the numbers)
+
+`data/cards.json` can carry an `upcoming` list on a card: `effective` date, `text`, `source`, `sourceName`, optional `announced`. The site shows it in the card's drawer and as a "change from <month>" marker in the table, and hides it by itself once the effective date has passed. The ranking keeps using today's values; when a change takes effect, update the value and remove the entry. Entries as of 2026-11-07 (from press coverage, to be confirmed on the issuer's page):
+
+- Citi AAdvantage Platinum Select: fee $99 → $150 at renewals after Jan 24, 2027 (first year $0); adds $100 in-flight credit and up to $120 Global Entry/TSA PreCheck (CNBC, Oct 27, 2026).
+- Amex Platinum: FHR stays need two nights to count toward the $600 hotel credit from Jan 1, 2027; Airbnb Luxe added (One Mile at a Time).
+- Chase Sapphire Reserve / Reserve for Business: The Edit credit also covers 10,000+ vacation homes (4-night minimum) from Jan 1, 2027; Business card's Edit credit rises to $1,000 (NerdWallet, Fast Company, Nov 5, 2026).
+- Bilt Blue / Obsidian / Palladium: from Jan 1, 2027 no 4% Bilt Cash option for new cardholders, Bilt Cash expires 12 months after earning, Hyatt transfers 4:3 (The Points Guy, Oct 27, 2026).
+- Southwest Plus / Premier / Priority: card bonuses stop counting toward the Companion Pass from 2027; approvals by Dec 2, 2026 still count (The Points Guy).
