@@ -503,13 +503,11 @@ button, input, select { font-family: inherit; }
 .closed-note strong { display: block; margin-bottom: 2px; }
 .bonus-box { background: var(--surface-2); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
 .bonus-box strong { color: var(--ink); }
-<<<<<<< HEAD
 .bonus-check { margin-top: 10px; border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13px; line-height: 1.55; }
 .bonus-check-ok { background: var(--green-soft); color: var(--green); }
 .bonus-check-warn { background: var(--amber-soft); color: var(--amber); }
 .bonus-check strong { color: inherit; }
 .bonus-check-note { display: block; margin-top: 4px; font-size: 12px; opacity: 0.85; }
-=======
 
 /* Keep, downgrade, or cancel? (drawer, annual-fee cards) */
 .keep-box { border-radius: var(--radius-sm); padding: 14px 16px; border: 1px solid var(--line); background: var(--surface-2); }
@@ -523,7 +521,6 @@ button, input, select { font-family: inherit; }
 .keep-detail { font-size: 14px; color: var(--ink-2); line-height: 1.55; }
 .keep-detail strong { color: var(--ink); }
 .keep-note { font-size: 12px; color: var(--muted); line-height: 1.5; margin-top: 10px; }
->>>>>>> f6cec24 (Add "Keep, downgrade, or cancel?" verdict to the drawer for annual-fee cards)
 .btn-apply-card { display: block; width: 100%; text-align: center; padding: 15px; border-radius: 12px; font-size: 15px; margin-top: 8px; }
 
 /* ---- COMPARE BAR ---- */
@@ -596,6 +593,21 @@ button, input, select { font-family: inherit; }
 .bank-rel-tiers input[type="radio"] { accent-color: var(--ink); }
 .bank-rel-tiers label:has(input[type="radio"]:checked) { background: var(--ink); border-color: var(--ink); color: var(--white); }
 .bank-rel-balance, .bank-rel-apy { display: flex; flex-direction: column; gap: 4px; }
+
+/* Chase 5/24 check (spending drawer, and one line in a Chase card's drawer). Display only. */
+.five24-inputs { display: flex; flex-direction: column; gap: 12px; }
+.five24-count input { padding-left: 14px; }
+.five24-count span { padding: 0 14px 0 0; }
+.input-wrap select { border: none; outline: none; padding: 11px 12px; font-size: 16px; width: 100%; background: transparent; color: var(--ink); font-weight: 500; font-family: inherit; }
+.five24-status { display: none; font-size: 13px; line-height: 1.55; padding: 10px 14px; border-radius: var(--radius-sm); }
+.five24-status.is-ok { display: block; background: var(--green-soft); color: var(--green); }
+.five24-status.is-warn { display: block; background: var(--amber-soft); color: var(--amber); }
+.five24-status strong { color: inherit; }
+.five24-note { border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13px; line-height: 1.55; }
+.five24-ok { background: var(--green-soft); color: var(--green); }
+.five24-warn { background: var(--amber-soft); color: var(--amber); }
+.five24-note strong { color: inherit; }
+.five24-src { display: block; margin-top: 4px; font-size: 12px; opacity: 0.85; }
 .bank-rel-balance label { font-size: 12.5px; color: var(--ink-2); font-weight: 500; }
 .bank-rel-apy > label { font-size: 13px; color: var(--ink); font-weight: 500; }
 .apy-hint { font-weight: 400; color: var(--muted); font-size: 12px; }
@@ -841,6 +853,7 @@ body.gate-open { overflow: hidden; }
   .card-row:nth-child(1) .td-rank span { font-size: 18px; }
   .card-row .td-card { grid-column: 1 / -1; padding-left: 30px; padding-right: 36px; min-height: 36px; display: flex; align-items: center; }
   .card-row .card-identity { gap: 10px; width: 100%; }
+  .card-row .card-identity > div { min-width: 0; }   /* lets long names ellipsize instead of widening the page */
   .card-row .card-name { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
   .card-row .td-compare { position: absolute; top: 14px; right: 14px; }
   .card-row .compare-check { width: 22px; height: 22px; }

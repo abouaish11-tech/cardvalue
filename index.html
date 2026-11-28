@@ -69,7 +69,7 @@
        download when a card that uses them is on screen. -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..900;1,62..125,400..900&family=Allura&family=Cormorant+Garamond:wght@300&family=Geist:wght@200..700&family=Geist+Mono:wght@500&family=Libre+Caslon+Text:wght@400;700&family=Montserrat:ital,wght@0,700;1,600;1,700&family=Yellowtail&display=swap" />
   <link rel="stylesheet" href="cardart.css?v=2" />
-  <link rel="stylesheet" href="style.css?v=30" />
+  <link rel="stylesheet" href="style.css?v=32" />
 
   <!-- Polar overlay checkout: any <a data-polar-checkout> opens as an in-page
        modal so the address bar never leaves cardvalue.org. -->
@@ -279,6 +279,30 @@
             <label for="comparisonApy">Comparison APY <span class="apy-hint">(what you could earn elsewhere, like a high-yield savings account)</span></label>
             <div class="input-wrap apy-input"><input type="number" id="comparisonApy" value="4.5" min="0" max="20" step="0.1" /><span>%</span></div>
           </div>
+        </div>
+      </details>
+
+      <!-- Chase 5/24 check. Display only: it never feeds the ranking, the
+           wallet builder or the unlock. Shows a verdict here and one line in
+           the drawer of every Chase card. -->
+      <details class="banking-relationships five24" id="five24">
+        <summary class="banking-summary">
+          <span class="banking-title">Applying for a Chase card? <em>(optional)</em></span>
+          <span class="banking-hint">Check the 5/24 rule</span>
+        </summary>
+        <div class="banking-body">
+          <p class="banking-explainer">Chase generally declines anyone who has opened <strong>5 or more</strong> personal credit cards, with any bank, in the last 24 months, whatever their score. Cards you're an authorized user on count too. Business cards usually don't add to the count, but you still need to be under it to get a Chase business card.</p>
+          <div class="five24-inputs">
+            <div class="bank-rel-balance">
+              <label for="five24_count">Credit cards you've opened in the last 24 months</label>
+              <div class="input-wrap five24-count"><input type="number" id="five24_count" min="0" max="30" step="1" inputmode="numeric" placeholder="e.g. 3" /><span>cards</span></div>
+            </div>
+            <div class="bank-rel-balance">
+              <label for="five24_oldest">When did you open the oldest of them? <span class="apy-hint">(so we can say when it stops counting)</span></label>
+              <div class="input-wrap five24-month"><select id="five24_oldest"><option value="">Not sure</option></select></div>
+            </div>
+          </div>
+          <p class="five24-status" id="five24Status" aria-live="polite"></p>
         </div>
       </details>
 
@@ -534,6 +558,6 @@
   <div id="toastHost" class="toast-host" aria-live="polite" aria-atomic="true"></div>
 
   <script src="cardart.js?v=6"></script>
-  <script src="script.js?v=40"></script>
+  <script src="script.js?v=42"></script>
 </body>
 </html>
