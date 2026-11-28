@@ -1259,6 +1259,122 @@ function keepOrDowngradeHTML(card, netValue, totalFee) {
   `;
 }
 
+// ---- CHASE 5/24 CHECK ----
+/** The visitor's own count of cards opened in the last 24 months, held against
+ *  Chase's unwritten 5/24 rule. Display only: it never feeds the ranking, the
+ *  wallet builder, or the unlock logic. Saved in localStorage like spending. */
+const FIVE24_KEY = 'cv_five24';
+let five24 = { count: null, oldest: '' };   // oldest: 'YYYY-MM' the oldest counted card was opened, or ''
+
+function isChaseCard(card) { return /^Chase\b/.test(card.issuer || ''); }
+
+/** 'YYYY-MM' → the month after that card turns 24 months old, e.g. "January 2027". */
+function five24DropLabel(oldest) {
+  const m = /^(\d{4})-(\d{2})$/.exec(oldest || '');
+  if (!m) return '';
+  const d = new Date(Number(m[1]), Number(m[2]) - 1 + 25, 1);
+  return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
+function five24Summary() {
+  const n = five24.count;
+  if (n == null) return null;
+  if (n < 5) return { tone: 'ok', text: `You're at <strong>${n}/24</strong>. Chase's 5/24 rule doesn't block you${n === 4 ? ', but one more card would' : ''}.` };
+  const drop = five24DropLabel(five24.oldest);
+  let text = `You're at <strong>${n}/24</strong>. Chase very likely declines a new card right now, whatever your score.`;
+  if (drop) {
+    text += n - 1 < 5
+      ? ` The oldest of those stops counting from <strong>${drop}</strong>, give or take a month. That's when Chase opens up again, if you open nothing else first.`
+      : ` The oldest of those stops counting from <strong>${drop}</strong>, give or take a month, which only takes you to ${n - 1}/24.`;
+  }
+  return { tone: 'warn', text };
+}
+
+function renderFive24Status() {
+  const el = document.getElementById('five24Status');
+  if (!el) return;
+  const s = five24Summary();
+  el.className = 'five24-status' + (s ? ` is-${s.tone}` : '');
+  el.innerHTML = s ? s.text : '';
+}
+
+function readFive24Inputs() {
+  const c = document.getElementById('five24_count');
+  const o = document.getElementById('five24_oldest');
+  const raw = c ? c.value.trim() : '';
+  const n = raw === '' ? NaN : Math.max(0, Math.min(30, Math.round(Number(raw))));
+  return { count: Number.isFinite(n) ? n : null, oldest: o ? o.value : '' };
+}
+
+/** Only the last 24 months can count, so the month picker offers exactly those. */
+function populateFive24Months() {
+  const sel = document.getElementById('five24_oldest');
+  if (!sel || sel.options.length > 1) return;
+  const now = new Date();
+  for (let i = 0; i < 24; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const opt = document.createElement('option');
+    opt.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    opt.textContent = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    sel.appendChild(opt);
+  }
+}
+
+function bindFive24() {
+  populateFive24Months();
+  ['five24_count', 'five24_oldest'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => { five24 = readFive24Inputs(); renderFive24Status(); });
+  });
+  try {
+    const saved = JSON.parse(localStorage.getItem(FIVE24_KEY) || 'null');
+    if (saved && typeof saved === 'object') {
+      const c = document.getElementById('five24_count');
+      const o = document.getElementById('five24_oldest');
+      if (c && typeof saved.count === 'number') c.value = saved.count;
+      if (o && typeof saved.oldest === 'string') o.value = saved.oldest;   // a month now older than 24 months finds no option and clears itself
+      five24 = readFive24Inputs();
+    }
+  } catch (e) {}
+  renderFive24Status();
+}
+
+function saveFive24() {
+  five24 = readFive24Inputs();
+  try { localStorage.setItem(FIVE24_KEY, JSON.stringify(five24)); } catch (e) {}
+  renderFive24Status();
+}
+
+function resetFive24() {
+  five24 = { count: null, oldest: '' };
+  const c = document.getElementById('five24_count'); if (c) c.value = '';
+  const o = document.getElementById('five24_oldest'); if (o) o.value = '';
+  try { localStorage.removeItem(FIVE24_KEY); } catch (e) {}
+  renderFive24Status();
+}
+
+/** One box in a Chase card's drawer, only once the visitor has entered a count. */
+function five24NoteHTML(card) {
+  if (!isChaseCard(card) || five24.count == null) return '';
+  const n = five24.count;
+  const business = (card.tags || []).includes('business');
+  const bizLine = business ? ' Chase business cards like this one don\'t add to your count, but you still have to be under it to be approved.' : '';
+  let box;
+  if (n < 5) {
+    box = `<div class="five24-note five24-ok"><strong>5/24 check: at ${n}/24 you're under Chase's limit.</strong>${business ? bizLine : ` This card would take you to ${n + 1}/24.`}</div>`;
+  } else {
+    const drop = five24DropLabel(five24.oldest);
+    const when = drop ? ` The oldest of your ${n} stops counting from ${drop}, give or take a month${n - 1 < 5 ? ', when this card opens up again if you open nothing else first' : `, which only gets you to ${n - 1}/24`}.` : '';
+    box = `<div class="five24-note five24-warn"><strong>5/24 check: you're at ${n}/24.</strong> Chase very likely declines applications from anyone who opened 5 or more cards in the last 24 months, whatever their score.${when}${bizLine} Until then, a card from another issuer is the safer application. <span class="five24-src">Your count comes from "Rank for my spending"; change it there.</span></div>`;
+  }
+  return `
+    <div class="detail-section">
+      <div class="detail-section-title">Chase's 5/24 rule</div>
+      ${box}
+    </div>
+  `;
+}
+
 // ---- DETAIL DRAWER ----
 /** "Can you hit the bonus?" check for the detail drawer.
  *  Compares the visitor's total monthly spending (the same five inputs the
@@ -1619,6 +1735,9 @@ function openDetail(card) {
     `;
   }
 
+  // Chase 5/24 check, only when the visitor has entered a count (display only)
+  if (!isDiscontinued(card)) html += five24NoteHTML(card);
+
   // Apply button (or the closed badge for a card nobody can apply for)
   html += isDiscontinued(card) ? `
     <div class="detail-section detail-closed">
@@ -1782,6 +1901,7 @@ function applyPersonalization() {
   comparisonApy = bankInputs.comparisonApy;
   isPersonalized = true;
   try { localStorage.setItem(GATE_KEYS.spending, JSON.stringify(currentSpending)); } catch (e) {}
+  saveFive24();
   completeGateChoice('mine');
   document.querySelector('.default-profile-label').innerHTML = `
     <span class="profile-dot personalized"></span>
@@ -1872,6 +1992,7 @@ function resetPersonalization() {
   if (usbDeposits) usbDeposits.value = 0;
   const apyInput = document.getElementById('comparisonApy');
   if (apyInput) apyInput.value = 4.5;
+  resetFive24();
 
   document.querySelector('.default-profile-label').innerHTML = `
     <span class="profile-dot default"></span>
@@ -2342,6 +2463,7 @@ async function init() {
     pointsValuations = data.pointsValuations;
     transferValuations = { ...data.pointsValuations };
     bindEvents();
+    bindFive24();
     bindApplyTracking();
     restoreSavedSpending();
     renderCards();
